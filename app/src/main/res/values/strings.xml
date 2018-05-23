@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Navigation Drawer -->
+    <string name="fragment_title_statistic">Statistics</string>
+    <string name="fragment_title_Configurator">Configurator</string>
+    <string name="fragment_title_Training">Training</string>
+    <string name="drawer_header_name_hint">Fat Pig</string>
+    <string name="drawer_header_email_hint">hey.fatboy@example.com</string>
+    <string name="drawer_subitem_settings">Settings</string>
+    <string name="drawer_subitem_aboutus">About us</string>
+    <string name="drawer_subitem_feedback">Feedback</string>
+    <string name="drawer_subitem_close">Close</string>
+
+
+    <string name="app_name">Speck muss weg</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
