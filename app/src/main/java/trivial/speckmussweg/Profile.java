@@ -36,7 +36,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 import pub.devrel.easypermissions.EasyPermissions;
-import trivial.speckmussweg.database.MyDatabase;
+import trivial.speckmussweg.database.*;
 
 public class Profile extends Fragment {
     // TODO: Methode schreiben um daten abzufragen, ob was eingegeben wurde. Diese dann in Home abfragen, um onbackPressed() zum laufen zu kriegen.
