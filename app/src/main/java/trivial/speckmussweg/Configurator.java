@@ -1,5 +1,6 @@
 package trivial.speckmussweg;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -7,12 +8,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.animation.AnticipateOvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -31,8 +32,6 @@ import trivial.speckmussweg.adapter.RecyclerViewAdapter;
 import trivial.speckmussweg.internet.*;
 
 import static android.support.v7.widget.RecyclerView.HORIZONTAL;
-import static android.support.v7.widget.RecyclerView.SCROLL_STATE_DRAGGING;
-import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
 
 public class Configurator extends Fragment implements RecyclerViewAdapter.ItemClickListener {
     View viewMain;
@@ -44,7 +43,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
     // URL to get contacts JSON
     // http://thelegendsrising.de/test.json
     // https://api.androidhive.info/contacts/
-    private static String url = "http://thelegendsrising.de/test.json";
+    private static String url = "http://thelegendsrising.de/subs.json";
 
     ArrayList<HashMap<String, String>> contactList;
     ArrayList<HashMap<String, String>> subList;
@@ -57,7 +56,6 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
 
     private boolean programaticallyScrolled;
     int currentVisibleItem = 0;
-    private LinearLayoutManager linearLayoutManager;
     RecyclerView recyclerView;
     ImageView leftArrow, rightArrow;
 
@@ -74,7 +72,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
 
         recyclerView = viewMain.findViewById(R.id.list);
 
-        linearLayoutManager = new LinearLayoutManager(getContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(HORIZONTAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         leftArrow = viewMain.findViewById(R.id.recyclerViewLeftArrow);
@@ -87,7 +85,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         fettList = new ArrayList<>();
 
         //lv = viewMain.findViewById(R.id.list);
-        new GetContacts().execute();
+        new getData().execute();
 
         return viewMain;
     }
@@ -129,13 +127,15 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
     //TODO: noch machen
     @Override
     public void onLongClick(View view, int position) {
+        view.animate().translationZ(300).scaleX(1.1f).scaleY(1.1f).setInterpolator(new AnticipateOvershootInterpolator()).start();
         Toast.makeText(getActivity(), "You clicked long on" + adapter.getItem(position) + " " + position, Toast.LENGTH_SHORT).show();
     }
 
     /**
      * Async task class to get json by making HTTP call
      */
-    public class GetContacts extends AsyncTask<Void, Void, Void> {
+    @SuppressLint("StaticFieldLeak")
+    public class getData extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected void onPreExecute() {
@@ -160,16 +160,16 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             if (jsonStr != null) {
                 try {
                     JSONObject jsonObj = new JSONObject(jsonStr);
-                    JSONArray subs = jsonObj.getJSONArray("subs");
+                    JSONArray bread = jsonObj.getJSONArray("bread");
                     int j = 1;
-                    for (int i = 0; i < subs.length(); i++) {
+                    for (int i = 0; i < bread.length(); i++) {
 
-                        JSONObject s = subs.getJSONObject(i);
+                        JSONObject s = bread.getJSONObject(i);
 
 
-                        if (s.getString("id").equals("b" + Integer.toString(j))) {
+                        //if (s.getString("id").equals("b" + Integer.toString(j))) {
                             String id = s.getString("id");
-                            String art = s.getString("art");
+                            String art = s.getString("name");
                             String kcal = s.getString("kcal");
                             String fett = s.getString("fett");
 
@@ -183,8 +183,8 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
                             nameList.add(art);
                             kcalList.add(kcal);
                             fettList.add(fett);
-                        }
-                        j++;
+                        //}
+                        //j++;
                     }
 
                 /*try {

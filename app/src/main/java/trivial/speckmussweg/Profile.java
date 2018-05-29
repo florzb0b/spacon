@@ -75,7 +75,6 @@ public class Profile extends Fragment {
 
         database = new MyDatabase(getActivity());
         Cursor cursor = database.selectProfile(1);
-        ;
         if (cursor.getCount() >= 1) {
             /*
     "firstname";
