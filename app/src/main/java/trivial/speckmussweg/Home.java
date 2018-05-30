@@ -111,7 +111,7 @@ Boolean backPressedCheck = false;
                 fragmentClass = Configurator.class;
                 break;
             case R.id.nav_third_fragment:
-                fragmentClass = TestFragment.class;
+                fragmentClass = Training.class;
                 break;
             default:
                 fragmentClass = TestFragment.class;
