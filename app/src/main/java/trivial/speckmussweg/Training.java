@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 public class Training extends Fragment {
 
+    //i bims 1 command for push test
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
