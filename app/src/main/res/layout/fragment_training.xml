@@ -17,103 +17,85 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
             android:background="@drawable/profile_circular_border_imageview"
-            android:src="@drawable/ic_launcher_foreground"
-            />
+            android:src="@drawable/ic_launcher_foreground" />
 
-
-        <RelativeLayout
-            android:id="@+id/training_relative_layout_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="20dp">
-
-            <Button
-                android:id="@+id/start"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/round_button"
-                android:text="@string/button_training_start" />
-
-
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/training_relative_layout_time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true" >
-
-            <EditText
-                android:id="@+id/editText_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:ems="10"
-                android:inputType="time"
-                android:background="@drawable/training_rectangle_border"/>
-
-        </RelativeLayout>
-
-        <RelativeLayout
+        <TextView
+            android:id="@+id/training_TextView_kcal"
+            style="@android:style/Widget.EditText"
+            android:backgroundTint="@color/colorAccent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="25dp"
-            android:layout_marginEnd="135dp"
-            android:layout_marginStart="10dp"
-            android:background="@drawable/training_rectangle_border">
+            android:layout_below="@id/pig_svg"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:text="Hallo i bims die zeit"
+             />
 
-            <TextView
-                android:id="@+id/training_linear_layout_infokcal"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:text="Information kcal"
-                android:textStyle="bold" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/training_TextView_kcal"
+            android:layout_marginTop="10dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ems="10"/>
-
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ems="10"/>
                 <TextView
-                    android:id="@+id/training_linear_layout_info"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:text="Information Training"
-                    android:textStyle="bold" />
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ems="10"/>
+                    android:text="Information Meal"
+                    android:textSize="17dp"/>
 
-                <EditText
-                    android:id="@+id/training"
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ems="10"/>
+                    style="@android:style/Widget.EditText"
+                    android:text="Meal: "
+                    android:ems="8"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@android:style/Widget.EditText"
+                    android:text="Calories Meal: "
+                    android:ems="8"/>
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Information Training "
+                    android:textSize="17dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@android:style/Widget.EditText"
+                    android:text="Sport: "
+                    android:ems="8"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@android:style/Widget.EditText"
+                    android:text="Burned Calories: "
+                    android:ems="8"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@android:style/Widget.EditText"
+                    android:text="Distance: "
+                    android:ems="8"/>
+
+
 
             </LinearLayout>
 
-
         </RelativeLayout>
+
 
 
     </RelativeLayout>
