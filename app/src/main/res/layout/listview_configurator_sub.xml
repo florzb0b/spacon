@@ -6,7 +6,8 @@
     android:orientation="vertical"
     android:padding="5dp"
     tools:ignore="UseCompoundDrawables"
-    android:background="@drawable/shadow">
+    android:background="@drawable/shadow"
+    android:id="@+id/idvonglistview">
 
     <ImageView
         android:id="@+id/header_configurator_icon"

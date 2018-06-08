@@ -14,8 +14,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/list"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content" />
 
 
         <ImageView
@@ -26,8 +25,8 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="5dp"
             android:contentDescription="TODO"
-            android:paddingStart="5dp"
             android:paddingEnd="5dp"
+            android:paddingStart="5dp"
             android:visibility="visible"
             app:srcCompat="@drawable/ic_chevron_left_black_24dp"
             tools:ignore="VectorDrawableCompat" />
@@ -40,11 +39,65 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="5dp"
             android:contentDescription="TODO"
-            android:paddingStart="5dp"
             android:paddingEnd="5dp"
+            android:paddingStart="5dp"
             android:visibility="visible"
             app:srcCompat="@drawable/ic_chevron_right_black_24dp"
             tools:ignore="VectorDrawableCompat" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/list"
+            android:layout_marginTop="15dp"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+
+            <LinearLayout
+                android:id="@+id/linearlayout_first_meal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Hello1"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Helloasdasd1"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearlayout_second_meal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Hello2" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Hello2adssad" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Hello2gj,mnbvc" />
+
+            </LinearLayout>
+        </LinearLayout>
     </RelativeLayout>
 
 

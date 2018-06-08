@@ -1,18 +1,23 @@
 package trivial.speckmussweg.adapter;
 
+import android.content.ClipData;
 import android.content.Context;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.Collections;
 import java.util.List;
 
 import trivial.speckmussweg.R;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>
+        implements  View.OnTouchListener{
 
     private List<String> mName;
     private List<String> mKcal;
@@ -50,6 +55,22 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public int getItemCount() {
         return mName.size();
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        switch (motionEvent.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                ClipData data = ClipData.newPlainText("", "");
+                View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    view.startDragAndDrop(data, shadowBuilder, view, 0);
+                } else {
+                    view.startDrag(data, shadowBuilder, view, 0);
+                }
+                return true;
+        }
+        return false;
     }
 
 

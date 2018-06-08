@@ -15,8 +15,11 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.view.animation.AnticipateOvershootInterpolator;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -34,6 +37,7 @@ import trivial.speckmussweg.internet.*;
 import static android.support.v7.widget.RecyclerView.HORIZONTAL;
 
 public class Configurator extends Fragment implements RecyclerViewAdapter.ItemClickListener {
+    int i = 1;
     View viewMain;
     private String TAG = Home.class.getSimpleName();
 
@@ -115,13 +119,13 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
                 }
             }
         });
-
-
     }
 
     @Override
     public void onItemClick(View view, int position) {
         Toast.makeText(getActivity(), "You clicked " + adapter.getItem(position) + " on item position " + position, Toast.LENGTH_SHORT).show();
+        createSub(adapter.getItem(position));
+
     }
 
     //TODO: noch machen
@@ -168,21 +172,21 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
 
 
                         //if (s.getString("id").equals("b" + Integer.toString(j))) {
-                            String id = s.getString("id");
-                            String art = s.getString("name");
-                            String kcal = s.getString("kcal");
-                            String fett = s.getString("fett");
+                        String id = s.getString("id");
+                        String art = s.getString("name");
+                        String kcal = s.getString("kcal");
+                        String fett = s.getString("fett");
 
-                            HashMap<String, String> tempSubs = new HashMap<>();
-                            tempSubs.put("id", id);
-                            tempSubs.put("art", art);
-                            tempSubs.put("kcal", kcal);
-                            tempSubs.put("fett", fett);
+                        HashMap<String, String> tempSubs = new HashMap<>();
+                        tempSubs.put("id", id);
+                        tempSubs.put("art", art);
+                        tempSubs.put("kcal", kcal);
+                        tempSubs.put("fett", fett);
 
-                            subList.add(tempSubs);
-                            nameList.add(art);
-                            kcalList.add(kcal);
-                            fettList.add(fett);
+                        subList.add(tempSubs);
+                        nameList.add(art);
+                        kcalList.add(kcal);
+                        fettList.add(fett);
                         //}
                         //j++;
                     }
@@ -274,5 +278,22 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             fillList();
         }
 
+    }
+
+
+
+    @SuppressLint("ResourceType")
+    private void createSub(String content) {
+        //added LInearLayout
+        LinearLayout linearLayout = viewMain.findViewById(R.id.linearlayout_first_meal);
+
+        //add textView
+        TextView textView = new TextView(getActivity());
+        textView.setText(content);
+        textView.setId(i);
+
+        //added the textView and the Button to LinearLayout
+        linearLayout.addView(textView);
+      i++;
     }
 }
