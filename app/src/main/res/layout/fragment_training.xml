@@ -8,7 +8,8 @@
     <RelativeLayout
         android:id="@+id/training_relative_layout_master"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/background_gradient">
 
         <ImageView
             android:id="@+id/pig_svg"
@@ -35,68 +36,66 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/training_TextView_kcal"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="15dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="3dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Information Meal"
-                    android:textSize="17dp"/>
+                    android:textSize="15dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@android:style/Widget.EditText"
-                    android:text="Meal: "
-                    android:ems="8"/>
+                    android:text="Meal: " />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@android:style/Widget.EditText"
-                    android:text="Calories Meal: "
-                    android:ems="8"/>
+                    android:text="Calories Meal: " />
 
                 <TextView
                     android:layout_marginTop="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Information Training "
-                    android:textSize="17dp"/>
+                    android:textSize="15dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@android:style/Widget.EditText"
-                    android:text="Sport: "
-                    android:ems="8"/>
+                    android:text="Sport: " />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@android:style/Widget.EditText"
-                    android:text="Burned Calories: "
-                    android:ems="8"/>
+                    android:text="Burned Calories: " />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@android:style/Widget.EditText"
-                    android:text="Distance: "
-                    android:ems="8"/>
-
-
+                    android:text="Distance: " />
 
             </LinearLayout>
 
+            <Button
+                android:id="@+id/training_btn_start"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="125dp"
+                android:layout_height="75dp"
+                android:layout_marginStart="250dp"
+                android:layout_marginTop="125dp"
+                android:text="Start"/>
+
         </RelativeLayout>
-
-
 
     </RelativeLayout>
 
