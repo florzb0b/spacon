@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:id="@+id/test1"
     android:layout_height="match_parent"
-    tools:context=".training_map">
+    tools:context=".Training_map">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/test"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="300dp">
+
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:src="@android:color/background_dark" />
+    </RelativeLayout>
 
 </FrameLayout>
