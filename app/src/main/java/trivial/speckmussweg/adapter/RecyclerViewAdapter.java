@@ -1,5 +1,6 @@
 package trivial.speckmussweg.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.Context;
 import android.os.Build;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import trivial.speckmussweg.R;
@@ -23,14 +25,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private List<String> mKcal;
     private List<String> mFett;
 
+
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
-    public RecyclerViewAdapter(Context context, List<String> name, List<String> kcal, List<String> fett) {
+    public RecyclerViewAdapter(Context context, List<String> names, List<String> calories) {
         this.mInflater = LayoutInflater.from(context);
-        this.mName = name;
-        this.mKcal = kcal;
-        this.mFett = fett;
+        this.mName = names;
+        this.mKcal = calories;
+        //this.mFett = fett;
     }
 
     // inflates the row layout from xml when needed
@@ -43,10 +46,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        /*for (Entry<String, String> entry : map.entrySet()) {
+            System.out.println(entry.getKey() + "=" + entry.getValue());
+        }*/
         String name = mName.get(position);
-        //String kcal = mKcal.get(position);
+        String kcal = mKcal.get(position);
         //String fett = mFett.get(position);
         holder.nameTextView.setText(name);
+        holder.kcalTextView.setText(kcal);
         //holder.kcalTextView.setText(kcal);
         //holder.fettTextView.setText(fett);
 
@@ -57,6 +64,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return mName.size();
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
         switch (motionEvent.getAction()) {
@@ -83,7 +91,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         ViewHolder(View itemView) {
             super(itemView);
             nameTextView = itemView.findViewById(R.id.header_configurator_name);
-            //kcalTextView = itemView.findViewById(R.id.header_configurator_name);
+            kcalTextView = itemView.findViewById(R.id.header_configurator_calories);
             //fettTextView = itemView.findViewById(R.id.mobile);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
@@ -104,6 +112,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     // convenience method for getting data at click position
     public String getItem(int id) {
         return mName.get(id);
+    }
+
+    public String getCalories(int id){
+        return mKcal.get(id);
     }
 
     // allows clicks events to be caught

@@ -10,93 +10,617 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/list"
+        <RelativeLayout
+            android:id="@+id/relativelayout_configurator_header"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp">
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recylcerview_configurator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-        <ImageView
-            android:id="@+id/recyclerViewLeftArrow"
-            android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/recyclerViewLeftArrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="5dp"
+                android:contentDescription="TODO"
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"
+                android:visibility="visible"
+                app:srcCompat="@drawable/ic_chevron_left_black_24dp"
+                tools:ignore="VectorDrawableCompat" />
+
+            <ImageView
+                android:id="@+id/recyclerViewRightArrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="5dp"
+                android:contentDescription="TODO"
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"
+                android:visibility="visible"
+                app:srcCompat="@drawable/ic_chevron_right_black_24dp"
+                tools:ignore="VectorDrawableCompat" />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/button_configurator_last"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="5dp"
-            android:contentDescription="TODO"
-            android:paddingEnd="5dp"
-            android:paddingStart="5dp"
-            android:visibility="visible"
-            app:srcCompat="@drawable/ic_chevron_left_black_24dp"
-            tools:ignore="VectorDrawableCompat" />
+            android:layout_below="@id/relativelayout_configurator_header"
+            android:drawableStart="@drawable/ic_navigate_before_white_24dp"
+            android:text="Last"
+            android:textAlignment="textStart" />
 
-        <ImageView
-            android:id="@+id/recyclerViewRightArrow"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/relativelayout_configurator_header"
+            android:layout_toEndOf="@id/button_configurator_last"
+            android:layout_toStartOf="@id/button_configurator_next"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Currently"
+                android:textSize="15sp"
+                android:textStyle="italic|bold" />
+
+            <TextView
+                android:id="@+id/textview_configurator_header_art_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:hint="Art" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/button_configurator_next"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="5dp"
-            android:contentDescription="TODO"
-            android:paddingEnd="5dp"
-            android:paddingStart="5dp"
-            android:visibility="visible"
-            app:srcCompat="@drawable/ic_chevron_right_black_24dp"
-            tools:ignore="VectorDrawableCompat" />
+            android:layout_below="@id/relativelayout_configurator_header"
+            android:drawableEnd="@drawable/ic_navigate_next_white_24dp"
+            android:text="Next"
+            android:textAlignment="textEnd" />
 
 
         <LinearLayout
+            android:id="@+id/linearlayout_configurator_top_parent"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/list"
-            android:layout_marginTop="15dp"
+            android:layout_below="@id/button_configurator_last"
+            android:layout_marginTop="10dp"
             android:baselineAligned="false"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <!--  <RelativeLayout
+                  android:layout_width="0dp"
+                  android:layout_height="match_parent"
+                  android:layout_weight="1"
+                  android:orientation="vertical"
+                  android:layout_margin="5dp">
 
 
-            <LinearLayout
-                android:id="@+id/linearlayout_first_meal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                  <ScrollView
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_above="@id/relativelayout_configurator_footer_first_meal">
+
+                      <LinearLayout
+                          android:id="@+id/linearlayout_first_meal"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical"
+                          android:padding="10dp"
+                          android:weightSum="2">
+
+                          &lt;!&ndash; Hier ist das layout das programmatisch eingesetzt werden soll&ndash;&gt;
+
+                          <LinearLayout
+                              android:id="@+id/linearlayout_configurator_bread_header"
+                              android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:orientation="vertical"
+                              android:visibility="gone">
+
+                              <LinearLayout
+
+                                  android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                                  android:orientation="horizontal"
+                                  tools:ignore="UseCompoundDrawables">
+
+                                  <TextView
+                                      android:layout_width="0dp"
+                                      android:layout_height="match_parent"
+                                      android:layout_weight="1"
+                                      android:gravity="center|start"
+                                      android:text="Bread:"
+                                      android:textStyle="italic" />
+
+                                  <ImageView
+                                      android:id="@+id/imageview_configurator_delete_bread"
+                                      android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:contentDescription="TODO"
+                                      android:src="@drawable/ic_delete_black_24dp" />
+
+                              </LinearLayout>
+
+                              <View
+                                  android:layout_width="match_parent"
+                                  android:layout_height="1dp"
+                                  android:background="@android:color/black" />
+
+                          </LinearLayout>
+
+                          <LinearLayout
+                              android:id="@+id/linearlayout_configurator_bread_content"
+                              android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:orientation="horizontal"
+                              android:padding="5dp"
+                              android:visibility="gone">
+
+
+                              <TextView
+                                  android:id="@+id/textview_configurator_bread_content"
+                                  android:layout_width="0dp"
+                                  android:layout_height="wrap_content"
+                                  android:layout_weight="1"
+                                  android:text="Cheese Oregano" />
+
+                              <LinearLayout
+                                  android:id="@+id/linearlayout_configurator_bread_size"
+                                  android:layout_width="0dp"
+                                  android:layout_height="match_parent"
+                                  android:layout_weight="1"
+                                  android:orientation="horizontal">
+
+                                  <TextView
+                                      android:id="@+id/textview_configurator_bread_size_content"
+                                      android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:layout_gravity="center"
+                                      android:text="15"
+                                      android:textColor="@android:color/black" />
+
+                                  <TextView
+                                      android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:layout_gravity="center"
+                                      android:text="cm"
+                                      android:textColor="@android:color/black" />
+                              </LinearLayout>
+
+
+                          </LinearLayout>
+
+                          <LinearLayout
+                              android:id="@+id/linearlayout_configurator_cheese_header"
+                              android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:orientation="vertical"
+                              android:visibility="gone">
+
+                              <LinearLayout
+                                  android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                                  android:orientation="horizontal">
+
+                                  <TextView
+                                      android:layout_width="0dp"
+                                      android:layout_height="match_parent"
+                                      android:layout_weight="1"
+                                      android:gravity="center|start"
+                                      android:text="Cheese:"
+                                      android:textStyle="italic" />
+
+                                  <ImageView
+                                      android:id="@+id/imageview_configurator_delete_cheese"
+                                      android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:src="@drawable/ic_delete_black_24dp" />
+
+                              </LinearLayout>
+
+                              <View
+                                  android:layout_width="match_parent"
+                                  android:layout_height="1dp"
+                                  android:background="@android:color/black" />
+                          </LinearLayout>
+
+                          <LinearLayout
+                              android:id="@+id/linearlayout_configurator_cheese_content"
+                              android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:orientation="vertical"
+                              android:padding="5dp"
+                              android:visibility="gone">
+
+
+                              &lt;!&ndash;<TextView
+                                  android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:text="Irgendien käse" />
+
+
+                              <TextView
+                                  android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:text="noch irgendein Irgendien käse" />&ndash;&gt;
+                          </LinearLayout>
+
+                          <LinearLayout
+                              android:id="@+id/linearlayout_configurator_meat_header"
+                              android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:orientation="vertical"
+                              android:visibility="gone">
+
+                              <LinearLayout
+                                  android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                                  android:orientation="horizontal">
+
+                                  <TextView
+                                      android:layout_width="0dp"
+                                      android:layout_height="match_parent"
+                                      android:layout_weight="1"
+                                      android:gravity="center|start"
+                                      android:text="Meat:"
+                                      android:textStyle="italic" />
+
+                                  <ImageView
+                                      android:id="@+id/imageview_configurator_delete_meat"
+                                      android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:src="@drawable/ic_delete_black_24dp" />
+
+                              </LinearLayout>
+
+                              <View
+                                  android:layout_width="match_parent"
+                                  android:layout_height="1dp"
+                                  android:background="@android:color/black" />
+                          </LinearLayout>
+
+                          <LinearLayout
+                              android:id="@+id/linearlayout_configurator_meat_content"
+                              android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:orientation="vertical"
+                              android:padding="5dp"
+                              android:visibility="gone">
+
+                              &lt;!&ndash;<TextView
+                                  android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:text="Irgendien käse" />
+
+                              <TextView
+                                  android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:text="noch irgendein Irgendien käse" />&ndash;&gt;
+                          </LinearLayout>
+
+                          <LinearLayout
+                              android:id="@+id/linearlayout_configurator_salad_header"
+                              android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:orientation="vertical"
+                              android:visibility="gone">
+
+                              <LinearLayout
+
+                                  android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                                  android:orientation="horizontal">
+
+                                  <TextView
+                                      android:layout_width="0dp"
+                                      android:layout_height="match_parent"
+                                      android:layout_weight="1"
+                                      android:gravity="center|start"
+                                      android:text="Salad:"
+                                      android:textStyle="italic" />
+
+                                  <ImageView
+                                      android:id="@+id/imageview_configurator_delete_salad"
+                                      android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:src="@drawable/ic_delete_black_24dp" />
+
+                              </LinearLayout>
+
+                              <View
+                                  android:layout_width="match_parent"
+                                  android:layout_height="1dp"
+                                  android:background="@android:color/black" />
+                          </LinearLayout>
+
+                          <LinearLayout
+                              android:id="@+id/linearlayout_configurator_salad_content"
+                              android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:orientation="vertical"
+                              android:padding="5dp"
+                              android:visibility="gone">
+
+                              &lt;!&ndash;<TextView
+                                  android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:text="1 Salat" />
+
+                              <TextView
+                                  android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:text="Noch ein Salat" />&ndash;&gt;
+
+                          </LinearLayout>
+
+                          <LinearLayout
+                              android:id="@+id/linearlayout_configurator_extras_header"
+                              android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:orientation="vertical"
+                              android:visibility="gone">
+
+                              <LinearLayout
+
+                                  android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                                  android:orientation="horizontal">
+
+                                  <TextView
+                                      android:layout_width="0dp"
+                                      android:layout_height="match_parent"
+                                      android:layout_weight="1"
+                                      android:gravity="center|start"
+                                      android:text="Extras:"
+                                      android:textStyle="italic" />
+
+                                  <ImageView
+                                      android:id="@+id/imageview_configurator_delete_extras"
+                                      android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:src="@drawable/ic_delete_black_24dp" />
+
+                              </LinearLayout>
+
+                              <View
+                                  android:layout_width="match_parent"
+                                  android:layout_height="1dp"
+                                  android:background="@android:color/black" />
+                          </LinearLayout>
+
+                          <LinearLayout
+                              android:id="@+id/linearlayout_configurator_extras_content"
+                              android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:orientation="vertical"
+                              android:padding="5dp"
+                              android:visibility="gone">
+
+                              &lt;!&ndash; <TextView
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content"
+                                   android:text="Chocolat Chip" />
+
+                               <TextView
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content"
+                                   android:text="Chocolat Chip" />
+
+                               <TextView
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content"
+                                   android:text="Chocolat Chip" />
+
+                               <TextView
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content"
+                                   android:text="Chocolat Chip" />
+
+                               <TextView
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content"
+                                   android:text="Chocolat Chip" />
+   &ndash;&gt;
+                          </LinearLayout>
+
+                          <LinearLayout
+                              android:id="@+id/linearlayout_configurator_sauce_header"
+                              android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:orientation="vertical"
+                              android:visibility="gone">
+
+                              <LinearLayout
+
+                                  android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                                  android:orientation="horizontal">
+
+                                  <TextView
+                                      android:layout_width="0dp"
+                                      android:layout_height="match_parent"
+                                      android:layout_weight="1"
+                                      android:gravity="center|start"
+                                      android:text="Sauce:"
+                                      android:textStyle="italic" />
+
+                                  <ImageView
+                                      android:id="@+id/imageview_configurator_delete_sauce"
+                                      android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:src="@drawable/ic_delete_black_24dp" />
+
+                              </LinearLayout>
+
+                              <View
+                                  android:layout_width="match_parent"
+                                  android:layout_height="1dp"
+                                  android:background="@android:color/black" />
+                          </LinearLayout>
+
+                          <LinearLayout
+                              android:id="@+id/linearlayout_configurator_sauce_content"
+                              android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:orientation="vertical"
+                              android:padding="5dp"
+                              android:visibility="gone">
+
+                              &lt;!&ndash;<TextView
+                                  android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:text="Chocolat Chip" />&ndash;&gt;
+
+                          </LinearLayout>
+                      </LinearLayout>
+
+                  </ScrollView>
+
+                  <RelativeLayout
+                      android:id="@+id/relativelayout_configurator_footer_first_meal"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_alignParentBottom="true"
+                      android:background="#FC0">
+
+
+                      <TextView
+                          android:id="@+id/footer_configurator_max_calories_text"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_margin="5dp"
+                          android:text="Total calories:"
+                          android:textColor="#000"
+                          android:textStyle="italic" />
+
+                      <TextView
+                          android:id="@+id/footer_configurator_calories_content"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_margin="5dp"
+                          android:layout_toEndOf="@+id/footer_configurator_max_calories_text"
+                          android:text="2145"
+                          android:textColor="#000" />
+
+                      <TextView
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_alignParentEnd="true"
+                          android:layout_margin="5dp"
+                          android:layout_toEndOf="@+id/footer_configurator_calories_content"
+                          android:text="kcal"
+                          android:textColor="#000" />
+                  </RelativeLayout>
+
+
+              </RelativeLayout>-->
+
+            <RelativeLayout
+                android:id="@+id/relativelayout_scrollview_configurator_first_meal"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
                 android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
                 android:orientation="vertical">
 
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Hello1"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Helloasdasd1"
-                    />
+                <include
+                    android:id="@+id/include_first_meal"
+                    layout="@layout/scrollview_configurator" />
+            </RelativeLayout>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linearlayout_second_meal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <RelativeLayout
+                android:id="@+id/relativelayout_scrollview_configurator_second_meal"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
                 android:orientation="vertical"
-                android:layout_weight="1">
+                android:clickable="true"
+                android:focusable="true">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="Hello2" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="Hello2adssad" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="Hello2gj,mnbvc" />
+                <include
+                    android:id="@+id/include_second_meal"
+                    layout="@layout/scrollview_configurator" />
 
-            </LinearLayout>
+            </RelativeLayout>
+            <!--<LinearLayout
+                android:id="@+id/linearlayout_second_meal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                &lt;!&ndash; Hier ist das layout das programmatisch eingesetzt werden soll&ndash;&gt;
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:text="Cheese Oregano"
+                        android:textSize="15sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="2dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:text="15cm"
+                            android:textColor="@android:color/darker_gray" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:text="|"
+                            android:textColor="@android:color/black" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:text="30cm"
+                            android:textColor="@color/colorAccent" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </LinearLayout>-->
+
         </LinearLayout>
     </RelativeLayout>
 
