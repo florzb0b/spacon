@@ -31,7 +31,9 @@
                 android:id="@+id/flContent"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent" >
+
+            </FrameLayout>
         </LinearLayout>
 
         <!-- The navigation drawer that comes from the left -->
