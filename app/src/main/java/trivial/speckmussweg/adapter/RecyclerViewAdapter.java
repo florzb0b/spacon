@@ -25,7 +25,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private List<String> mKcal;
     private List<String> mFett;
 
-
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
