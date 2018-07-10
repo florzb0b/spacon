@@ -25,7 +25,7 @@ public class Training_pig extends Fragment {
         page = getArguments().getInt("someInt", 0);
     }
 
-    // Inflate the view for the fragment based on layout XML
+    // Inflate the view for the fragment based on layout XML.
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
