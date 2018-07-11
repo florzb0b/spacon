@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="trivial.speckmussweg.Home">
+    tools:context="trivial.speckmussweg.Home"
+    android:background="@drawable/background">
 
     <!-- This DrawerLayout has two children at the root  -->
     <android.support.v4.widget.DrawerLayout

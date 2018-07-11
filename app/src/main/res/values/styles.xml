@@ -8,4 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="HeaderBar">
+        <item name="android:background">@color/backgroundColorDarkGreen</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
 </resources>

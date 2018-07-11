@@ -45,7 +45,7 @@ public class Profile extends Fragment {
     MyDatabase database;
     View viewMain;
     EditText editTextFirstName, editTextLastName, editTextWeight, editTextHeight;
-    TextView textViewAge, textViewDateOfBirth, textViewGender;
+    TextView textViewDateOfBirth, textViewGender;
     LinearLayout linearLayoutAge;
     ImageView imgViewBtnDeleteContent, imgViewProfilePic;
     Uri uriProfileImage;
@@ -66,7 +66,6 @@ public class Profile extends Fragment {
         editTextLastName = viewMain.findViewById(R.id.user_profile_content_lastname);
         editTextWeight = viewMain.findViewById(R.id.user_profile_content_weight);
         editTextHeight = viewMain.findViewById(R.id.user_profile_content_height);
-        textViewAge = viewMain.findViewById(R.id.user_profile_content_age);
         textViewDateOfBirth = viewMain.findViewById(R.id.user_profile_content_dateofbirth);
         textViewGender = viewMain.findViewById(R.id.user_profile_content_gender);
         linearLayoutAge = viewMain.findViewById(R.id.user_profile_linearlayout_age);
@@ -95,7 +94,6 @@ public class Profile extends Fragment {
             textViewDateOfBirth.setText(cursor.getString(4));
             String dateToSplit = cursor.getString(4);
             String[] splittedDate = dateToSplit.split("/");
-            textViewAge.setText(getAge(Integer.parseInt(splittedDate[2]), Integer.parseInt(splittedDate[1]), Integer.parseInt(splittedDate[0])));
             editTextHeight.setText(cursor.getString(5));
             editTextWeight.setText(cursor.getString(6));
             uriProfileImage = Uri.parse(cursor.getString(7));
@@ -110,7 +108,6 @@ public class Profile extends Fragment {
                 editTextLastName.setText("");
                 editTextWeight.setText("");
                 editTextHeight.setText("");
-                textViewAge.setText("");
                 textViewDateOfBirth.setText("");
                 textViewGender.setText("");
             }
@@ -143,9 +140,6 @@ public class Profile extends Fragment {
                 calenderProfile.set(Calendar.MONTH, monthOfYear);
                 calenderProfile.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 setDate();
-                textViewAge.setText(getAge(calenderProfile.get(Calendar.YEAR),
-                        calenderProfile.get(Calendar.MONTH),
-                        calenderProfile.get(Calendar.DAY_OF_MONTH)));
             }
         };
         linearLayoutAge.setOnClickListener(new View.OnClickListener() {

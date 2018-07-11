@@ -52,14 +52,16 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:text="First Name*"
-                    android:textColor="@color/textColorOnYellowBackground" />
+                    android:textColor="@color/textColorOnYellowBackground"
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:text="Last Name*"
-                    android:textColor="@color/textColorOnYellowBackground" />
+                    android:textColor="@color/textColorOnYellowBackground"
+                    android:textStyle="bold"/>
 
             </LinearLayout>
 
@@ -132,7 +134,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:text="Date of Birth*"
-                    android:textColor="@color/textColorOnYellowBackground" />
+                    android:textColor="@color/textColorOnYellowBackground"
+                    android:textStyle="bold"/>
 
 
                 <TextView
@@ -140,21 +143,24 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:text="Weight*"
-                    android:textColor="@color/textColorOnYellowBackground" />
+                    android:textColor="@color/textColorOnYellowBackground"
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:text="Height*"
-                    android:textColor="@color/textColorOnYellowBackground" />
+                    android:textColor="@color/textColorOnYellowBackground"
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:text="Gender*"
-                    android:textColor="@color/textColorOnYellowBackground" />
+                    android:textColor="@color/textColorOnYellowBackground"
+                    android:textStyle="bold"/>
 
             </LinearLayout>
 
@@ -175,7 +181,7 @@
                     android:focusable="true"
                     android:orientation="horizontal">
 
-                    <TextView
+                   <!-- <TextView
                         android:id="@+id/user_profile_content_age"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -183,14 +189,14 @@
                         android:layout_marginTop="9dp"
                         android:hint="00"
                         android:textColor="@color/textColorOnYellowBackground"
-                        android:textColorHint="@color/textColorOnYellowBackground" />
+                        android:textColorHint="@color/textColorOnYellowBackground" />-->
 
                     <TextView
                         android:id="@+id/user_profile_content_dateofbirth"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
                         android:layout_marginTop="9dp"
+                        android:layout_marginStart="3dp"
                         android:hint="dd/mm/yyyy"
                         android:textColor="@color/textColorOnYellowBackground"
                         android:textColorHint="@color/textColorOnYellowBackground" />
@@ -205,18 +211,20 @@
                         android:id="@+id/user_profile_content_weight"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="8dp"
                         android:hint="Weight in kg"
                         android:inputType="number"
                         android:textColor="@color/textColorOnYellowBackground"
                         android:textColorHint="@color/textColorOnYellowBackground"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:layout_gravity="center|start"/>
 
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="70dp"
                         android:layout_marginTop="12dp"
+                        android:layout_gravity="center|end"
                         android:text="kg"
                         android:textColor="@color/textColorOnYellowBackground" />
                 </LinearLayout>
@@ -230,12 +238,13 @@
                         android:id="@+id/user_profile_content_height"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="-1dp"
                         android:hint="Height in cm"
+                        android:layout_marginTop="1dp"
                         android:inputType="number"
                         android:textColor="@color/textColorOnYellowBackground"
                         android:textColorHint="@color/textColorOnYellowBackground"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:layout_gravity="center|start"/>
 
                     <TextView
                         android:layout_width="fill_parent"
@@ -243,7 +252,8 @@
                         android:layout_marginStart="65dp"
                         android:layout_marginTop="1dp"
                         android:text="cm"
-                        android:textColor="@color/textColorOnYellowBackground" />
+                        android:textColor="@color/textColorOnYellowBackground"
+                        android:layout_gravity="center|end"/>
                 </LinearLayout>
 
                 <TextView
@@ -251,7 +261,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="3dp"
-                    android:layout_marginTop="7dp"
+                    android:layout_marginTop="11dp"
                     android:clickable="true"
                     android:focusable="true"
                     android:hint="Choose your Gender"
