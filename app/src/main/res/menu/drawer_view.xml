@@ -1,38 +1,47 @@
-<menu xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <group android:checkableBehavior="single">
+
+    <group
+        android:id="@+id/menu_top"
+        android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_first_fragment"
-            android:icon="@drawable/ic_launcher_foreground"
-            android:title="@string/fragment_title_statistic"
-            android:checked="true"/>
-        <item
-            android:id="@+id/nav_second_fragment"
-            android:icon="@drawable/ic_launcher_foreground"
+            android:id="@+id/nav_configurator"
+            android:icon="@drawable/ic_restaurant_black_24dp"
             android:title="@string/fragment_title_Configurator" />
         <item
-            android:id="@+id/nav_third_fragment"
-            android:icon="@drawable/ic_launcher_foreground"
+            android:id="@+id/nav_training"
+            android:icon="@drawable/ic_fitness_center_black_24dp"
             android:title="@string/fragment_title_Training" />
     </group>
 
-    <item tools:ignore="MenuTitle">
-        <menu>
-            <group android:checkableBehavior="single">
-                <item
-                    android:icon="@drawable/ic_launcher_foreground"
-                    android:title="@string/drawer_subitem_settings" />
-                <item
-                    android:icon="@drawable/ic_launcher_foreground"
-                    android:title="@string/drawer_subitem_aboutus" />
-                <item
-                    android:icon="@drawable/ic_launcher_foreground"
-                    android:title="@string/drawer_subitem_feedback" />
-                <item
-                    android:icon="@drawable/ic_launcher_foreground"
-                    android:title="@string/drawer_subitem_close" />
-            </group>
-        </menu>
-    </item>
+
+    <group
+        android:id="@+id/menu_center"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:title="@string/drawer_subitem_settings" />
+        <item
+            android:id="@+id/nav_aboutus"
+            android:icon="@drawable/ic_group_black_24dp"
+            android:title="@string/drawer_subitem_aboutus" />
+        <item
+            android:id="@+id/nav_credits"
+            android:icon="@drawable/ic_description_black_24dp"
+            android:title="@string/drawer_subitem_credits" />
+    </group>
+
+
+    <group
+        android:id="@+id/menu_bottom"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_shutdown"
+            android:icon="@drawable/ic_power"
+            android:title="@string/drawer_subitem_close" />
+    </group>
+
 </menu>

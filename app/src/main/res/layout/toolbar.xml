@@ -13,6 +13,7 @@
         android:fitsSystemWindows="true"
         app:theme="@style/HeaderBar"
         android:background="@color/backgroundColorDarkGreen"
+        app:titleTextColor="@android:color/white"
         >
     </android.support.v7.widget.Toolbar>
 

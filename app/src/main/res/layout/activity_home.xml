@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="trivial.speckmussweg.Home"
-    android:background="@drawable/background">
+    android:background="@drawable/background"
+    tools:context="trivial.speckmussweg.Home">
+
 
     <!-- This DrawerLayout has two children at the root  -->
-    <android.support.v4.widget.DrawerLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
@@ -28,13 +28,62 @@
                 android:layout_height="wrap_content" />
 
             <!-- The main content view where fragments are loaded -->
-            <FrameLayout
-                android:id="@+id/flContent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            </FrameLayout>
+            <RelativeLayout
+                android:id="@+id/flContent"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".5">
+
+
+                <ImageView
+                    android:id="@+id/spacon_imageview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/spacon_text"
+                    android:contentDescription="TODO"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Conquer your weaker self"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp"
+                    android:layout_marginTop="30dp"
+                    android:layout_below="@id/spacon_imageview"
+                    android:layout_centerHorizontal="true"/>
+
+            </RelativeLayout>
+
+                <!--<RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight=".5">
+
+                    &lt;!&ndash;<com.github.jorgecastillo.FillableLoader
+                        android:id="@+id/home_fillableLoader"
+                        android:layout_centerInParent="true"
+                        android:layout_width="250dp"
+                        android:layout_height="250dp"
+                        app:fl_clippingTransform="waves"
+                        app:fl_fillColor="@color/backgroundColorDarkYellow"
+                        app:fl_fillDuration="1500"
+                        app:fl_originalHeight="400"
+                        app:fl_originalWidth="430"
+                        app:fl_strokeColor="@android:color/black"
+                        app:fl_strokeDrawingDuration="1500"
+                        app:fl_strokeWidth="1dp" />&ndash;&gt;
+                </RelativeLayout>-->
+            </LinearLayout>
+
         </LinearLayout>
 
         <!-- The navigation drawer that comes from the left -->
@@ -44,9 +93,11 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:background="@android:color/white"
+            android:background="@drawable/nav_header_gradient"
+            app:itemTextColor="@drawable/drawer_item_color"
+            app:headerLayout="@layout/nav_header"
             app:menu="@menu/drawer_view"
-            app:headerLayout="@layout/nav_header"/>
+            app:itemIconTint="@drawable/drawer_item_color"/>
     </android.support.v4.widget.DrawerLayout>
 
 

@@ -6,4 +6,5 @@
 
     <color name="textColorOnYellowBackground">#01621E</color>
     <color name="backgroundColorDarkGreen">#00611D</color>
+    <color name="backgroundColorDarkYellow">#FFC300</color>
 </resources>

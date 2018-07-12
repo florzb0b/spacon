@@ -8,9 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -24,9 +22,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import java.util.Objects;
+import com.github.jorgecastillo.FillableLoader;
 
-import trivial.speckmussweg.adapter.ViewpagerAdapter;
+import java.util.Objects;
 
 public class Home extends AppCompatActivity {
 
@@ -34,11 +32,11 @@ public class Home extends AppCompatActivity {
     private Toolbar toolbar;
 Boolean backPressedCheck = false;
     private ActionBarDrawerToggle drawerToggle;
+    FillableLoader fillableLoader;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
 
 
 
@@ -80,7 +78,9 @@ Boolean backPressedCheck = false;
             }
         });
 
-
+        /*fillableLoader = (FillableLoader) findViewById(R.id.home_fillableLoader);
+        fillableLoader.setSvgPath(SVGPath.PIG_NEW);
+        fillableLoader.start();*/
     }
 
     @Override
@@ -115,15 +115,14 @@ Boolean backPressedCheck = false;
         Fragment fragment = null;
         Class fragmentClass;
         switch (menuItem.getItemId()) {
-            case R.id.nav_first_fragment:
-                fragmentClass = Statistics.class;
-                break;
-            case R.id.nav_second_fragment:
+            case R.id.nav_configurator:
                 fragmentClass = Configurator.class;
                 break;
-            case R.id.nav_third_fragment:
+            case R.id.nav_training:
                 fragmentClass = Training_main.class;
                 break;
+            case R.id.nav_shutdown:
+                System.exit(1);
             default:
                 fragmentClass = TestFragment.class;
         }
