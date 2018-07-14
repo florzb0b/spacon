@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/nav_header"
     android:layout_width="match_parent"
     android:layout_height="178dp"
     android:background="@color/backgroundColorDarkGreen"
-    android:orientation="vertical"
-    android:weightSum="1"
     android:clickable="true"
     android:focusable="true"
-    android:id="@+id/nav_header">
+    android:orientation="vertical"
+    android:weightSum="1">
 
 
     <LinearLayout
@@ -29,17 +29,42 @@
             android:textSize="14sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/nav_header_email"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="5dp"
-            android:hint="@string/drawer_header_email_hint"
-            android:textColor="@android:color/white"
-            android:textColorHint="@android:color/holo_green_light"
-            android:textSize="14sp"
-            android:textStyle="normal" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/nav_header_weight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="5dp"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:text="0 kg"
+                android:textStyle="normal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:text="|"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/nav_header_height"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:text="0 cm"
+                android:textStyle="normal" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"

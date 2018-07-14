@@ -5,7 +5,8 @@
     <string name="fragment_title_Configurator">Configurator</string>
     <string name="fragment_title_Training">Training</string>
     <string name="drawer_header_name_hint">Fat Pig</string>
-    <string name="drawer_header_email_hint">hey.fatboy@example.com</string>
+    <string name="drawer_header_weight_hint">Your Weight</string>
+    <string name="drawer_header_height_hint">Your Height</string>
     <string name="drawer_subitem_settings">Settings</string>
     <string name="drawer_subitem_aboutus">About us</string>
     <string name="drawer_subitem_credits">Credits</string>

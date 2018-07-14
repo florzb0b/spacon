@@ -3,11 +3,14 @@ package trivial.speckmussweg;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -19,25 +22,34 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.github.jorgecastillo.FillableLoader;
 
 import java.util.Objects;
+
+import trivial.speckmussweg.database.MyDatabase;
 
 public class Home extends AppCompatActivity {
 
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
-Boolean backPressedCheck = false;
+    Boolean backPressedCheck = false;
     private ActionBarDrawerToggle drawerToggle;
     FillableLoader fillableLoader;
-
+    MyDatabase database;
+    Uri uriProfileImage;
+    View headerview;
+    FragmentTransaction fragmentTransaction;
+    FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
 
 
         super.onCreate(savedInstanceState);
@@ -53,10 +65,9 @@ Boolean backPressedCheck = false;
         drawerToggle = setupDrawerToggle();
         mDrawer.addDrawerListener(drawerToggle);
 
-        View headerview = nvDrawer.getHeaderView(0);
+        headerview = nvDrawer.getHeaderView(0);
 
         RelativeLayout header = headerview.findViewById(R.id.nav_header);
-
 
 
         header.setOnClickListener(new View.OnClickListener() {
@@ -81,6 +92,8 @@ Boolean backPressedCheck = false;
         /*fillableLoader = (FillableLoader) findViewById(R.id.home_fillableLoader);
         fillableLoader.setSvgPath(SVGPath.PIG_NEW);
         fillableLoader.start();*/
+
+        setProfile();
     }
 
     @Override
@@ -113,6 +126,7 @@ Boolean backPressedCheck = false;
     public void selectDrawerItem(MenuItem menuItem) {
         // Create a new fragment and specify the fragment to show based on nav item clicked
         Fragment fragment = null;
+
         Class fragmentClass;
         switch (menuItem.getItemId()) {
             case R.id.nav_configurator:
@@ -134,7 +148,10 @@ Boolean backPressedCheck = false;
         }
 
         // Insert the fragment by replacing any existing fragment
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.flContent, fragment, "fragment");
+        fragmentTransaction.commit();
         fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
 
         // Highlight the selected item has been done by NavigationView
@@ -166,15 +183,15 @@ Boolean backPressedCheck = false;
         drawerToggle.onConfigurationChanged(newConfig);
     }
 
-    //Backtaste gedrückt UND es wurde mind. ein Name eingeben, dann trotzdem speichern?
+    /*//Backtaste gedrückt UND es wurde mind. ein Name eingeben, dann trotzdem speichern?
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (Profile.checkContent()) {
-                /*if (TextUtils.isEmpty(editTextName.getText().toString())) {
+                *//*if (TextUtils.isEmpty(editTextName.getText().toString())) {
                     keypressCheck = false;
                     finish();
-                    */
+                    *//*
             } else {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(Objects.requireNonNull(this));
                 dialog.setTitle("Speichern?");
@@ -211,6 +228,42 @@ Boolean backPressedCheck = false;
             onBackPressed();
         }
         return super.onKeyDown(keyCode, event);
+    }*/
+
+    public void setProfile() {
+        database = new MyDatabase(this);
+        Cursor cursor = database.selectProfile(1);
+        if (cursor.getCount() >= 1) {
+            TextView headerName = headerview.findViewById(R.id.nav_header_name);
+            TextView headerWeight = headerview.findViewById(R.id.nav_header_weight);
+            TextView headerHeight = headerview.findViewById(R.id.nav_header_height);
+            ImageView headerPic = headerview.findViewById(R.id.nav_header_picture);
+            String temp = cursor.getString(1) + " " + cursor.getString(2);
+            headerName.setText(temp);
+            temp = cursor.getString(6) + " kg";
+            headerWeight.setText(temp);
+            temp = cursor.getString(5) + " cm";
+            headerHeight.setText(temp);
+            uriProfileImage = Uri.parse(cursor.getString(7));
+            Glide.with(this).load(uriProfileImage).crossFade().
+                    diskCacheStrategy(DiskCacheStrategy.ALL).into(headerPic);
+        } else {
+            Fragment fragment = null;
+            Class fragmentClass;
+            fragmentClass = Profile.class;
+            try {
+                fragment = (Fragment) fragmentClass.newInstance();
+                Toast.makeText(this,
+                        "You have to create a Profile first, before you can start!",
+                        Toast.LENGTH_LONG).show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            // Insert the fragment by replacing any existing fragment
+            fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+        }
     }
 
     public static void hideKeyboard(Activity activity) {
@@ -235,6 +288,18 @@ Boolean backPressedCheck = false;
             }
         }
     };
+
+    @Override
+    public void onBackPressed() {
+        Fragment fragment = fragmentManager.findFragmentById(R.id.flContent);
+        if (fragment != null) {
+            fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.remove(fragment);
+            fragmentTransaction.commit();
+        } else {
+            super.onBackPressed();
+        }
+    }
 }
 
 

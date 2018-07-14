@@ -4,8 +4,8 @@
     android:layout_height="match_parent"
     android:clipToPadding="false"
     android:orientation="vertical"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
     android:background="@drawable/background">
 
     <RelativeLayout
@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:background="@drawable/layout_shadow"
+            android:background="@drawable/layout_shadow_darkyellow"
             android:elevation="5dp">
 
 
@@ -118,7 +118,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/user_profile_myprofiletag_layout"
             android:layout_marginTop="15dp"
-            android:background="@drawable/layout_shadow"
+            android:background="@drawable/layout_shadow_darkyellow"
             android:elevation="5dp">
 
 

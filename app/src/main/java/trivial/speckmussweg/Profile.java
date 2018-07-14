@@ -221,6 +221,7 @@ public class Profile extends Fragment {
                     }
                     database.close();
                     Toast.makeText(getActivity(), "Profile saved", Toast.LENGTH_LONG).show();
+
                 } else {
                     Toast.makeText(getActivity(), "Please fill in all Fields with '*'",
                             Toast.LENGTH_LONG).show();

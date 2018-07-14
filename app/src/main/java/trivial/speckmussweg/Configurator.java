@@ -3,6 +3,7 @@ package trivial.speckmussweg;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,7 +12,11 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.AsyncTask;
@@ -35,6 +40,7 @@ import java.util.List;
 import java.util.Objects;
 
 import trivial.speckmussweg.adapter.RecyclerViewAdapter;
+import trivial.speckmussweg.database.MyDatabase;
 import trivial.speckmussweg.internet.*;
 
 import static android.support.v7.widget.RecyclerView.HORIZONTAL;
@@ -187,7 +193,6 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
                             ++buttonCounter;
                             fillList();
                             break;
-
                         case 2:
                             ++buttonCounter;
                             fillList();
@@ -227,27 +232,27 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
 
         recyclerView.setLayoutManager(horizontalLayoutManager);
         if (!breadIsChoosed || buttonCounter == 1) {
-            adapter = new RecyclerViewAdapter(getActivity(), breadNameList, breadkcalList);
+            adapter = new RecyclerViewAdapter(getActivity(), breadNameList, breadkcalList, buttonCounter);
             textViewConfiguratorHeaderArtContent.setText("Bread");
         }
         if (buttonCounter == 2) {
-            adapter = new RecyclerViewAdapter(getActivity(), cheeseNameList, cheesekcalList);
+            adapter = new RecyclerViewAdapter(getActivity(), cheeseNameList, cheesekcalList, buttonCounter);
             textViewConfiguratorHeaderArtContent.setText("Cheese");
         }
         if (buttonCounter == 3) {
-            adapter = new RecyclerViewAdapter(getActivity(), meatNameList, meatkcalList);
+            adapter = new RecyclerViewAdapter(getActivity(), meatNameList, meatkcalList, buttonCounter);
             textViewConfiguratorHeaderArtContent.setText("Meat");
         }
         if (buttonCounter == 4) {
-            adapter = new RecyclerViewAdapter(getActivity(), saladNameList, saladkcalList);
+            adapter = new RecyclerViewAdapter(getActivity(), saladNameList, saladkcalList, buttonCounter);
             textViewConfiguratorHeaderArtContent.setText("Salad");
         }
         if (buttonCounter == 5) {
-            adapter = new RecyclerViewAdapter(getActivity(), extrasNameList, extraskcalList);
+            adapter = new RecyclerViewAdapter(getActivity(), extrasNameList, extraskcalList, buttonCounter);
             textViewConfiguratorHeaderArtContent.setText("Extra");
         }
         if (buttonCounter == 6) {
-            adapter = new RecyclerViewAdapter(getActivity(), sauceNameList, extraskcalList);
+            adapter = new RecyclerViewAdapter(getActivity(), sauceNameList, saucekcalList, buttonCounter);
             textViewConfiguratorHeaderArtContent.setText("Sauce");
         }
         adapter.setClickListener(this);
@@ -292,7 +297,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         if (buttonCounter == 6) {
             setSauce(adapter.getItem(position));
         }
-            int sum = setSum(adapter.getCalories(position));
+        int sum = setSum(adapter.getCalories(position));
 
         footerConfiguratorCaloriesContent.setText(String.valueOf(sum));
 
@@ -347,7 +352,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             // Making a request to url and getting response
             String jsonStr = sh.makeServiceCall(url);
 
-            Log.e(TAG, "Response from url: " + jsonStr);
+            //Log.e(TAG, "Response from url: " + jsonStr);
 
             if (jsonStr != null) {
                 try {
@@ -645,14 +650,13 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
     private void initializeViews() {
 
 
-
         //relativeLayoutScrollviewMainLeft = viewMain.findViewById(R.id.include_first_meal).findViewById(R.id.relativelayout_scrollview_main);
         //relativeLayoutScrollviewMainRight =  viewMain.findViewById(R.id.include_second_meal).findViewById(R.id.relativelayout_scrollview_main);
 
         if (firstMealIsOn) {
             selectedView = viewMain.findViewById(R.id.include_first_meal);
         } else {
-           selectedView =  viewMain.findViewById(R.id.include_second_meal);
+            selectedView = viewMain.findViewById(R.id.include_second_meal);
         }
         relativelayoutConfiguratorFooterSelected = selectedView.findViewById(R.id.relativelayout_configurator_footer_selected);
         relativeLayoutConfiguratorFooterFirstMeal = selectedView.findViewById(R.id.relativelayout_configurator_footer_first_meal);
@@ -673,5 +677,24 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         textViewConfiguratorHeaderArtContent = viewMain.findViewById(R.id.textview_configurator_header_art_content);
         footerConfiguratorCaloriesContent = selectedView.findViewById(R.id.footer_configurator_calories_content);
 
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.optionsmenu_configurator, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.optionsmenu_configurator_starttraining:
+                return true;
+            case R.id.optionsmenu_configurator_showinfo:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

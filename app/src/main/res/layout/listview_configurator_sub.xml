@@ -4,17 +4,15 @@
     android:layout_width="150dp"
     android:layout_height="170dp"
     android:orientation="vertical"
-    android:padding="5dp"
     tools:ignore="UseCompoundDrawables"
-    android:background="@drawable/shadow"
-    android:id="@+id/idvonglistview">
+    android:id="@+id/idvonglistview"
+    android:layout_margin="5dp">
 
     <ImageView
         android:id="@+id/header_configurator_icon"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
-        android:background="@mipmap/ic_launcher"
         android:paddingBottom="2dp"
         android:paddingTop="6dp"
         android:textColor="@color/colorPrimaryDark"
@@ -30,14 +28,15 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:paddingBottom="2dp"
-        android:text="hallo"
-        android:textColor="@color/colorAccent" />
+        android:textStyle="bold"
+        android:textColor="@android:color/white" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center">
         <TextView
+            android:textColor="@android:color/white"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -45,15 +44,16 @@
             android:text="("
             />
         <TextView
+            android:textColor="@android:color/white"
             android:layout_gravity="center"
             android:id="@+id/header_configurator_calories"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="2dp"
-            android:text="124"
             />
 
         <TextView
+            android:textColor="@android:color/white"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

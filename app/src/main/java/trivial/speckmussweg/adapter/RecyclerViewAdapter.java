@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.Collections;
@@ -24,14 +25,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private List<String> mName;
     private List<String> mKcal;
     private List<String> mFett;
+    int mId;
 
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
-    public RecyclerViewAdapter(Context context, List<String> names, List<String> calories) {
+    public RecyclerViewAdapter(Context context, List<String> names, List<String> calories, int id) {
         this.mInflater = LayoutInflater.from(context);
         this.mName = names;
         this.mKcal = calories;
+        this.mId = id;
         //this.mFett = fett;
     }
 
@@ -48,6 +51,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         /*for (Entry<String, String> entry : map.entrySet()) {
             System.out.println(entry.getKey() + "=" + entry.getValue());
         }*/
+
+
         String name = mName.get(position);
         String kcal = mKcal.get(position);
         //String fett = mFett.get(position);
@@ -55,6 +60,28 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.kcalTextView.setText(kcal);
         //holder.kcalTextView.setText(kcal);
         //holder.fettTextView.setText(fett);
+
+        //1= brot, 2 = cheese, 3 = Meat, 4 = salad, 5 = extra, 6 = sauce
+        if (mId == 1){
+            holder.iconImageView.setImageResource(R.drawable.ic_configurator_bread);
+        }
+        if (mId == 2){
+            holder.iconImageView.setImageResource(R.drawable.ic_configurator_cheese);
+        }
+        if (mId == 3){
+            holder.iconImageView.setImageResource(R.drawable.ic_configurator_cheese);
+        }
+        if (mId == 4){
+            holder.iconImageView.setImageResource(R.drawable.ic_configurator_salad);
+        }
+        if (mId == 5){
+            holder.iconImageView.setImageResource(R.drawable.ic_configurator_extra);
+        }
+        if (mId == 6){
+            holder.iconImageView.setImageResource(R.drawable.ic_configurator_sauce);
+        }
+
+
 
     }
 
@@ -85,12 +112,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         TextView nameTextView;
         TextView kcalTextView;
-        TextView fettTextView;
+        ImageView iconImageView;
 
         ViewHolder(View itemView) {
             super(itemView);
             nameTextView = itemView.findViewById(R.id.header_configurator_name);
             kcalTextView = itemView.findViewById(R.id.header_configurator_calories);
+            iconImageView = itemView.findViewById(R.id.header_configurator_icon);
+
             //fettTextView = itemView.findViewById(R.id.mobile);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);

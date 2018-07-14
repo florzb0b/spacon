@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/optionsmenu_configurator_showinfo"
+        android:orderInCategory="1"
+        android:title="Shows Information about the Meals"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_info_outline_black_24dp"/>
+
+    <item android:id="@+id/optionsmenu_configurator_starttraining"
+        android:orderInCategory="1"
+        android:title="Start Training"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_done_black_24dp"/>
+
+</menu>
