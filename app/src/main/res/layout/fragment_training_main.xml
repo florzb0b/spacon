@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
 
 
     <RelativeLayout
         android:id="@+id/training_relative_layout_master"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#06943E">
+        android:layout_height="match_parent">
 
         <RelativeLayout
+            android:id="@+id/container1"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:id="@+id/container1">
+            >
 
 
             <android.support.v4.view.ViewPager
+                android:id="@+id/vpPager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/vpPager"
-                android:layout_alignParentStart="true"></android.support.v4.view.ViewPager>
+                android:layout_alignParentStart="true"/>
 
             <ImageView
                 android:id="@+id/pig_svg"
@@ -35,180 +35,185 @@
             <TextView
                 android:id="@+id/training_TextView_kcal"
                 style="@android:style/Widget.EditText"
-                android:backgroundTint="#F9C216"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/pig_svg"
-                android:layout_marginTop="10dp"
                 android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#F9C216"
                 android:text="Hallo i bims die zeit"
-                android:textColor="#FFFFFF"
-                />
+                android:textColor="#FFFFFF" />
         </RelativeLayout>
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="300dp"
-    android:layout_below="@+id/container1"
-    android:id="@+id/container2">
+
         <RelativeLayout
-            android:layout_centerHorizontal="true"
-            android:id="@+id/training_stat_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/training_rectangle_border">
+            android:id="@+id/container2"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_below="@+id/container1">
 
-            <LinearLayout
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="5dp"
-                android:id="@+id/training_stats_leftlayout"
-                android:layout_width="130dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Information Meal"
-                    android:textSize="15dp"
-                    android:textColor="#FFFFFF"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@drawable/training_underline"/>
-
-                <TextView
-                    android:layout_marginTop="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Meal: "
-                    android:textColor="#FFFFFF"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="Turkey"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@drawable/training_underline"/>
-
-                <TextView
-                    android:layout_marginTop="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Calories Meal: "
-                    android:textColor="#FFFFFF"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="2000kcal"/>
-
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@drawable/training_underline"/>
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_marginStart="15dp"
-                android:layout_width="wrap_content"
-                android:layout_height="170dp"
-                android:background="@drawable/training_border_middle"
-                android:layout_toRightOf="@id/training_stats_leftlayout">
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
-                android:id="@+id/training_stats_rightlayout"
+            <RelativeLayout
+                android:id="@+id/training_stat_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:orientation="vertical"
-                android:layout_toEndOf="@id/training_stats_leftlayout">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Information Training "
-                    android:textSize="15dp"
-                    android:textColor="#FFFFFF"/>
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="2dp"
-                    android:background="@drawable/training_underline"/>
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/training_rectangle_border">
 
-                <TextView
+                <LinearLayout
+                    android:id="@+id/training_stats_leftlayout"
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Information Meal"
+                        android:textColor="#FFFFFF"
+                        android:textSize="15dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@drawable/training_underline" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="Meal: "
+                        android:textColor="#FFFFFF" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Turkey" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@drawable/training_underline" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="Calories Meal: "
+                        android:textColor="#FFFFFF" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="2000kcal" />
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@drawable/training_underline" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="170dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_toRightOf="@id/training_stats_leftlayout"
+                    android:background="@drawable/training_border_middle">
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/training_stats_rightlayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sport: "
-                    android:textColor="#FFFFFF"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="Laufen"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@drawable/training_underline"/>
-
-                <TextView
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="30dp"
                     android:layout_marginTop="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Burned Calories: "
-                    android:textColor="#FFFFFF"/>
+                    android:layout_toEndOf="@id/training_stats_leftlayout"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="1000Kcal/2000Kcal"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Information Training "
+                        android:textColor="#FFFFFF"
+                        android:textSize="15dp" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@drawable/training_underline"/>
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="2dp"
+                        android:background="@drawable/training_underline" />
 
-                <TextView
-                    android:layout_marginTop="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Distance: "
-                    android:textColor="#FFFFFF"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="Sport: "
+                        android:textColor="#FFFFFF" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="3 Km"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Laufen" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@drawable/training_underline"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@drawable/training_underline" />
 
-            </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="Burned Calories: "
+                        android:textColor="#FFFFFF" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="1000Kcal/2000Kcal" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@drawable/training_underline" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="Distance: "
+                        android:textColor="#FFFFFF" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="3 Km" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@drawable/training_underline" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/training_btn_start"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="125dp"
+                android:layout_height="75dp"
+                android:layout_below="@id/training_stat_layout"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="#F9C216"
+                android:text="Start" />
 
         </RelativeLayout>
-
-        <Button
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:layout_below="@id/training_stat_layout"
-            android:id="@+id/training_btn_start"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="125dp"
-            android:layout_height="75dp"
-            android:text="Start"
-            android:backgroundTint="#F9C216"/>
-
-</RelativeLayout>
 
     </RelativeLayout>
 

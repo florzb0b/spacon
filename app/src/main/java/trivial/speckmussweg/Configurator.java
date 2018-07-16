@@ -2,17 +2,18 @@ package trivial.speckmussweg;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.ViewStub;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -40,13 +42,12 @@ import java.util.List;
 import java.util.Objects;
 
 import trivial.speckmussweg.adapter.RecyclerViewAdapter;
-import trivial.speckmussweg.database.MyDatabase;
 import trivial.speckmussweg.internet.*;
 
 import static android.support.v7.widget.RecyclerView.HORIZONTAL;
 
 public class Configurator extends Fragment implements RecyclerViewAdapter.ItemClickListener {
-    int i = 1;
+    int currentSum = 0;
     View viewMain;
     private String TAG = Home.class.getSimpleName();
 
@@ -60,6 +61,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
 
     ArrayList<HashMap<String, String>> contactList;
     ArrayList<HashMap<String, String>> breadList;
+    int[][] kcalList = new int[6][10];
 
     private RecyclerViewAdapter adapter;
 
@@ -74,6 +76,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
     RecyclerView recyclerView;
     ImageView leftArrow, rightArrow;
     Button buttonLast, buttonNext;
+    FloatingActionButton fab;
 
 
     Boolean breadIsChoosed = false;
@@ -83,13 +86,16 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             linearLayoutConfiguratorMeatHeader, linearLayoutConfiguratorMeatContent,
             linearLayoutConfiguratorSaladHeader, linearLayoutConfiguratorSaladContent,
             linearLayoutConfiguratorExtraHeader, linearLayoutConfiguratorExtraContent,
-            linearLayoutConfiguratorSauceHeader, linearLayoutConfiguratorSauceContent;
+            linearLayoutConfiguratorSauceHeader, linearLayoutConfiguratorSauceContent,
+            linearLayoutConfiguratorMainTab;
     TextView textViewConfiguratorBreadContent, textViewConfiguratorBreadSizeContent,
             textViewConfiguratorHeaderArtContent, footerConfiguratorCaloriesContent;
     ConstraintLayout constraintLayoutScrollviewConfigurator;
 
     RelativeLayout relativeLayoutScrollviewMainLeft, relativeLayoutScrollviewMainRight,
             relativelayoutConfiguratorFooterSelected, relativeLayoutConfiguratorFooterFirstMeal;
+
+    ImageView imageViewConfiguratorDeleteCheeseContent;
     View selectedView;
     boolean firstMealIsOn = true;
 
@@ -118,6 +124,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         buttonLast = viewMain.findViewById(R.id.button_configurator_last);
         buttonNext = viewMain.findViewById(R.id.button_configurator_next);
         linearLayoutFirstMeal = viewMain.findViewById(R.id.linearlayout_configurator_cheese_content);
+        fab = viewMain.findViewById(R.id.fab_configurator);
         contactList = new ArrayList<>();
         breadList = new ArrayList<>();
 
@@ -137,25 +144,24 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         sumCaloriesFirstMeal = new ArrayList<>();
         sumCaloriesSecondMeal = new ArrayList<>();
 
-        viewMain.findViewById(R.id.relativelayout_scrollview_configurator_first_meal).setOnClickListener(new View.OnClickListener() {
+        viewMain.findViewById(R.id.relativelayout_scrollview_configurator_meal_content).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 viewMain.findViewById(R.id.include_first_meal).findViewById(R.id.relativelayout_configurator_footer_selected).setVisibility(View.VISIBLE);
-                viewMain.findViewById(R.id.include_second_meal).findViewById(R.id.relativelayout_configurator_footer_selected).setVisibility(View.GONE);
                 firstMealIsOn = true;
                 initializeViews();
             }
         });
 
-        viewMain.findViewById(R.id.relativelayout_scrollview_configurator_second_meal).setOnClickListener(new View.OnClickListener() {
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewMain.findViewById(R.id.include_first_meal).findViewById(R.id.relativelayout_configurator_footer_selected).setVisibility(View.GONE);
-                viewMain.findViewById(R.id.include_second_meal).findViewById(R.id.relativelayout_configurator_footer_selected).setVisibility(View.VISIBLE);
-                firstMealIsOn = false;
-                initializeViews();
+                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                createMeal();
             }
         });
+
 
         buttonLast.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -222,6 +228,31 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
                 }
             }
         });
+
+        imageViewConfiguratorDeleteCheeseContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (linearLayoutConfiguratorCheeseHeader.getVisibility() == View.VISIBLE &&
+                        linearLayoutConfiguratorCheeseContent.getVisibility() == View.VISIBLE) {
+
+                    linearLayoutConfiguratorCheeseContent.removeAllViews();
+                    linearLayoutConfiguratorCheeseHeader.setVisibility(View.GONE);
+                    linearLayoutConfiguratorCheeseContent.setVisibility(View.GONE);
+
+                    for (int i=0; i <10; i++){
+                        kcalList[buttonCounter -1][i] = 0;
+                    }
+
+                    currentSum = setSum();
+                    setKcalText();
+                }
+
+            }
+        });
+
+
+
+
         new getData().execute();
 
         return viewMain;
@@ -297,19 +328,35 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         if (buttonCounter == 6) {
             setSauce(adapter.getItem(position));
         }
-        int sum = setSum(adapter.getCalories(position));
 
-        footerConfiguratorCaloriesContent.setText(String.valueOf(sum));
+        int sum = 0;
+        //int sum = setSum(adapter.getCalories(position));
+
+        for (int i = 0; i < 10; i++) {
+            if (kcalList[buttonCounter - 1][i] == 0) {
+                kcalList[buttonCounter - 1][i] = Integer.parseInt(adapter.getCalories(position));
+                sum += setSum();
+                currentSum = sum;
+                break;
+            }
+        }
+
+        setKcalText();
 
     }
+    private void setKcalText(){
+        footerConfiguratorCaloriesContent.setText(String.valueOf(currentSum));
+    }
 
-    private int setSum(String content) {
+
+    private int setSum() {
         int sum = 0;
-        if (firstMealIsOn) {
+     /*   if (firstMealIsOn) {
             sumCaloriesFirstMeal.add(content);
             for (int i = 0; i < sumCaloriesFirstMeal.size(); i++) {
                 sum += Integer.parseInt(sumCaloriesFirstMeal.get(i));
             }
+
             return sum;
         } else {
             sumCaloriesSecondMeal.add(content);
@@ -317,9 +364,16 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
                 sum += Integer.parseInt(sumCaloriesSecondMeal.get(i));
             }
             return sum;
-        }
+        }*/
 
+        for (int k = 0; k < 6; k++) {
+            for (int j = 0; j < 10; j++) {
+                sum += kcalList[k][j];
+            }
+        }
+        return sum;
     }
+
 
     //TODO: noch machen - oder eher nicht
     @Override
@@ -580,14 +634,23 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
 //TextView textView = new TextView(getActivity());
         //textView.setText(content);
         //linearLayoutFirstMeal.addView(textView);
+
         if (linearLayoutConfiguratorCheeseHeader.getVisibility() == View.GONE &&
                 linearLayoutConfiguratorCheeseContent.getVisibility() == View.GONE) {
             linearLayoutConfiguratorCheeseHeader.setVisibility(View.VISIBLE);
             linearLayoutConfiguratorCheeseContent.setVisibility(View.VISIBLE);
         }
-        TextView cheeseTextView = new TextView(getActivity());
-        cheeseTextView.setText(content);
-        linearLayoutConfiguratorCheeseContent.addView(cheeseTextView);
+        int num = linearLayoutConfiguratorCheeseContent.getChildCount();
+
+        if (!(num >= 9)){
+            TextView cheeseTextView = new TextView(getActivity());
+            cheeseTextView.setText(content);
+
+            linearLayoutConfiguratorCheeseContent.addView(cheeseTextView);
+        } else{
+            Toast.makeText(getActivity(), "et is jetz mo genuch du haufen scheisse", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private void setMeat(String content) {
@@ -655,8 +718,6 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
 
         if (firstMealIsOn) {
             selectedView = viewMain.findViewById(R.id.include_first_meal);
-        } else {
-            selectedView = viewMain.findViewById(R.id.include_second_meal);
         }
         relativelayoutConfiguratorFooterSelected = selectedView.findViewById(R.id.relativelayout_configurator_footer_selected);
         relativeLayoutConfiguratorFooterFirstMeal = selectedView.findViewById(R.id.relativelayout_configurator_footer_first_meal);
@@ -677,6 +738,10 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         textViewConfiguratorHeaderArtContent = viewMain.findViewById(R.id.textview_configurator_header_art_content);
         footerConfiguratorCaloriesContent = selectedView.findViewById(R.id.footer_configurator_calories_content);
 
+        linearLayoutConfiguratorMainTab = viewMain.findViewById(R.id.linearlayout_configurator_tablayout);
+
+        imageViewConfiguratorDeleteCheeseContent = viewMain.findViewById(R.id.imageview_configurator_delete_cheese);
+
     }
 
     @Override
@@ -696,5 +761,21 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    // Create new LinearLayout
+    @SuppressLint("InflateParams")
+    public void createMeal() {
+
+        // get your outer relative layout
+        RelativeLayout rl = (RelativeLayout) viewMain.findViewById(R.id.linearlayout_configurator_tablayout);
+
+
+// inflate content layout and add it to the relative layout as second child
+// add as second child, therefore pass index 1 (0,1,...)
+
+        LayoutInflater layoutInflater = (LayoutInflater)
+                getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        //rl.addView(1, layoutInflater.inflate(R.layout.layout_meallist);
     }
 }

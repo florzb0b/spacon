@@ -47,6 +47,7 @@ public class Home extends AppCompatActivity {
     View headerview;
     FragmentTransaction fragmentTransaction;
     FragmentManager fragmentManager;
+    MenuItem profileMenuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +87,11 @@ public class Home extends AppCompatActivity {
                 // Insert the fragment by replacing any existing fragment
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+                setTitle("Profile");
+                if(profileMenuItem != null){
+                    profileMenuItem.setChecked(false);
+                }
+
             }
         });
 
@@ -135,6 +141,9 @@ public class Home extends AppCompatActivity {
             case R.id.nav_training:
                 fragmentClass = Training_main.class;
                 break;
+            case R.id.nav_aboutus:
+                fragmentClass = AboutUs.class;
+                break;
             case R.id.nav_shutdown:
                 System.exit(1);
             default:
@@ -156,6 +165,7 @@ public class Home extends AppCompatActivity {
 
         // Highlight the selected item has been done by NavigationView
         menuItem.setChecked(true);
+        profileMenuItem = menuItem;
         // Set action bar title
         setTitle(menuItem.getTitle());
         // Close the navigation drawer
@@ -296,6 +306,7 @@ public class Home extends AppCompatActivity {
             fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.remove(fragment);
             fragmentTransaction.commit();
+            setTitle("");
         } else {
             super.onBackPressed();
         }
