@@ -27,6 +27,7 @@ public class Training_main extends Fragment {
     Button btnDialog;
     AlertDialog.Builder alertDialog;
     ArrayList<String> myList;
+    TextView sportTextView;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -51,7 +52,7 @@ public class Training_main extends Fragment {
         myList.add("lololol");
 
         alertDialog = new AlertDialog.Builder(getActivity());
-
+        sportTextView = viewMain.findViewById(R.id.training_sport_textview);
         btnDialog = viewMain.findViewById(R.id.training_btn_start_new);
         btnDialog.setOnClickListener(new OnClickListener() {
             @Override
@@ -83,6 +84,7 @@ public class Training_main extends Fragment {
                     @Override
                     public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                         // TODO Auto-generated method stub
+                        sportTextView.setText(myList.get(position));
                         Toast.makeText(getActivity(),"You have selected -: " + myList.get(position), Toast.LENGTH_SHORT).show();
                         alert.cancel();
 

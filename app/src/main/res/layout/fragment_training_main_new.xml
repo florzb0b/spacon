@@ -152,6 +152,7 @@
                 android:textColor="#FFFFFF"/>
 
             <TextView
+                android:id="@+id/training_sport_textview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Running"
