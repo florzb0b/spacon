@@ -23,11 +23,10 @@ public class Training_main extends Fragment {
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        View main = inflater.inflate(R.layout.fragment_training_main, container,false);
-        ViewPager vpPager = main.findViewById(R.id.vpPager);
-        vpPager.setAdapter(adapterViewPager);
-        adapterViewPager = new ViewpagerAdapter.MyPagerAdapter(getActivity().getSupportFragmentManager());
-
+        View main = inflater.inflate(R.layout.fragment_training_main_new, container,false);
+//        ViewPager vpPager = main.findViewById(R.id.vpPager);
+//        vpPager.setAdapter(adapterViewPager);
+//        adapterViewPager = new ViewpagerAdapter.MyPagerAdapter(getActivity().getSupportFragmentManager());
 
         return main;
     }
