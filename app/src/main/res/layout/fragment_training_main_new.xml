@@ -87,6 +87,7 @@
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:text="Chicken Breast"
+               android:layout_marginStart="5dp"
                android:textColor="@color/backgroundColorDarkerGreen"/>
 
            <TextView
@@ -105,6 +106,7 @@
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:text="2500 kcal"
+               android:layout_marginStart="5dp"
                android:textColor="@color/backgroundColorDarkerGreen"/>
 
        </LinearLayout>
@@ -153,6 +155,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Running"
+                android:layout_marginStart="5dp"
                 android:textColor="@color/backgroundColorDarkerGreen"/>
 
             <TextView
@@ -170,6 +173,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
                 android:text="344 kcal / 2500 kcal"
                 android:textColor="@color/backgroundColorDarkerGreen"/>
 
@@ -189,7 +193,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="3,12 km"
-                android:layout_marginBottom="5dp"
+                android:layout_marginStart="5dp"
                 android:textColor="@color/backgroundColorDarkerGreen"/>
 
         </LinearLayout>
@@ -207,7 +211,6 @@
             android:backgroundTint="@color/backgroundColorDarkYellow"
             android:translationZ="5dp"
             android:text="Start"
-            android:textSize="22sp"
             android:textStyle="bold"/>
 
     </RelativeLayout>
