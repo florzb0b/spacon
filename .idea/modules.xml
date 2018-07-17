@@ -4,7 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/spacon.iml" filepath="$PROJECT_DIR$/spacon.iml" />
-      <module fileurl="file://C:\Users\Fl0rZ\ApkProjects\spacon\spacon.iml" filepath="C:\Users\Fl0rZ\ApkProjects\spacon\spacon.iml" />
+      <module fileurl="file://C:/Users/Fl0rZ/ApkProjects/spacon/spacon.iml" filepath="C:/Users/Fl0rZ/ApkProjects/spacon/spacon.iml" />
     </modules>
   </component>
 </project>
