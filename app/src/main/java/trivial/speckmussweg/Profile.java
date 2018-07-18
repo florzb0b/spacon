@@ -219,7 +219,9 @@ public class Profile extends Fragment {
                     } else if (cursor.getCount() == 1) {
                         database.updateProfile(1, stringFirstName, stringLastName, genderId, stringDateOfBirth, stringHeight, stringWeight, stringPhotoRes);
                     }
+                    cursor.close();
                     database.close();
+
                     Toast.makeText(getActivity(), "Profile saved", Toast.LENGTH_LONG).show();
 
                 } else {

@@ -2,14 +2,13 @@ package trivial.speckmussweg;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,7 +21,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.ViewStub;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -41,12 +39,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-import trivial.speckmussweg.Objects.Sub;
+//import trivial.speckmussweg.Objects.Sub;
 import trivial.speckmussweg.adapter.RecyclerViewAdapter;
+import trivial.speckmussweg.database.MyDatabase;
 import trivial.speckmussweg.internet.*;
 
 import static android.support.v7.widget.RecyclerView.HORIZONTAL;
-import static android.view.View.VISIBLE;
 
 public class Configurator extends Fragment implements RecyclerViewAdapter.ItemClickListener {
     int currentSum = 0, layoutId = 1, focusIdMeal = 1;
@@ -75,7 +73,8 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
 
     LinearLayoutManager horizontalLayoutManager;
     List<Integer> subListId;
-    List<String> objectBreadList, objectBreadListCalories, objectCheeseList,
+    String objectBreadContent, objectBreadCalories;
+    List<String> objectCheeseList,
             objectCheeseListCalories, objectMeatList, objectMeatListCalories, objectSaladList,
             objectSaladListCalories, objectExtraList, objectExtraListCalories, objectSauceList,
             objectSauceListCalories;
@@ -117,7 +116,15 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
     ImageView imageViewMealLayoutDeleteContentId1, imageViewMealLayoutDeleteContentId2,
             imageViewMealLayoutDeleteContentId3, imageViewMealLayoutDeleteContentId4;
     View selectedView;
-    boolean firstMealIsOn = true, firstAttempt = false, subIsLong = false;
+    boolean firstMealIsOn = true, firstAttempt = false, subIsLong = false,
+            id1IsFocused = false, id2IsFocused = false, id3IsFocused = false, id4IsFocused = false,
+            buildAllowed = false;
+
+    MyDatabase database;
+  /*  Sub sub1 = new Sub(1);
+    Sub sub2 = new Sub(2);
+    Sub sub3 = new Sub(3);
+    Sub sub4 = new Sub(4);*/
 
     @Nullable
     @Override
@@ -162,21 +169,23 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         extraskcalList = new ArrayList<>();
         saucekcalList = new ArrayList<>();
         subListId = new ArrayList<>();
+        objectCheeseList = new ArrayList<>();
+        objectCheeseListCalories = new ArrayList<>();
+        objectSaladList = new ArrayList<>();
+        objectSaladListCalories = new ArrayList<>();
+        objectMeatList = new ArrayList<>();
+        objectMeatListCalories = new ArrayList<>();
+        objectExtraList = new ArrayList<>();
+        objectExtraListCalories = new ArrayList<>();
+        objectSauceList = new ArrayList<>();
+        objectSauceListCalories = new ArrayList<>();
 
-        viewMain.findViewById(R.id.relativelayout_scrollview_configurator_meal_content).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                viewMain.findViewById(R.id.include_first_meal).findViewById(R.id.relativelayout_configurator_footer_selected).setVisibility(View.VISIBLE);
-                firstMealIsOn = true;
-                initializeViews();
-            }
-        });
+        objectBreadCalories = "";
+        objectBreadContent = "";
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
                 createMeal();
             }
         });
@@ -266,113 +275,43 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
                     setKcalText();
                 }
             }
+
         });
 
         imageViewConfiguratorDeleteCheeseContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (linearLayoutConfiguratorCheeseHeader.getVisibility() == View.VISIBLE &&
-                        linearLayoutConfiguratorCheeseContent.getVisibility() == View.VISIBLE) {
-
-                    linearLayoutConfiguratorCheeseContent.removeAllViews();
-                    linearLayoutConfiguratorCheeseHeader.setVisibility(View.GONE);
-                    linearLayoutConfiguratorCheeseContent.setVisibility(View.GONE);
-
-                    for (int i = 0; i < 10; i++) {
-                        kcalList[1][i] = 0;
-                    }
-
-                    currentSum = setSum();
-                    setKcalText();
-                }
-
+                deleteCheeseLayout();
             }
         });
 
         imageViewConfiguratorDeleteMeatContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (linearLayoutConfiguratorMeatHeader.getVisibility() == View.VISIBLE &&
-                        linearLayoutConfiguratorMeatContent.getVisibility() == View.VISIBLE) {
-
-                    linearLayoutConfiguratorMeatContent.removeAllViews();
-                    linearLayoutConfiguratorMeatHeader.setVisibility(View.GONE);
-                    linearLayoutConfiguratorMeatContent.setVisibility(View.GONE);
-
-                    for (int i = 0; i < 10; i++) {
-                        kcalList[2][i] = 0;
-                    }
-
-                    currentSum = setSum();
-                    setKcalText();
-                }
-
+                deleteMeatLayout();
             }
         });
 
         imageViewConfiguratorDeleteSaladContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (linearLayoutConfiguratorSaladHeader.getVisibility() == View.VISIBLE &&
-                        linearLayoutConfiguratorSaladContent.getVisibility() == View.VISIBLE) {
-
-                    linearLayoutConfiguratorSaladContent.removeAllViews();
-                    linearLayoutConfiguratorSaladHeader.setVisibility(View.GONE);
-                    linearLayoutConfiguratorSaladContent.setVisibility(View.GONE);
-
-                    for (int i = 0; i < 10; i++) {
-                        kcalList[3][i] = 0;
-                    }
-
-                    currentSum = setSum();
-                    setKcalText();
-                }
-
+                deleteSaladLayout();
             }
         });
 
         imageViewConfiguratorDeleteExtraContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (linearLayoutConfiguratorExtraHeader.getVisibility() == View.VISIBLE &&
-                        linearLayoutConfiguratorExtraContent.getVisibility() == View.VISIBLE) {
-
-                    linearLayoutConfiguratorExtraContent.removeAllViews();
-                    linearLayoutConfiguratorExtraHeader.setVisibility(View.GONE);
-                    linearLayoutConfiguratorExtraContent.setVisibility(View.GONE);
-
-                    for (int i = 0; i < 10; i++) {
-                        kcalList[4][i] = 0;
-                    }
-
-                    currentSum = setSum();
-                    setKcalText();
-                }
-
+                deleteExtraLayout();
             }
         });
 
         imageViewConfiguratorDeleteSauceContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (linearLayoutConfiguratorSauceHeader.getVisibility() == View.VISIBLE &&
-                        linearLayoutConfiguratorSauceContent.getVisibility() == View.VISIBLE) {
-
-                    linearLayoutConfiguratorSauceContent.removeAllViews();
-                    linearLayoutConfiguratorSauceHeader.setVisibility(View.GONE);
-                    linearLayoutConfiguratorSauceContent.setVisibility(View.GONE);
-
-                    for (int i = 0; i < 10; i++) {
-                        kcalList[5][i] = 0;
-                    }
-
-                    currentSum = setSum();
-                    setKcalText();
-                }
-
+                deleteSauceLayout();
             }
         });
-//HERERHEHREHEHEHE#######################################################################################################################################################################
 
         linearLayoutMealLayoutClickableLayout1 = viewMain.findViewById(R.id.linearlayout_tablayout_meallayout);
         viewParams1 = linearLayoutMealLayoutClickableLayout1;
@@ -391,32 +330,40 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         linearLayoutMealLayoutClickableLayout1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "1", Toast.LENGTH_LONG).show();
+                deleteMealContentViews();
                 getFocusOnMeal(1);
+                setMealFromDatabase(1);
+                prepareSum(0, false);
             }
         });
 
         linearLayoutMealLayoutClickableLayout2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "2", Toast.LENGTH_LONG).show();
+                deleteMealContentViews();
                 getFocusOnMeal(2);
+                setMealFromDatabase(2);
+                prepareSum(0, false);
             }
         });
 
         linearLayoutMealLayoutClickableLayout3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "3", Toast.LENGTH_LONG).show();
+                deleteMealContentViews();
                 getFocusOnMeal(3);
+                setMealFromDatabase(3);
+                prepareSum(0, false);
             }
         });
 
         linearLayoutMealLayoutClickableLayout4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "4", Toast.LENGTH_LONG).show();
+                deleteMealContentViews();
                 getFocusOnMeal(4);
+                setMealFromDatabase(4);
+                prepareSum(0, false);
             }
         });
 
@@ -432,6 +379,10 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
                 textViewMealLayoutBread1.setText("");
                 textViewMealLayoutBread1.setVisibility(View.GONE);
                 linearLayoutMealLayoutClickableLayout1.setVisibility(View.GONE);
+                deleteMealContentViews();
+                deleteMealInDatabase(layoutId);
+                checkBuildIsAllowed();
+
             }
         });
         imageViewMealLayoutDeleteContentId2.setOnClickListener(new View.OnClickListener() {
@@ -441,6 +392,9 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
                 textViewMealLayoutBread2.setText("");
                 textViewMealLayoutBread2.setVisibility(View.GONE);
                 linearLayoutMealLayoutClickableLayout2.setVisibility(View.GONE);
+                deleteMealContentViews();
+                deleteMealInDatabase(layoutId);
+                checkBuildIsAllowed();
             }
         });
         imageViewMealLayoutDeleteContentId3.setOnClickListener(new View.OnClickListener() {
@@ -450,6 +404,9 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
                 textViewMealLayoutBread3.setText("");
                 textViewMealLayoutBread3.setVisibility(View.GONE);
                 linearLayoutMealLayoutClickableLayout3.setVisibility(View.GONE);
+                deleteMealContentViews();
+                deleteMealInDatabase(layoutId);
+                checkBuildIsAllowed();
             }
         });
         imageViewMealLayoutDeleteContentId4.setOnClickListener(new View.OnClickListener() {
@@ -459,8 +416,13 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
                 textViewMealLayoutBread4.setText("");
                 textViewMealLayoutBread4.setVisibility(View.GONE);
                 linearLayoutMealLayoutClickableLayout4.setVisibility(View.GONE);
+                deleteMealContentViews();
+                deleteMealInDatabase(layoutId);
+                checkBuildIsAllowed();
+
             }
         });
+        deleteAllMealsInDatabase();
 
         new getData().execute();
 
@@ -468,8 +430,13 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
     }
 
     private void deleteBreadTemporary() {
-        textViewConfiguratorBreadContent.setText("");
-        textViewConfiguratorBreadSizeContent.setText("");
+        if (linearLayoutConfiguratorBreadHeader.getVisibility() == View.VISIBLE &&
+                linearLayoutConfiguratorBreadContent.getVisibility() == View.VISIBLE) {
+
+            linearLayoutConfiguratorBreadHeader.setVisibility(View.GONE);
+            linearLayoutConfiguratorBreadContent.setVisibility(View.GONE);
+        }
+
 
         for (int i = 0; i < 10; i++) {
             kcalList[0][i] = 0;
@@ -479,6 +446,191 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         setKcalText();
     }
 
+    private void deleteCheeseLayout() {
+        if (linearLayoutConfiguratorCheeseHeader.getVisibility() == View.VISIBLE &&
+                linearLayoutConfiguratorCheeseContent.getVisibility() == View.VISIBLE) {
+
+            linearLayoutConfiguratorCheeseContent.removeAllViews();
+            linearLayoutConfiguratorCheeseHeader.setVisibility(View.GONE);
+            linearLayoutConfiguratorCheeseContent.setVisibility(View.GONE);
+
+            for (int i = 0; i < 10; i++) {
+                kcalList[1][i] = 0;
+            }
+
+            currentSum = setSum();
+            setKcalText();
+        }
+    }
+
+    private void deleteMeatLayout() {
+        if (linearLayoutConfiguratorMeatHeader.getVisibility() == View.VISIBLE &&
+                linearLayoutConfiguratorMeatContent.getVisibility() == View.VISIBLE) {
+
+            linearLayoutConfiguratorMeatContent.removeAllViews();
+            linearLayoutConfiguratorMeatHeader.setVisibility(View.GONE);
+            linearLayoutConfiguratorMeatContent.setVisibility(View.GONE);
+
+            for (int i = 0; i < 10; i++) {
+                kcalList[2][i] = 0;
+            }
+
+            currentSum = setSum();
+            setKcalText();
+        }
+    }
+
+    private void deleteSaladLayout() {
+        if (linearLayoutConfiguratorSaladHeader.getVisibility() == View.VISIBLE &&
+                linearLayoutConfiguratorSaladContent.getVisibility() == View.VISIBLE) {
+
+            linearLayoutConfiguratorSaladContent.removeAllViews();
+            linearLayoutConfiguratorSaladHeader.setVisibility(View.GONE);
+            linearLayoutConfiguratorSaladContent.setVisibility(View.GONE);
+
+            for (int i = 0; i < 10; i++) {
+                kcalList[3][i] = 0;
+            }
+
+            currentSum = setSum();
+            setKcalText();
+        }
+    }
+
+    private void deleteExtraLayout() {
+        if (linearLayoutConfiguratorExtraHeader.getVisibility() == View.VISIBLE &&
+                linearLayoutConfiguratorExtraContent.getVisibility() == View.VISIBLE) {
+
+            linearLayoutConfiguratorExtraContent.removeAllViews();
+            linearLayoutConfiguratorExtraHeader.setVisibility(View.GONE);
+            linearLayoutConfiguratorExtraContent.setVisibility(View.GONE);
+
+            for (int i = 0; i < 10; i++) {
+                kcalList[4][i] = 0;
+            }
+
+            currentSum = setSum();
+            setKcalText();
+        }
+    }
+
+    private void deleteSauceLayout() {
+        if (linearLayoutConfiguratorSauceHeader.getVisibility() == View.VISIBLE &&
+                linearLayoutConfiguratorSauceContent.getVisibility() == View.VISIBLE) {
+
+            linearLayoutConfiguratorSauceContent.removeAllViews();
+            linearLayoutConfiguratorSauceHeader.setVisibility(View.GONE);
+            linearLayoutConfiguratorSauceContent.setVisibility(View.GONE);
+
+            for (int i = 0; i < 10; i++) {
+                kcalList[5][i] = 0;
+            }
+
+            currentSum = setSum();
+            setKcalText();
+        }
+
+    }
+
+    //SHOULDBEDONE####################################################################################
+    //cursor.getString(1); NAME
+    //cursor.getString(2); CALORIES
+    //cursor.getString(3); ID FOR ALL
+    private void setMealFromDatabase(int id) {
+
+
+        database = new MyDatabase(getActivity());
+        Cursor cursor;
+        cursor = database.selectBread(id);
+        if (cursor != null && cursor.getCount() > 0) {
+            if (cursor.getInt(4) == 0) {
+                textViewConfiguratorBreadSizeContent.setText("15");
+            } else {
+                textViewConfiguratorBreadSizeContent.setText("30");
+            }
+
+            linearLayoutConfiguratorBreadHeader.setVisibility(View.VISIBLE);
+            linearLayoutConfiguratorBreadContent.setVisibility(View.VISIBLE);
+            textViewConfiguratorBreadContent.setText(cursor.getString(1));
+            kcalList[0][0] = cursor.getInt(2);
+        }
+        cursor = database.selectCheese(id);
+        if (cursor != null && cursor.getCount() > 0) {
+            if (cursor.moveToFirst()) {
+                do {
+                    setCheese(cursor.getString(1), -100);
+                    kcalList[1][cursor.getPosition()] = cursor.getInt(2);
+                } while (cursor.moveToNext());
+            }
+        }
+        cursor = database.selectMeat(id);
+        if (cursor != null && cursor.getCount() > 0) {
+            if (cursor.moveToFirst()) {
+                do {
+                    setMeat(cursor.getString(1), -100);
+                    kcalList[2][cursor.getPosition()] = cursor.getInt(2);
+                } while (cursor.moveToNext());
+            }
+        }
+        cursor = database.selectSalad(id);
+        if (cursor != null && cursor.getCount() > 0) {
+            if (cursor.moveToFirst()) {
+                do {
+                    setSalad(cursor.getString(1), -100);
+                    kcalList[3][cursor.getPosition()] = cursor.getInt(2);
+                } while (cursor.moveToNext());
+            }
+        }
+        cursor = database.selectExtras(id);
+        if (cursor != null && cursor.getCount() > 0) {
+            if (cursor.moveToFirst()) {
+                do {
+                    setExtras(cursor.getString(1), -100);
+                    kcalList[4][cursor.getPosition()] = cursor.getInt(2);
+                } while (cursor.moveToNext());
+            }
+        }
+        cursor = database.selectSauce(id);
+        if (cursor != null && cursor.getCount() > 0) {
+            if (cursor.moveToFirst()) {
+                do {
+                    setSauce(cursor.getString(1), -100);
+                    kcalList[5][cursor.getPosition()] = cursor.getInt(2);
+                } while (cursor.moveToNext());
+            }
+        }
+        if (cursor != null) {
+            cursor.close();
+        }
+        database.close();
+    }
+
+    private void deleteAllMealsInDatabase() {
+        database = new MyDatabase(getActivity());
+
+        for (int i = 1; i <= 4; i++) {
+            database.deleteBread(i);
+            database.deleteCheese(i);
+            database.deleteMeat(i);
+            database.deleteSalad(i);
+            database.deleteExtras(i);
+            database.deleteSauce(i);
+        }
+
+        database.close();
+
+    }
+
+    private void deleteMealInDatabase(int i) {
+        database = new MyDatabase(getActivity());
+        database.deleteBread(i);
+        database.deleteCheese(i);
+        database.deleteMeat(i);
+        database.deleteSalad(i);
+        database.deleteExtras(i);
+        database.deleteSauce(i);
+        database.close();
+    }
 
     private void fillList() {
 
@@ -529,6 +681,11 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
 
     private void getFocusOnMeal(int id) {
         if (id == 1) {
+            /*id1IsFocused = true;
+            id2IsFocused = false;
+            id3IsFocused = false;
+            id4IsFocused = false;*/
+            focusIdMeal = 1;
             llParams1.weight = .3f;
             viewParams1.setLayoutParams(llParams1);
             llParams2.weight = .2f;
@@ -544,6 +701,11 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             linearLayoutMealLayoutClickableLayout4.setBackgroundColor(getResources().getColor(R.color.backgroundColorDarkerYellow));
         }
         if (id == 2) {
+            /*id1IsFocused = false;
+            id2IsFocused = true;
+            id3IsFocused = false;
+            id4IsFocused = false;*/
+            focusIdMeal = 2;
             llParams2.weight = .3f;
             viewParams2.setLayoutParams(llParams2);
             llParams1.weight = .2f;
@@ -559,6 +721,11 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             linearLayoutMealLayoutClickableLayout4.setBackgroundColor(getResources().getColor(R.color.backgroundColorDarkerYellow));
         }
         if (id == 3) {
+            /*id1IsFocused = false;
+            id2IsFocused = true;
+            id3IsFocused = false;
+            id4IsFocused = false;*/
+            focusIdMeal = 3;
             llParams3.weight = .3f;
             viewParams3.setLayoutParams(llParams3);
             llParams1.weight = .2f;
@@ -574,6 +741,11 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             linearLayoutMealLayoutClickableLayout4.setBackgroundColor(getResources().getColor(R.color.backgroundColorDarkerYellow));
         }
         if (id == 4) {
+            /*id1IsFocused = false;
+            id2IsFocused = true;
+            id3IsFocused = false;
+            id4IsFocused = false;*/
+            focusIdMeal = 4;
             llParams4.weight = .3f;
             viewParams4.setLayoutParams(llParams4);
             llParams1.weight = .2f;
@@ -590,77 +762,94 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         }
     }
 
-    //####################################################################################################################################
-    private void saveObject() {
-
-    }
-
-    private void deleteObject(int id) {
-
+    private void checkBuildIsAllowed() {
+        if (linearLayoutMealLayoutClickableLayout1.getVisibility() == View.GONE
+                && linearLayoutMealLayoutClickableLayout2.getVisibility() == View.GONE
+                && linearLayoutMealLayoutClickableLayout3.getVisibility() == View.GONE
+                && linearLayoutMealLayoutClickableLayout4.getVisibility() == View.GONE) {
+            buildAllowed = false;
+        }
     }
 
     @Override
     public void onItemClick(View view, int position) {
+        if (!buildAllowed) {
+            Toast.makeText(getActivity(), "Please add a Meal first on the Plusbutton",
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            if (buttonCounter == 1) {
+                createSub(adapter.getItem(position), position);
+            }
+            if (buttonCounter == 2) {
+                setCheese(adapter.getItem(position), position);
+                //objectCheeseListCalories.add(String.valueOf(adapter.getCalories(position)));
+                prepareSum(position, true);
 
-        if (buttonCounter == 1) {
-            createSub(adapter.getItem(position), position);
+            }
+            if (buttonCounter == 3) {
+                setMeat(adapter.getItem(position), position);
+                //objectMeatListCalories.add(String.valueOf(adapter.getCalories(position)));
+                prepareSum(position, true);
+            }
+            if (buttonCounter == 4) {
+                setSalad(adapter.getItem(position), position);
+                //objectSaladListCalories.add(String.valueOf(adapter.getCalories(position)));
+                prepareSum(position, true);
+            }
+            if (buttonCounter == 5) {
+                setExtras(adapter.getItem(position), position);
+                //objectExtraListCalories.add(String.valueOf(adapter.getCalories(position)));
+                prepareSum(position, true);
+            }
+            if (buttonCounter == 6) {
+                setSauce(adapter.getItem(position), position);
+                //objectSauceListCalories.add(String.valueOf(adapter.getCalories(position)));
+                prepareSum(position, true);
+            }
         }
-        if (buttonCounter == 2) {
-            setCheese(adapter.getItem(position));
-            prepareSum(position);
-        }
-        if (buttonCounter == 3) {
-            setMeat(adapter.getItem(position));
-            prepareSum(position);
-        }
-        if (buttonCounter == 4) {
-            setSalad(adapter.getItem(position));
-            prepareSum(position);
-        }
-        if (buttonCounter == 5) {
-            setExtras(adapter.getItem(position));
-            prepareSum(position);
-        }
-        if (buttonCounter == 6) {
-            setSauce(adapter.getItem(position));
-            prepareSum(position);
-        }
-
     }
 
     private void setKcalText() {
         footerConfiguratorCaloriesContent.setText(String.valueOf(currentSum));
     }
 
-    private void prepareSum(int position){
+    private void prepareSum(int position, boolean normalPrepare) {
         int sum = 0;
-        for (int i = 0; i < 10; i++) {
-            //for bread
-            if (buttonCounter - 1 == 0) {
-                if (kcalList[buttonCounter - 1][0] != 0) {
-                    deleteBreadTemporary();
-                }
-                if (subIsLong) {
-                    kcalList[buttonCounter - 1][i] =
-                            Integer.parseInt(adapter.getCalories(position)) * 2;
+        if (normalPrepare) {
+            for (int i = 0; i < 10; i++) {
+                //for bread
+                if (buttonCounter - 1 == 0) {
+                    if (kcalList[buttonCounter - 1][0] != 0) {
+                        deleteBreadTemporary();
+                    }
+                    if (subIsLong) {
+                        kcalList[buttonCounter - 1][i] =
+                                Integer.parseInt(adapter.getCalories(position)) * 2;
 
-                } else {
-                    kcalList[buttonCounter - 1][i] = Integer.parseInt(adapter.getCalories(position));
-                }
-                sum += setSum();
-                currentSum = sum;
-                break;
-            } else { //everything else
-                if (kcalList[buttonCounter - 1][i] == 0) {
-                    kcalList[buttonCounter - 1][i] = Integer.parseInt(adapter.getCalories(position));
+                    } else {
+                        if (position != 0) {
+                            kcalList[buttonCounter - 1][i] = Integer.parseInt(adapter.getCalories(position));
+                        }
+                    }
                     sum += setSum();
                     currentSum = sum;
                     break;
+                } else { //everything else
+                    if (kcalList[buttonCounter - 1][i] == 0) {
+                        kcalList[buttonCounter - 1][i] = Integer.parseInt(adapter.getCalories(position));
+                        sum += setSum();
+                        currentSum = sum;
+                        break;
+                    }
                 }
             }
+        } else {
+            sum += setSum();
+            currentSum = sum;
         }
         setKcalText();
     }
+
     private int setSum() {
         int sum = 0;
         for (int k = 0; k < 6; k++) {
@@ -902,32 +1091,52 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             public void onClick(DialogInterface dialog, int index) {
                 if (index == 0) {
                     subIsLong = false;
-                    prepareSum(position);
+                    if (position != 0) {
+                        prepareSum(position, true);
+                    }
+
                     textViewConfiguratorBreadSizeContent.setText("15");
                     linearLayoutConfiguratorBreadHeader.setVisibility(View.VISIBLE);
                     linearLayoutConfiguratorBreadContent.setVisibility(View.VISIBLE);
                     textViewConfiguratorBreadContent.setText(content);
 
+                    if (!(position == -100)) {
+                        database = new MyDatabase(getActivity());
+                        database.deleteBread(focusIdMeal);
+                        database.insertBread(focusIdMeal, textViewConfiguratorBreadContent.getText().toString(), kcalList[0][0], 0);
+                        database.close();
+                    }
                 }
                 if (index == 1) {
                     subIsLong = true;
-                    prepareSum(position);
+                    if (position != 0) {
+                        prepareSum(position, true);
+                    }
                     textViewConfiguratorBreadSizeContent.setText("30");
                     linearLayoutConfiguratorBreadHeader.setVisibility(View.VISIBLE);
                     linearLayoutConfiguratorBreadContent.setVisibility(View.VISIBLE);
                     textViewConfiguratorBreadContent.setText(content);
 
+                    if (!(position == -100)) {
+                        database = new MyDatabase(getActivity());
+                        database.deleteBread(focusIdMeal);
+                        database.insertBread(focusIdMeal, textViewConfiguratorBreadContent.getText().toString(), kcalList[0][0], 1);
+                        database.close();
+                    }
+
+
                 }
             }
         });
         builder.show();
-
+        //objectBreadContent = String.valueOf(textViewConfiguratorBreadContent.getText());
+        //objectBreadCalories = String.valueOf(adapter.getCalories(position));
         if (!breadIsChoosed) {
             breadIsChoosed = true;
         }
     }
 
-    private void setCheese(String content) {
+    private void setCheese(String content, final int position) {
 //TextView textView = new TextView(getActivity());
         //textView.setText(content);
         //linearLayoutFirstMeal.addView(textView);
@@ -944,13 +1153,23 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             cheeseTextView.setText(content);
 
             linearLayoutConfiguratorCheeseContent.addView(cheeseTextView);
+
+            if (!(position == -100)) {
+                database = new MyDatabase(getActivity());
+                database.insertCheese(focusIdMeal, cheeseTextView.getText().toString(), Integer.parseInt(adapter.getCalories(position)));
+                database.close();
+            }
+
+//            objectCheeseList.add(String.valueOf(cheeseTextView.getText()));
+
         } else {
             Toast.makeText(getActivity(), "et is jetz mo genuch du haufen scheisse", Toast.LENGTH_SHORT).show();
         }
 
+
     }
 
-    private void setMeat(String content) {
+    private void setMeat(String content, final int position) {
 //TextView textView = new TextView(getActivity());
         //textView.setText(content);
         //linearLayoutFirstMeal.addView(textView);
@@ -959,12 +1178,25 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             linearLayoutConfiguratorMeatHeader.setVisibility(View.VISIBLE);
             linearLayoutConfiguratorMeatContent.setVisibility(View.VISIBLE);
         }
-        TextView meatTextView = new TextView(getActivity());
-        meatTextView.setText(content);
-        linearLayoutConfiguratorMeatContent.addView(meatTextView);
+        int num = linearLayoutConfiguratorMeatContent.getChildCount();
+
+        if (!(num >= 9)) {
+            TextView meatTextView = new TextView(getActivity());
+            meatTextView.setText(content);
+            linearLayoutConfiguratorMeatContent.addView(meatTextView);
+
+            if (!(position == -100)) {
+                database = new MyDatabase(getActivity());
+                database.insertMeat(focusIdMeal, meatTextView.getText().toString(), Integer.parseInt(adapter.getCalories(position)));
+                database.close();
+            }
+
+        } else {
+            Toast.makeText(getActivity(), "et is jetz mo genuch du haufen scheisse", Toast.LENGTH_SHORT).show();
+        }
     }
 
-    private void setSalad(String content) {
+    private void setSalad(String content, final int position) {
 //TextView textView = new TextView(getActivity());
         //textView.setText(content);
         //linearLayoutFirstMeal.addView(textView);
@@ -973,12 +1205,25 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             linearLayoutConfiguratorSaladHeader.setVisibility(View.VISIBLE);
             linearLayoutConfiguratorSaladContent.setVisibility(View.VISIBLE);
         }
-        TextView saladTextView = new TextView(getActivity());
-        saladTextView.setText(content);
-        linearLayoutConfiguratorSaladContent.addView(saladTextView);
+        int num = linearLayoutConfiguratorSaladContent.getChildCount();
+
+        if (!(num >= 9)) {
+            TextView saladTextView = new TextView(getActivity());
+            saladTextView.setText(content);
+            linearLayoutConfiguratorSaladContent.addView(saladTextView);
+
+            if (!(position == -100)) {
+                database = new MyDatabase(getActivity());
+                database.insertSalad(focusIdMeal, saladTextView.getText().toString(), Integer.parseInt(adapter.getCalories(position)));
+                database.close();
+            }
+
+        } else {
+            Toast.makeText(getActivity(), "et is jetz mo genuch du haufen scheisse", Toast.LENGTH_SHORT).show();
+        }
     }
 
-    private void setExtras(String content) {
+    private void setExtras(String content, final int position) {
 //TextView textView = new TextView(getActivity());
         //textView.setText(content);
         //linearLayoutFirstMeal.addView(textView);
@@ -987,12 +1232,26 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             linearLayoutConfiguratorExtraHeader.setVisibility(View.VISIBLE);
             linearLayoutConfiguratorExtraContent.setVisibility(View.VISIBLE);
         }
-        TextView extraTextView = new TextView(getActivity());
-        extraTextView.setText(content);
-        linearLayoutConfiguratorExtraContent.addView(extraTextView);
+        int num = linearLayoutConfiguratorMeatContent.getChildCount();
+
+        if (!(num >= 9)) {
+            TextView extraTextView = new TextView(getActivity());
+            extraTextView.setText(content);
+            linearLayoutConfiguratorExtraContent.addView(extraTextView);
+
+            if (!(position == -100)) {
+                database = new MyDatabase(getActivity());
+                database.insertExtras(focusIdMeal, extraTextView.getText().toString(), Integer.parseInt(adapter.getCalories(position)));
+                database.close();
+            }
+
+        } else {
+            Toast.makeText(getActivity(), "et is jetz mo genuch du haufen scheisse", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
-    private void setSauce(String content) {
+    private void setSauce(String content, final int position) {
 //TextView textView = new TextView(getActivity());
         //textView.setText(content);
         //linearLayoutFirstMeal.addView(textView);
@@ -1001,9 +1260,31 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             linearLayoutConfiguratorSauceHeader.setVisibility(View.VISIBLE);
             linearLayoutConfiguratorSauceContent.setVisibility(View.VISIBLE);
         }
-        TextView sauceTextView = new TextView(getActivity());
-        sauceTextView.setText(content);
-        linearLayoutConfiguratorSauceContent.addView(sauceTextView);
+        int num = linearLayoutConfiguratorSauceContent.getChildCount();
+
+        if (!(num >= 9)) {
+            TextView sauceTextView = new TextView(getActivity());
+            sauceTextView.setText(content);
+            linearLayoutConfiguratorSauceContent.addView(sauceTextView);
+
+            if (!(position == -100)) {
+                database = new MyDatabase(getActivity());
+                database.insertSauce(focusIdMeal, sauceTextView.getText().toString(), Integer.parseInt(adapter.getCalories(position)));
+                database.close();
+            }
+
+        } else {
+            Toast.makeText(getActivity(), "et is jetz mo genuch du haufen scheisse", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void deleteMealContentViews() {
+        deleteCheeseLayout();
+        deleteBreadTemporary();
+        deleteMeatLayout();
+        deleteSaladLayout();
+        deleteExtraLayout();
+        deleteSauceLayout();
     }
 
     @SuppressLint("CutPasteId")
@@ -1016,8 +1297,8 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         if (firstMealIsOn) {
             selectedView = viewMain.findViewById(R.id.include_first_meal);
         }
-        relativelayoutConfiguratorFooterSelected = selectedView.findViewById(R.id.relativelayout_configurator_footer_selected);
-        relativeLayoutConfiguratorFooterFirstMeal = selectedView.findViewById(R.id.relativelayout_configurator_footer_first_meal);
+//        relativelayoutConfiguratorFooterSelected = selectedView.findViewById(R.id.relativelayout_configurator_footer_selected);
+        relativeLayoutConfiguratorFooterFirstMeal = selectedView.findViewById(R.id.relativelayout_configurator_footer);
         linearLayoutConfiguratorBreadHeader = selectedView.findViewById(R.id.linearlayout_configurator_bread_header);
         linearLayoutConfiguratorBreadContent = selectedView.findViewById(R.id.linearlayout_configurator_bread_content);
         textViewConfiguratorBreadContent = selectedView.findViewById(R.id.textview_configurator_bread_content);
@@ -1043,7 +1324,6 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         imageViewConfiguratorDeleteSaladContent = viewMain.findViewById(R.id.imageview_configurator_delete_salad);
         imageViewConfiguratorDeleteExtraContent = viewMain.findViewById(R.id.imageview_configurator_delete_extras);
         imageViewConfiguratorDeleteSauceContent = viewMain.findViewById(R.id.imageview_configurator_delete_sauce);
-
 
         textViewMealLayoutBread1 = viewMain.findViewById(R.id.layout_meallist_subart);
         textViewMealLayoutBread2 = viewMain.findViewById(R.id.layout_meallist_subart2);
@@ -1073,8 +1353,8 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
     // Create new Meal
     @SuppressLint("CutPasteId")
     public void createMeal() {
-
-
+        deleteMealContentViews();
+        buildAllowed = true;
         //subListId.add(sub.getmId());
 
         if (firstAttempt) {
@@ -1094,7 +1374,18 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
 
         if (layoutId == 1) {
 
-            Sub sub1 = new Sub(1, "", false, null, null, null, null);
+            //sub1 = new Sub(1, objectBreadContent, objectBreadCalories, subIsLong, objectCheeseList, objectMeatList, objectExtraList, saucekcalList);
+            /*sub1.setmBread(objectBreadContent);
+            sub1.setmBreadCalories(objectBreadCalories);
+            sub1.setmSubIsLong(subIsLong);
+            sub1.setmCheese(objectCheeseList);
+            sub1.setmCheeseCalories(objectCheeseListCalories);
+            sub1.setmMeat(objectMeatList);
+            sub1.setmMeatCalories(objectMeatListCalories);
+            sub1.setmExtra(objectExtraList);
+            sub1.setmExtraCalories(objectExtraListCalories);
+            sub1.setmSauce(objectSauceList);
+            sub1.setmSauceCalories(objectSauceListCalories);*/
             linearLayoutMealLayoutClickableLayout1.setVisibility(View.VISIBLE);
             textViewMealLayoutId1 = viewMain.findViewById(R.id.layout_meallist_id);
             textViewMealLayoutId1.setText(String.valueOf(layoutId));
@@ -1102,21 +1393,21 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
 
         }
         if (layoutId == 2) {
-            Sub sub2 = new Sub(2, "", false, null, null, null, null);
+            //sub2 = new Sub(2, objectBreadContent, objectBreadCalories, subIsLong, objectCheeseList, objectMeatList, objectExtraList, saucekcalList);
             linearLayoutMealLayoutClickableLayout2.setVisibility(View.VISIBLE);
             textViewMealLayoutId2 = viewMain.findViewById(R.id.layout_meallist_id2);
             textViewMealLayoutId2.setText(String.valueOf(layoutId));
             getFocusOnMeal(2);
         }
         if (layoutId == 3) {
-            Sub sub3 = new Sub(3, "", false, null, null, null, null);
+            //sub3 = new Sub(3, objectBreadContent, objectBreadCalories, subIsLong, objectCheeseList, objectMeatList, objectExtraList, saucekcalList);
             linearLayoutMealLayoutClickableLayout3.setVisibility(View.VISIBLE);
             textViewMealLayoutId3 = viewMain.findViewById(R.id.layout_meallist_id3);
             textViewMealLayoutId3.setText(String.valueOf(layoutId));
             getFocusOnMeal(3);
         }
         if (layoutId == 4) {
-            Sub sub4 = new Sub(4, "", false, null, null, null, null);
+            //sub4 = new Sub(4, objectBreadContent, objectBreadCalories, subIsLong, objectCheeseList, objectMeatList, objectExtraList, saucekcalList);
             linearLayoutMealLayoutClickableLayout4.setVisibility(View.VISIBLE);
             textViewMealLayoutId4 = viewMain.findViewById(R.id.layout_meallist_id4);
             textViewMealLayoutId4.setText(String.valueOf(layoutId));
