@@ -52,6 +52,7 @@ public class Training_main extends Fragment {
     MyDatabase database;
     Cursor cursor;
 
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
