@@ -51,7 +51,6 @@ public class Training_main extends Fragment {
     private static String url = "http://thelegendsrising.de/sports.json";
     ArrayList<String> sportNameList;
     ArrayList<String> sportMultiList;
-    double multi;
     MyDatabase database;
     Cursor cursor;
 
@@ -74,6 +73,7 @@ public class Training_main extends Fragment {
         btnDialog = viewMain.findViewById(R.id.training_btn_start_new);
         trainingTime = viewMain.findViewById(R.id.training_time);
         trainingCalories = viewMain.findViewById(R.id.training_calories);
+        trainingCalories.setText(String.valueOf(Home.kcalSum));
 
 
         btnDialog.setOnClickListener(new OnClickListener() {
@@ -97,24 +97,28 @@ public class Training_main extends Fragment {
                 alertDialog.setView(convertView);
                 ListView lv = (ListView) convertView.findViewById(R.id.listview_sport);
                 final AlertDialog alert = alertDialog.create();
-                alert.setTitle("Choose your Sport you fat fuck!"); // Title
+                alert.setTitle("Choose your Sport you fat fuck!");
                 MyAdapter myadapter = new MyAdapter(getActivity(), R.layout.listview_item, sportNameList);
                 lv.setAdapter(myadapter);
+
                 lv.setOnItemClickListener(new OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                         // TODO Auto-generated method stub
                         sportTextView.setText(sportNameList.get(position));
+                        long timeForSport = calcTime();
 
-                        new CountDownTimer(3600000, 10){
-                            public void onTick (long millisUntilFinished){
-                                String text = String.format(Locale.getDefault(), "%02d min %02d sec",
-                                        TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) % 60,
-                                        TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) % 60);
+                        // CountDownTimer for training
+                        new CountDownTimer(timeForSport, 10){
+                            public void onTick (long timeForSport){
+                                String text = String.format(Locale.getDefault(), "%d min %d sec",
+                                        TimeUnit.MILLISECONDS.toMinutes( timeForSport),
+                                        TimeUnit.MILLISECONDS.toSeconds(timeForSport) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(timeForSport)));
+
                                 trainingTime.setText(text);
                             }
                             public void onFinish() {
-                                Toast.makeText(getActivity(), "FINISHED WOOOOHOOO", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(), "Yeah, you finished you fat shit", Toast.LENGTH_LONG).show();
                             }
                         }.start();
                         alert.cancel();
@@ -264,10 +268,17 @@ public class Training_main extends Fragment {
             }
         }
 
+        //Function calculating the time for training
+        public long calcTime(){
+            long timeinmilli;
+            int kcalSum = Home.kcalSum;
+            int weight = Integer.parseInt(cursor.getString(6));
+            double multi = Double.parseDouble(sportMultiList.get(0));
+            double time = ((kcalSum /(weight*multi))*60)*1000; // Calculating time and convert to milliseconds
+            timeinmilli = (long) time;
 
-        /*public void calcTime(){
-            TODO: Berechnen der Trainingdauer = Calories / (Weight*multiplicatorfromtable)
-        }*/
+            return timeinmilli;
+        }
 
     }
 
