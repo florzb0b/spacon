@@ -30,7 +30,6 @@ import org.json.JSONObject;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import com.github.jorgecastillo.FillableLoader;
-
 import trivial.speckmussweg.database.MyDatabase;
 import trivial.speckmussweg.database.SVGPath;
 import trivial.speckmussweg.internet.*;
@@ -84,7 +83,7 @@ public class Training_main extends Fragment {
                 // create view for add item in dialog
                 View convertView = (View) inflater.inflate(R.layout.listview_training_sport, null);
 
-                // on dialog cancel button listner
+                // on dialog cancel button listener
                 alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -104,11 +103,7 @@ public class Training_main extends Fragment {
                     @Override
                     public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                         // TODO Auto-generated method stub
-                        double test = Double.parseDouble(trainingCalories.getText().toString());
-                        double gewicht = Double.parseDouble(cursor.getString(6));
-                        double berechnung = test / (gewicht*0.14);
                         sportTextView.setText(sportNameList.get(position));
-                        trainingTime.setText(String.valueOf(berechnung));
                         Toast.makeText(getActivity(),"You have selected -: " + sportNameList.get(position), Toast.LENGTH_SHORT).show();
                         alert.cancel();
 
@@ -140,7 +135,7 @@ public class Training_main extends Fragment {
 
         List<String> newList;
 
-        public MyAdapter(Context context, int resource, List<String> list) {
+        private MyAdapter(Context context, int resource, List<String> list) {
 
             super(context, resource, list);
 
@@ -155,22 +150,22 @@ public class Training_main extends Fragment {
         }
 
         @Override
-
-        public View getView(final int position, View view, ViewGroup parent) {
+        @NonNull
+        public View getView(final int position, View view,@NonNull ViewGroup parent) {
 
             final ViewHolder holder;
 
             if (view == null) {
                 holder = new ViewHolder();
                 view = inflater.inflate(R.layout.listview_item, null);
-                holder.tvSname = (TextView) view.findViewById(R.id.tvtext_item);
+                holder.tvSname = view.findViewById(R.id.tvtext_item);
                 view.setTag(holder);
 
             } else {
                 holder = (ViewHolder) view.getTag();
             }
 
-            holder.tvSname.setText(newList.get(position).toString());
+            holder.tvSname.setText(newList.get(position));
             return view;
 
         }
@@ -219,9 +214,6 @@ public class Training_main extends Fragment {
 
                         sportNameList.add(name);
                         sportMultiList.add(multi);
-                        // die musste anlegen als klassenvariable ArrayList<String> sportList;!!
-                        // ab dann kannst du immer mit sportList.get(positionListView) den Namen herbekommen
-                        // die kcal müssen wir selbst von hand machen
 
                     }
                 } catch (final JSONException e) {
@@ -260,6 +252,12 @@ public class Training_main extends Fragment {
                     pDialog.dismiss();
             }
         }
+
+
+        /*public void calcTime(){
+            TODO: Berechnen der Trainingdauer = Calories / (Weight*multiplicatorfromtable)
+        }*/
+
     }
 
 
