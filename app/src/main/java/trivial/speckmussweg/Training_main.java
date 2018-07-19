@@ -2,7 +2,10 @@ package trivial.speckmussweg;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
+
 import android.database.Cursor;
 import android.os.Bundle;
 import android.app.AlertDialog;
@@ -34,6 +37,7 @@ import trivial.speckmussweg.database.MyDatabase;
 import trivial.speckmussweg.database.SVGPath;
 import trivial.speckmussweg.internet.*;
 import android.os.AsyncTask;
+import android.os.CountDownTimer;
 import static android.support.constraint.Constraints.TAG;
 
 public class Training_main extends Fragment {
@@ -65,7 +69,6 @@ public class Training_main extends Fragment {
         database = new MyDatabase(getActivity());
         cursor = database.selectProfile(1);
 
-
         alertDialog = new AlertDialog.Builder(getActivity());
         sportTextView = viewMain.findViewById(R.id.training_sport_textview);
         btnDialog = viewMain.findViewById(R.id.training_btn_start_new);
@@ -90,7 +93,6 @@ public class Training_main extends Fragment {
                                 // TODO Auto-generated method stub
                             }
                         });
-
                 // add custom view in dialog
                 alertDialog.setView(convertView);
                 ListView lv = (ListView) convertView.findViewById(R.id.listview_sport);
@@ -98,15 +100,24 @@ public class Training_main extends Fragment {
                 alert.setTitle("Choose your Sport you fat fuck!"); // Title
                 MyAdapter myadapter = new MyAdapter(getActivity(), R.layout.listview_item, sportNameList);
                 lv.setAdapter(myadapter);
-
                 lv.setOnItemClickListener(new OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                         // TODO Auto-generated method stub
                         sportTextView.setText(sportNameList.get(position));
-                        Toast.makeText(getActivity(),"You have selected -: " + sportNameList.get(position), Toast.LENGTH_SHORT).show();
-                        alert.cancel();
 
+                        new CountDownTimer(3600000, 10){
+                            public void onTick (long millisUntilFinished){
+                                String text = String.format(Locale.getDefault(), "%02d min %02d sec",
+                                        TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) % 60,
+                                        TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) % 60);
+                                trainingTime.setText(text);
+                            }
+                            public void onFinish() {
+                                Toast.makeText(getActivity(), "FINISHED WOOOOHOOO", Toast.LENGTH_LONG).show();
+                            }
+                        }.start();
+                        alert.cancel();
                     }
                 });
                 // show dialog

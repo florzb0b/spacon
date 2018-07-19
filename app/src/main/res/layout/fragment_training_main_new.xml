@@ -42,7 +42,6 @@
             android:layout_height="0dp"
             android:layout_marginTop="15dp"
             android:layout_gravity="center"
-            android:text="22:15"
             android:textSize="25sp"
             android:textStyle="bold"
             android:textColor="#FFFFFF"
@@ -111,7 +110,7 @@
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:layout_marginTop="5dp"
-               android:text="Calories Meal in kcal:"
+               android:text="Calories Meal:"
                android:textColor="#FFFFFF"/>
 
            <TextView
