@@ -42,7 +42,6 @@
             android:layout_height="0dp"
             android:layout_marginTop="15dp"
             android:layout_gravity="center"
-            android:text="22:15"
             android:textSize="25sp"
             android:textStyle="bold"
             android:textColor="#FFFFFF"
@@ -60,9 +59,9 @@
         android:id="@+id/training_info_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/layout_shadow_darkyellow"
         android:elevation="5dp">
 
@@ -111,7 +110,7 @@
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:layout_marginTop="5dp"
-               android:text="Calories Meal in kcal:"
+               android:text="Calories Meal:"
                android:textColor="#FFFFFF"/>
 
            <TextView
