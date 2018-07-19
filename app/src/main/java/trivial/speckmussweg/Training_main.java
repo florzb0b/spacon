@@ -2,12 +2,15 @@ package trivial.speckmussweg;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
 import android.os.Bundle;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,6 +30,9 @@ import org.json.JSONObject;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import trivial.speckmussweg.internet.*;
+import android.os.AsyncTask;
+
+import static android.support.constraint.Constraints.TAG;
 
 public class Training_main extends Fragment {
 
@@ -36,7 +42,8 @@ public class Training_main extends Fragment {
     TextView sportTextView;
 
     private ProgressDialog pDialog;
-    private static String url;
+    private static String url = "http://thelegendsrising.de/sports.json";
+    ArrayList<String> sportList;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,6 +53,7 @@ public class Training_main extends Fragment {
 
         View viewMain = inflater.inflate(R.layout.fragment_training_main_new, container, false);
 
+        sportList = new ArrayList<String>();
         myList = new ArrayList<String>();
         myList.add("India");
         myList.add("China");
@@ -63,6 +71,8 @@ public class Training_main extends Fragment {
         alertDialog = new AlertDialog.Builder(getActivity());
         sportTextView = viewMain.findViewById(R.id.training_sport_textview);
         btnDialog = viewMain.findViewById(R.id.training_btn_start_new);
+
+
         btnDialog.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,15 +96,15 @@ public class Training_main extends Fragment {
                 ListView lv = (ListView) convertView.findViewById(R.id.listview_sport);
                 final AlertDialog alert = alertDialog.create();
                 alert.setTitle("Choose your Sport you fat fuck!"); // Title
-                MyAdapter myadapter = new MyAdapter(getActivity(), R.layout.listview_item, myList);
+                MyAdapter myadapter = new MyAdapter(getActivity(), R.layout.listview_item, sportList);
                 lv.setAdapter(myadapter);
 
                 lv.setOnItemClickListener(new OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                         // TODO Auto-generated method stub
-                        sportTextView.setText(myList.get(position));
-                        Toast.makeText(getActivity(),"You have selected -: " + myList.get(position), Toast.LENGTH_SHORT).show();
+                        sportTextView.setText(sportList.get(position));
+                        Toast.makeText(getActivity(),"You have selected -: " + sportList.get(position), Toast.LENGTH_SHORT).show();
                         alert.cancel();
 
                     }
@@ -161,4 +171,82 @@ public class Training_main extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
     }
-}
+
+
+    @SuppressLint("StaticFieldLeak")
+    public class getData extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // Showing progress dialog
+            pDialog = new ProgressDialog(getActivity());
+            pDialog.setMessage("Please wait...");
+            pDialog.setCancelable(false);
+            pDialog.show();
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+            HttpHandler sh = new HttpHandler();
+
+            // Making a request to url and getting response
+            String jsonStr = sh.makeServiceCall(url); //die url ist die url der json datei
+
+            //Log.e(TAG, "Response from url: " + jsonStr);
+
+            if (jsonStr != null) {
+                try {
+                    JSONObject sportJsonObject = new JSONObject(jsonStr);
+                    JSONArray sports = sportJsonObject.getJSONArray("sports");
+                    for (int i = 0; i < sports.length(); i++) {
+
+                        JSONObject s = sports.getJSONObject(i);
+                        String name = s.getString("name");
+
+                        sportList.add(name);
+                        // die musste anlegen als klassenvariable ArrayList<String> sportList;!!
+                        // ab dann kannst du immer mit sportList.get(positionListView) den Namen herbekommen
+                        // die kcal müssen wir selbst von hand machen
+
+                    }
+                } catch (final JSONException e) {
+                    Log.e(TAG, "Json parsing error: " + e.getMessage());
+                    Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getActivity(),
+                                    "Json parsing error: " + e.getMessage(),
+                                    Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                    });
+                }
+            }else{
+                    Log.e(TAG, "Couldn't get json from server.");
+                    Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getActivity(),
+                                    "Couldn't get json from server. Check LogCat for possible errors!",
+                                    Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                    });
+
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute (Void result){
+                super.onPostExecute(result);
+                // Dismiss the progress dialog
+                if (pDialog.isShowing())
+                    pDialog.dismiss();
+            }
+        }
+    }
+
+

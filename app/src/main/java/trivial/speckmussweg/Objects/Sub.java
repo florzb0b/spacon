@@ -42,43 +42,43 @@ public class getData extends AsyncTask<Void, Void, Void> {
 
 
                     sportList.add(art); // die musste anlegen als klassenvariable ArrayList<String> sportList;!!
-                                        // ab dann kannst du immer mit sportList.get(positionListView) den Namen herbekommen
-                                        // die kcal müssen wir selbst von hand machen
+                    // ab dann kannst du immer mit sportList.get(positionListView) den Namen herbekommen
+                    // die kcal müssen wir selbst von hand machen
 
-            } catch (final JSONException e) {
-                Log.e(TAG, "Json parsing error: " + e.getMessage());
+                } catch( final JSONException e){
+                    Log.e(TAG, "Json parsing error: " + e.getMessage());
+                    Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getActivity(),
+                                    "Json parsing error: " + e.getMessage(),
+                                    Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                    });
+                }
+            } else{
+                Log.e(TAG, "Couldn't get json from server.");
                 Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         Toast.makeText(getActivity(),
-                                "Json parsing error: " + e.getMessage(),
+                                "Couldn't get json from server. Check LogCat for possible errors!",
                                 Toast.LENGTH_LONG)
                                 .show();
                     }
                 });
+
             }
-        } else {
-            Log.e(TAG, "Couldn't get json from server.");
-            Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(getActivity(),
-                            "Couldn't get json from server. Check LogCat for possible errors!",
-                            Toast.LENGTH_LONG)
-                            .show();
-                }
-            });
-
+            return null;
         }
-        return null;
-    }
 
-    @Override
-    protected void onPostExecute(Void result) {
-        super.onPostExecute(result);
-        // Dismiss the progress dialog
-        if (pDialog.isShowing())
-            pDialog.dismiss();
+        @Override
+        protected void onPostExecute (Void result){
+            super.onPostExecute(result);
+            // Dismiss the progress dialog
+            if (pDialog.isShowing())
+                pDialog.dismiss();
+        }
     }
-}
-*/
+} */
