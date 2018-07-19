@@ -3,6 +3,7 @@ package trivial.speckmussweg;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -29,6 +30,8 @@ import org.json.JSONObject;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import com.github.jorgecastillo.FillableLoader;
+
+import trivial.speckmussweg.database.MyDatabase;
 import trivial.speckmussweg.database.SVGPath;
 import trivial.speckmussweg.internet.*;
 import android.os.AsyncTask;
@@ -38,12 +41,16 @@ public class Training_main extends Fragment {
 
     Button btnDialog;
     AlertDialog.Builder alertDialog;
-    ArrayList<String> myList;
     TextView sportTextView;
-
+    TextView trainingTime;
+    TextView trainingCalories;
     private ProgressDialog pDialog;
     private static String url = "http://thelegendsrising.de/sports.json";
-    ArrayList<String> sportList;
+    ArrayList<String> sportNameList;
+    ArrayList<String> sportMultiList;
+    double multi;
+    MyDatabase database;
+    Cursor cursor;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -53,24 +60,17 @@ public class Training_main extends Fragment {
 
         View viewMain = inflater.inflate(R.layout.fragment_training_main_new, container, false);
 
-        sportList = new ArrayList<String>();
-        myList = new ArrayList<String>();
-        myList.add("India");
-        myList.add("China");
-        myList.add("South Africa");
-        myList.add("USA");
-        myList.add("UK");
-        myList.add("Japan ");
-        myList.add("Canada");
-        myList.add("Germany");
-        myList.add("Thailand");
-        myList.add("France");
-        myList.add("Ohnoooo");
-        myList.add("lololol");
+        sportNameList = new ArrayList<String>();
+        sportMultiList = new ArrayList<String>();
+        database = new MyDatabase(getActivity());
+        cursor = database.selectProfile(1);
+
 
         alertDialog = new AlertDialog.Builder(getActivity());
         sportTextView = viewMain.findViewById(R.id.training_sport_textview);
         btnDialog = viewMain.findViewById(R.id.training_btn_start_new);
+        trainingTime = viewMain.findViewById(R.id.training_time);
+        trainingCalories = viewMain.findViewById(R.id.training_calories);
 
 
         btnDialog.setOnClickListener(new OnClickListener() {
@@ -96,15 +96,19 @@ public class Training_main extends Fragment {
                 ListView lv = (ListView) convertView.findViewById(R.id.listview_sport);
                 final AlertDialog alert = alertDialog.create();
                 alert.setTitle("Choose your Sport you fat fuck!"); // Title
-                MyAdapter myadapter = new MyAdapter(getActivity(), R.layout.listview_item, sportList);
+                MyAdapter myadapter = new MyAdapter(getActivity(), R.layout.listview_item, sportNameList);
                 lv.setAdapter(myadapter);
 
                 lv.setOnItemClickListener(new OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                         // TODO Auto-generated method stub
-                        sportTextView.setText(sportList.get(position));
-                        Toast.makeText(getActivity(),"You have selected -: " + sportList.get(position), Toast.LENGTH_SHORT).show();
+                        double test = Double.parseDouble(trainingCalories.getText().toString());
+                        double gewicht = Double.parseDouble(cursor.getString(6));
+                        double berechnung = test / (gewicht*0.14);
+                        sportTextView.setText(sportNameList.get(position));
+                        trainingTime.setText(String.valueOf(berechnung));
+                        Toast.makeText(getActivity(),"You have selected -: " + sportNameList.get(position), Toast.LENGTH_SHORT).show();
                         alert.cancel();
 
                     }
@@ -208,9 +212,12 @@ public class Training_main extends Fragment {
                     for (int i = 0; i < sports.length(); i++) {
 
                         JSONObject s = sports.getJSONObject(i);
-                        String name = s.getString("name");
 
-                        sportList.add(name);
+                        String name = s.getString("name");
+                        String multi = s.getString("multi");
+
+                        sportNameList.add(name);
+                        sportMultiList.add(multi);
                         // die musste anlegen als klassenvariable ArrayList<String> sportList;!!
                         // ab dann kannst du immer mit sportList.get(positionListView) den Namen herbekommen
                         // die kcal müssen wir selbst von hand machen
