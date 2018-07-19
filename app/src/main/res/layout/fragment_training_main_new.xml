@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:clipToPadding="false"
     android:orientation="vertical"
     android:paddingLeft="10dp"
-    android:paddingRight="10dp">
+    android:paddingRight="10dp"
+    android:background="@drawable/background">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -19,35 +18,35 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:weightSum="4"
-            tools:ignore="UselessParent">
+            android:weightSum="4">
 
-            <com.github.jorgecastillo.FillableLoader
-                android:id="@+id/home_fillableLoader"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginTop="15dp"
-                android:layout_weight="3"
-                app:fl_clippingTransform="waves"
-                app:fl_fillColor="@color/textColorOnGreenBackground"
-                app:fl_fillDuration="2000"
-                app:fl_fillPercentage="100"
-                app:fl_originalHeight="700"
-                app:fl_originalWidth="700"
-                app:fl_strokeColor="@color/textColorOnYellowBackground"
-                app:fl_strokeDrawingDuration="2000"
-                app:fl_strokeWidth="1dp" />
+        <com.github.jorgecastillo.FillableLoader
+            android:layout_marginTop="15dp"
+            android:id="@+id/home_fillableLoader"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            app:fl_clippingTransform="waves"
+            app:fl_fillColor="@color/textColorOnGreenBackground"
+            app:fl_fillDuration="2000"
+            app:fl_originalHeight="700"
+            app:fl_originalWidth="700"
+            app:fl_strokeColor="@color/textColorOnYellowBackground"
+            app:fl_strokeDrawingDuration="2000"
+            app:fl_strokeWidth="1dp"
+            app:fl_fillPercentage="100"
+            android:layout_weight="3"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="15dp"
-                android:layout_weight="1"
-                android:text="22:15"
-                android:textColor="#FFFFFF"
-                android:textSize="25sp"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/training_time"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center"
+            android:text="22:15"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:layout_weight="1"/>
         </LinearLayout>
     </RelativeLayout>
 
@@ -57,159 +56,161 @@
         android:layout_height="0dp"
         android:layout_weight=".5">
 
-        <RelativeLayout
-            android:id="@+id/training_info_layout"
-            android:layout_width="match_parent"
+    <RelativeLayout
+        android:id="@+id/training_info_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/layout_shadow_darkyellow"
+        android:elevation="5dp">
+
+
+       <LinearLayout
+           android:id="@+id/training_info_layoutleft"
+           android:layout_width="150dp"
+           android:layout_height="wrap_content"
+           android:layout_marginLeft="15dp"
+           android:layout_marginTop="5dp"
+           android:orientation="vertical">
+
+           <TextView
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="Information Meal"
+               android:textSize="15dp"
+               android:gravity="center_horizontal"
+               android:textColor="#FFFFFF"/>
+
+           <TextView
+               android:layout_width="match_parent"
+               android:layout_height="2dp"
+               android:background="@color/backgroundColorDarkGreen"/>
+
+           <TextView
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="5dp"
+               android:text="Meal:"
+               android:textColor="#FFFFFF"/>
+
+           <TextView
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="Chicken Breast"
+               android:layout_marginStart="5dp"
+               android:textColor="@color/backgroundColorDarkerGreen"/>
+
+           <TextView
+               android:layout_width="match_parent"
+               android:layout_height="2dp"
+               android:background="@color/backgroundColorDarkGreen"/>
+
+           <TextView
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="5dp"
+               android:text="Calories Meal in kcal:"
+               android:textColor="#FFFFFF"/>
+
+           <TextView
+               android:id="@+id/training_calories"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="2500"
+               android:layout_marginStart="5dp"
+               android:textColor="@color/backgroundColorDarkerGreen"/>
+
+       </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/training_info_layoutmiddle"
+            android:layout_width="2dp"
+            android:layout_height="165dp"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/backgroundColorDarkGreen">
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/training_info_layoutright"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="35dp"
-            android:background="@drawable/layout_shadow_darkyellow"
-            android:elevation="5dp">
+            android:orientation="vertical"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp">
 
-
-            <LinearLayout
-                android:id="@+id/training_info_layoutleft"
-                android:layout_width="150dp"
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="5dp"
-                android:orientation="vertical">
+                android:text="Information Training"
+                android:gravity="center_horizontal"
+                android:textSize="15sp"
+                android:textColor="#FFFFFF"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:text="Information Meal"
-                    android:textColor="#FFFFFF"
-                    android:textSize="15dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/backgroundColorDarkGreen"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@color/backgroundColorDarkGreen" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="Meal:"
-                    android:textColor="#FFFFFF" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:text="Chicken Breast"
-                    android:textColor="@color/backgroundColorDarkerGreen" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@color/backgroundColorDarkGreen" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="Calories Meal:"
-                    android:textColor="#FFFFFF" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:text="2500 kcal"
-                    android:textColor="@color/backgroundColorDarkerGreen" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/training_info_layoutmiddle"
-                android:layout_width="2dp"
-                android:layout_height="165dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/backgroundColorDarkGreen"
-                android:orientation="horizontal"></LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/training_info_layoutright"
-                android:layout_width="150dp"
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="15dp"
                 android:layout_marginTop="5dp"
-                android:orientation="vertical">
+                android:text="Sport:"
+                android:textColor="#FFFFFF"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:text="Information Training"
-                    android:textColor="#FFFFFF"
-                    android:textSize="15sp" />
+            <TextView
+                android:id="@+id/training_sport_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Running"
+                android:layout_marginStart="5dp"
+                android:textColor="@color/backgroundColorDarkerGreen"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@color/backgroundColorDarkGreen" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/backgroundColorDarkGreen"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="Sport:"
-                    android:textColor="#FFFFFF" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Burned Calories:"
+                android:textColor="#FFFFFF"/>
 
-                <TextView
-                    android:id="@+id/training_sport_textview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:text="Running"
-                    android:textColor="@color/backgroundColorDarkerGreen" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="344 kcal / 2500 kcal"
+                android:textColor="@color/backgroundColorDarkerGreen"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@color/backgroundColorDarkGreen" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/backgroundColorDarkGreen"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="Burned Calories:"
-                    android:textColor="#FFFFFF" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Distance:"
+                android:textColor="#FFFFFF"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:text="344 kcal / 2500 kcal"
-                    android:textColor="@color/backgroundColorDarkerGreen" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="3,12 km"
+                android:layout_marginStart="5dp"
+                android:textColor="@color/backgroundColorDarkerGreen"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@color/backgroundColorDarkGreen" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="Distance:"
-                    android:textColor="#FFFFFF" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:text="3,12 km"
-                    android:textColor="@color/backgroundColorDarkerGreen" />
-
-            </LinearLayout>
+        </LinearLayout>
 
         </RelativeLayout>
 
@@ -222,9 +223,9 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
             android:backgroundTint="@color/backgroundColorDarkYellow"
+            android:translationZ="5dp"
             android:text="Start"
-            android:textStyle="bold"
-            android:translationZ="5dp" />
+            android:textStyle="bold"/>
 
     </RelativeLayout>
 
