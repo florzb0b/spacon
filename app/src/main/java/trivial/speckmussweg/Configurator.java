@@ -900,10 +900,6 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         }
     }
 
-    @Override
-    public void onLongClick(View view, int position) {
-
-    }
 
     private void setKcalText() {
         footerConfiguratorCaloriesContent.setText(String.valueOf(currentSum));

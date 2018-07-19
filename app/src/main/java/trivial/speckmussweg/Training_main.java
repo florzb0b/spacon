@@ -29,6 +29,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+
+import com.github.jorgecastillo.FillableLoader;
+
+import trivial.speckmussweg.database.SVGPath;
 import trivial.speckmussweg.internet.*;
 import android.os.AsyncTask;
 
@@ -113,6 +117,10 @@ public class Training_main extends Fragment {
                 alert.show();
             }
         });
+
+        FillableLoader fillableLoader = viewMain.findViewById(R.id.home_fillableLoader);
+        fillableLoader.setSvgPath(SVGPath.NEW_FAT_PIG);
+        fillableLoader.start();
         return viewMain;
     }
 

@@ -30,13 +30,16 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.github.jorgecastillo.FillableLoader;
+import com.github.jorgecastillo.State;
+import com.github.jorgecastillo.listener.OnStateChangeListener;
 
 import java.util.Calendar;
 import java.util.Objects;
 
 import trivial.speckmussweg.database.MyDatabase;
+import trivial.speckmussweg.database.SVGPath;
 
-public class Home extends AppCompatActivity {
+public class Home extends AppCompatActivity implements OnStateChangeListener{
 
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
@@ -98,9 +101,9 @@ public class Home extends AppCompatActivity {
             }
         });
 
-        /*fillableLoader = (FillableLoader) findViewById(R.id.home_fillableLoader);
-        fillableLoader.setSvgPath(SVGPath.PIG_NEW);
-        fillableLoader.start();*/
+        fillableLoader = findViewById(R.id.home_fillableLoader);
+        fillableLoader.setSvgPath(SVGPath.NEW_FAT_PIG);
+        fillableLoader.start();
 
         setProfile();
     }
@@ -119,6 +122,14 @@ public class Home extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override public void onStateChange(int state) {
+        switch(state) {
+            case State.FILL_STARTED:
+                break;
+            case State.FINISHED:
+        }
     }
 
     private void setupDrawerContent(NavigationView navigationView) {

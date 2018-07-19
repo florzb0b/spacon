@@ -67,10 +67,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             holder.iconImageView.setImageResource(R.drawable.ic_configurator_cheese);
         }
         if (mId == 3){
-            holder.iconImageView.setImageResource(R.drawable.ic_configurator_cheese);
+            holder.iconImageView.setImageResource(R.drawable.ic_configurator_meat);
         }
         if (mId == 4){
-            holder.iconImageView.setImageResource(R.drawable.ic_configurator_meat);
+            holder.iconImageView.setImageResource(R.drawable.ic_configurator_salad);
         }
         if (mId == 5){
             holder.iconImageView.setImageResource(R.drawable.ic_configurator_extra);
@@ -107,7 +107,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 
     // stores and recycles views as they are scrolled off screen
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView nameTextView;
         TextView kcalTextView;
         ImageView iconImageView;
@@ -120,7 +120,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             //fettTextView = itemView.findViewById(R.id.mobile);
             itemView.setOnClickListener(this);
-            itemView.setOnLongClickListener(this);
         }
 
         @Override
@@ -128,11 +127,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
         }
 
-        @Override
-        public boolean onLongClick(View view) {
-            if (mClickListener != null) mClickListener.onLongClick(view, getAdapterPosition());
-            return true;
-        }
     }
 
     // convenience method for getting data at click position
@@ -154,6 +148,5 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public interface ItemClickListener {
         void onItemClick(View view, int position);
 
-        void onLongClick(View view, int position);
     }
 }
