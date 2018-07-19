@@ -3,9 +3,12 @@ package trivial.speckmussweg;
 import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -23,6 +26,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,7 +54,7 @@ public class Profile extends Fragment {
     ImageView imgViewBtnDeleteContent, imgViewProfilePic;
     Uri uriProfileImage;
     String stringPhotoRes, stringFirstName, stringLastName, stringWeight, stringHeight, stringDateOfBirth, stringGender;
-    Boolean booleanPhotoSelected = false, booleanBackPressedCheck = false;
+    Boolean booleanPhotoSelected = false;
 
 
     @Override
@@ -157,8 +161,8 @@ public class Profile extends Fragment {
             public void onClick(View view) {
                 CharSequence genders[] = new CharSequence[]{"Female", "Male"};
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()));
-                builder.setTitle("I indentify myself as a");
+                AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()), R.style.AlertDialogStyle);
+                builder.setTitle("I identify myself as a...");
                 builder.setItems(genders, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int index) {
@@ -170,7 +174,8 @@ public class Profile extends Fragment {
                         }
                     }
                 });
-                builder.show();
+               builder.show();
+
             }
         });
         return viewMain;
@@ -183,18 +188,22 @@ public class Profile extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+    public Boolean savePossible() {
+        return TextUtils.isEmpty(editTextFirstName.getText().toString())
+                || TextUtils.isEmpty(editTextLastName.getText().toString())
+                || TextUtils.isEmpty(editTextWeight.getText().toString())
+                || TextUtils.isEmpty(editTextHeight.getText().toString())
+                || TextUtils.isEmpty(textViewDateOfBirth.getText().toString())
+                || TextUtils.isEmpty(textViewGender.getText().toString());
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.optionsmenu_profile_save:
                 // All Textviews must have Content
-                if (!(TextUtils.isEmpty(editTextFirstName.getText().toString())
-                        || TextUtils.isEmpty(editTextLastName.getText().toString())
-                        || TextUtils.isEmpty(editTextWeight.getText().toString())
-                        || TextUtils.isEmpty(editTextHeight.getText().toString())
-                        || TextUtils.isEmpty(textViewDateOfBirth.getText().toString())
-                        || TextUtils.isEmpty(textViewGender.getText().toString()))) {
+                if (!(savePossible())) {
                     // Profilepic is selected
                     if (booleanPhotoSelected) {
                         stringPhotoRes = uriProfileImage.toString();
@@ -221,9 +230,8 @@ public class Profile extends Fragment {
                     }
                     cursor.close();
                     database.close();
-
                     Toast.makeText(getActivity(), "Profile saved", Toast.LENGTH_LONG).show();
-
+                    Home.setBooleanSwitchPossible();
                 } else {
                     Toast.makeText(getActivity(), "Please fill in all Fields with '*'",
                             Toast.LENGTH_LONG).show();
@@ -234,17 +242,7 @@ public class Profile extends Fragment {
         }
     }
 
-    private String getAge(int year, int month, int day) {
-        Calendar dateOfBirth = Calendar.getInstance();
-        Calendar today = Calendar.getInstance();
-        dateOfBirth.set(year, month, day);
-        int age = today.get(Calendar.YEAR) - dateOfBirth.get(Calendar.YEAR);
 
-        if (today.get(Calendar.DAY_OF_YEAR) < dateOfBirth.get(Calendar.DAY_OF_YEAR)) {
-            age--;
-        }
-        return String.valueOf((Integer) age);
-    }
 
     private void setDate() {
         String myFormat = "dd/MM/yyyy";
@@ -291,6 +289,7 @@ public class Profile extends Fragment {
             }
         }
     }
+
     //TODO: fürs backPressed in Home, ist noch nicht gemacht.
     //Theoretisch dazu da, falls man ausversehen den zurückbutton drückt, dass es abgefangen wird mit nem Dialog
     public static Boolean checkContent() {

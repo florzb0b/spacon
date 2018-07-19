@@ -48,21 +48,22 @@
                             android:layout_weight="1"
                             android:gravity="center|start"
                             android:text="Bread:"
-                            android:textStyle="italic" />
+                            android:textStyle="italic|bold"
+                            android:textColor="@android:color/white"/>
 
                         <ImageView
                             android:id="@+id/imageview_configurator_delete_bread"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:contentDescription="TODO"
-                            android:src="@drawable/ic_delete_black_24dp" />
+                            android:src="@drawable/ic_delete_white_24dp" />
 
                     </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@android:color/black" />
+                        android:background="@android:color/white" />
 
                 </LinearLayout>
 
@@ -79,7 +80,8 @@
                         android:id="@+id/textview_configurator_bread_content"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1" />
+                        android:layout_weight="1"
+                        android:textColor="@color/textColorOnYellowBackground"/>
 
                     <LinearLayout
                         android:id="@+id/linearlayout_configurator_bread_size"
@@ -93,14 +95,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:textColor="@android:color/black" />
+                            android:textColor="@color/textColorOnYellowBackground" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:text="cm"
-                            android:textColor="@android:color/black" />
+                            android:textColor="@color/textColorOnYellowBackground" />
                     </LinearLayout>
 
 
@@ -124,20 +126,21 @@
                             android:layout_weight="1"
                             android:gravity="center|start"
                             android:text="Cheese:"
-                            android:textStyle="italic" />
+                            android:textStyle="italic|bold"
+                            android:textColor="@android:color/white"/>
 
                         <ImageView
                             android:id="@+id/imageview_configurator_delete_cheese"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_delete_black_24dp" />
+                            android:src="@drawable/ic_delete_white_24dp" />
 
                     </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@android:color/black" />
+                        android:background="@android:color/white" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -169,20 +172,21 @@
                             android:layout_weight="1"
                             android:gravity="center|start"
                             android:text="Meat:"
-                            android:textStyle="italic" />
+                            android:textStyle="italic|bold"
+                            android:textColor="@android:color/white"/>
 
                         <ImageView
                             android:id="@+id/imageview_configurator_delete_meat"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_delete_black_24dp" />
+                            android:src="@drawable/ic_delete_white_24dp" />
 
                     </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@android:color/black" />
+                        android:background="@android:color/white" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -214,20 +218,21 @@
                             android:layout_weight="1"
                             android:gravity="center|start"
                             android:text="Salad:"
-                            android:textStyle="italic" />
+                            android:textStyle="italic|bold"
+                            android:textColor="@android:color/white"/>
 
                         <ImageView
                             android:id="@+id/imageview_configurator_delete_salad"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_delete_black_24dp" />
+                            android:src="@drawable/ic_delete_white_24dp" />
 
                     </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@android:color/black" />
+                        android:background="@android:color/white" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -259,20 +264,21 @@
                             android:layout_weight="1"
                             android:gravity="center|start"
                             android:text="Extras:"
-                            android:textStyle="italic" />
+                            android:textStyle="italic|bold"
+                            android:textColor="@android:color/white"/>
 
                         <ImageView
                             android:id="@+id/imageview_configurator_delete_extras"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_delete_black_24dp" />
+                            android:src="@drawable/ic_delete_white_24dp" />
 
                     </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@android:color/black" />
+                        android:background="@android:color/white" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -304,20 +310,21 @@
                             android:layout_weight="1"
                             android:gravity="center|start"
                             android:text="Sauce:"
-                            android:textStyle="italic" />
+                            android:textStyle="italic|bold"
+                            android:textColor="@android:color/white"/>
 
                         <ImageView
                             android:id="@+id/imageview_configurator_delete_sauce"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_delete_black_24dp" />
+                            android:src="@drawable/ic_delete_white_24dp" />
 
                     </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@android:color/black" />
+                        android:background="@android:color/white" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -327,11 +334,6 @@
                     android:orientation="vertical"
                     android:padding="5dp"
                     android:visibility="gone">
-
-                    <!--<TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Chocolat Chip" />-->
 
                 </LinearLayout>
             </LinearLayout>
@@ -352,7 +354,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:text="Total:"
-                android:textColor="#ffffff"
+                android:textColor="@android:color/white"
                 android:textStyle="italic|bold" />
 
             <TextView
@@ -363,7 +365,7 @@
                 android:layout_toEndOf="@+id/footer_configurator_max_calories_text"
                 android:gravity="center_horizontal"
                 android:text="0"
-                android:textColor="#ffffff"
+                android:textColor="@android:color/white"
                 android:textStyle="bold" />
 
             <TextView
@@ -375,7 +377,7 @@
                 android:layout_toEndOf="@+id/footer_configurator_calories_content"
                 android:gravity="center_horizontal"
                 android:text="kcal"
-                android:textColor="#ffffff"
+                android:textColor="@android:color/white"
                 android:textStyle="bold" />
         </RelativeLayout>
 

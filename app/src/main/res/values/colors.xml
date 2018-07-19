@@ -9,5 +9,7 @@
     <color name="backgroundColorDarkerGreen">#004514</color>
     <color name="backgroundColorDarkYellow">#FFC300</color>
     <color name="backgroundColorDarkerYellow">#d2a100</color>
+    <color name="backgroundColorDarkestYellow">#816300</color>
     <color name="backgroundColorOrange">#FF8601</color>
+    <color name="textColorOnGreenBackground">#FFCB08</color>
 </resources>

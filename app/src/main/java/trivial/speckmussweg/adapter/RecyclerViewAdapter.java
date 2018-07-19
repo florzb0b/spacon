@@ -13,8 +13,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 import trivial.speckmussweg.R;
@@ -72,7 +70,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             holder.iconImageView.setImageResource(R.drawable.ic_configurator_cheese);
         }
         if (mId == 4){
-            holder.iconImageView.setImageResource(R.drawable.ic_configurator_salad);
+            holder.iconImageView.setImageResource(R.drawable.ic_configurator_meat);
         }
         if (mId == 5){
             holder.iconImageView.setImageResource(R.drawable.ic_configurator_extra);

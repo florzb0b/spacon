@@ -1,13 +1,334 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     android:clipToPadding="false"
-    android:orientation="vertical"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp"
-    android:background="@drawable/background">
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:background="@drawable/layout_shadow_darkgreen"
+            android:elevation="10dp">
+
+            <TextView
+                android:id="@+id/textview_developers_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal"
+                android:text="Libraries and SDK'S"
+                android:textColor="@color/textColorOnGreenBackground"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textview_developers_header2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textview_developers_header"
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal"
+                android:text="Circle Image View"
+                android:textColor="@color/textColorOnGreenBackground"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textview_developers_header3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textview_developers_header2"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:autoLink="all"
+                android:gravity="center_horizontal"
+                android:text="https://github.com/hdodenhof/CircleImageView"
+                android:textColor="@color/textColorOnGreenBackground"
+                android:textColorLink="@color/backgroundColorDarkerYellow" />
+
+            <TextView
+                android:id="@+id/textview_developers_header4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textview_developers_header3"
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal"
+                android:text="Glide"
+                android:textColor="@color/textColorOnGreenBackground"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textview_developers_header5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textview_developers_header4"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:autoLink="all"
+                android:gravity="center_horizontal"
+                android:text="https://github.com/bumptech/glide"
+                android:textColor="@color/textColorOnGreenBackground"
+                android:textColorLink="@color/backgroundColorDarkerYellow" />
+
+            <TextView
+                android:id="@+id/textview_developers_header6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textview_developers_header5"
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal"
+                android:text="OkHttp"
+                android:textColor="@color/textColorOnGreenBackground"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textview_developers_header7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textview_developers_header6"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:autoLink="all"
+                android:gravity="center_horizontal"
+                android:text="https://github.com/square/okhttp"
+                android:textColor="@color/textColorOnGreenBackground"
+                android:textColorLink="@color/backgroundColorDarkerYellow" />
+
+            <TextView
+                android:id="@+id/textview_developers_header8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textview_developers_header7"
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal"
+                android:text="EasyPermissions"
+                android:textColor="@color/textColorOnGreenBackground"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textview_developers_header9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textview_developers_header8"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:autoLink="all"
+                android:gravity="center_horizontal"
+                android:text="https://github.com/googlesamples/easypermissions"
+                android:textColor="@color/textColorOnGreenBackground"
+                android:textColorLink="@color/backgroundColorDarkerYellow" />
+
+            <TextView
+                android:id="@+id/textview_developers_header10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textview_developers_header9"
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal"
+                android:text="Google SDK's and Libraries"
+                android:textColor="@color/textColorOnGreenBackground"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textview_developers_header11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textview_developers_header10"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:autoLink="all"
+                android:gravity="center_horizontal"
+                android:text="https://developer.android.com/topic/libraries/support-library/packages"
+                android:textColor="@color/textColorOnGreenBackground"
+                android:textColorLink="@color/backgroundColorDarkerYellow" />
+
+            <TextView
+                android:id="@+id/textview_developers_header12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textview_developers_header11"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:autoLink="all"
+                android:gravity="center_horizontal"
+                android:text="https://developers.google.com/maps/documentation/android-sdk/intro"
+                android:textColor="@color/textColorOnGreenBackground"
+                android:textColorLink="@color/backgroundColorDarkerYellow" />
+
+            <TextView
+                android:id="@+id/textview_developers_header13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textview_developers_header12"
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal"
+                android:text="Fillable Loader"
+                android:textColor="@color/textColorOnGreenBackground"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textview_developers_header14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textview_developers_header13"
+                android:layout_marginBottom="20dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:autoLink="all"
+                android:gravity="center_horizontal"
+                android:text="https://github.com/JorgeCastilloPrz/AndroidFillableLoaders"
+                android:textColor="@color/textColorOnGreenBackground"
+                android:textColorLink="@color/backgroundColorDarkerYellow" />
+        </RelativeLayout>
 
 
-</LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:background="@drawable/layout_shadow_darkyellow"
+            android:elevation="10dp">
+
+            <TextView
+                android:id="@+id/textview_credits_center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal"
+                android:text="Icons and Graphic Resources"
+                android:textColor="@color/textColorOnYellowBackground"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textview_credits_center2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textview_credits_center"
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal"
+                android:text="Flaticon.com from CC 3.0 BY."
+                android:textColor="@color/textColorOnYellowBackground"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textview_credits_center3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textview_credits_center2"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:autoLink="all"
+                android:gravity="center_horizontal"
+                android:text="https://www.flaticon.com/free-icon/cutlery_565402#term=food&amp;page=1&amp;position=3"
+                android:textColor="@color/textColorOnYellowBackground"
+                android:textColorLink="@color/backgroundColorDarkerGreen" />
+
+
+            <TextView
+                android:id="@+id/textview_credits_center4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textview_credits_center3"
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal"
+                android:text="Shareicon.net"
+                android:textColor="@color/textColorOnYellowBackground"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textview_credits_center5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textview_credits_center4"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:autoLink="all"
+                android:gravity="center_horizontal"
+                android:text="https://www.shareicon.net/food-lunch-meal-snack-bread-sandwich-844970"
+                android:textColor="@color/textColorOnYellowBackground"
+                android:textColorLink="@color/backgroundColorDarkerGreen" />
+
+            <TextView
+                android:id="@+id/textview_credits_center6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textview_credits_center5"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:autoLink="all"
+                android:gravity="center_horizontal"
+                android:text="https://www.shareicon.net/healthy-food-fattening-milky-food-and-restaurant-food-cheese-798475"
+                android:textColor="@color/textColorOnYellowBackground"
+                android:textColorLink="@color/backgroundColorDarkerGreen" />
+
+            <TextView
+                android:id="@+id/textview_credits_center7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textview_credits_center6"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:autoLink="all"
+                android:gravity="center_horizontal"
+                android:text="https://www.shareicon.net/food-cookie-dessert-bakery-biscuit-baker-food-and-restaurant-820722"
+                android:textColor="@color/textColorOnYellowBackground"
+                android:textColorLink="@color/backgroundColorDarkerGreen" />
+
+            <TextView
+                android:id="@+id/textview_credits_center8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textview_credits_center7"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:autoLink="all"
+                android:gravity="center_horizontal"
+                android:text="https://www.shareicon.net/organic-food-food-and-restaurant-vegetables-vegetarian-salad-vegan-healthy-food-798444"
+                android:textColor="@color/textColorOnYellowBackground"
+                android:textColorLink="@color/backgroundColorDarkerGreen" />
+
+            <TextView
+                android:id="@+id/textview_credits_center9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textview_credits_center8"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:autoLink="all"
+                android:gravity="center_horizontal"
+                android:text="https://www.shareicon.net/bottle-ketchup-dressing-sauce-salad-dressing-bottles-food-786515"
+                android:textColor="@color/textColorOnYellowBackground"
+                android:textColorLink="@color/backgroundColorDarkerGreen" />
+
+            <TextView
+                android:id="@+id/textview_credits_center10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textview_credits_center9"
+                android:layout_marginBottom="20dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:autoLink="all"
+                android:gravity="center_horizontal"
+                android:text="https://www.shareicon.net/dinner-meal-vegetables-restaurant-lunch-food-gi-106533"
+                android:textColor="@color/textColorOnYellowBackground"
+                android:textColorLink="@color/backgroundColorDarkerGreen" />
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>
 

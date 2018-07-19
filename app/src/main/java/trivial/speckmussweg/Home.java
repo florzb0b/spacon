@@ -31,6 +31,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.github.jorgecastillo.FillableLoader;
 
+import java.util.Calendar;
 import java.util.Objects;
 
 import trivial.speckmussweg.database.MyDatabase;
@@ -48,6 +49,7 @@ public class Home extends AppCompatActivity {
     FragmentTransaction fragmentTransaction;
     FragmentManager fragmentManager;
     MenuItem profileMenuItem;
+    public static boolean booleanSwitchPossible = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,24 +76,25 @@ public class Home extends AppCompatActivity {
         header.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mDrawer.closeDrawer(GravityCompat.START);
-                Fragment fragment = null;
-                Class fragmentClass;
-                fragmentClass = Profile.class;
-                try {
-                    fragment = (Fragment) fragmentClass.newInstance();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                if (booleanSwitchPossible) {
+                    mDrawer.closeDrawer(GravityCompat.START);
+                    Fragment fragment = null;
+                    Class fragmentClass;
+                    fragmentClass = Profile.class;
+                    try {
+                        fragment = (Fragment) fragmentClass.newInstance();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
-                // Insert the fragment by replacing any existing fragment
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
-                setTitle("Profile");
-                if(profileMenuItem != null){
-                    profileMenuItem.setChecked(false);
+                    // Insert the fragment by replacing any existing fragment
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+                    setTitle("Profile");
+                    if (profileMenuItem != null) {
+                        profileMenuItem.setChecked(false);
+                    }
                 }
-
             }
         });
 
@@ -130,46 +133,59 @@ public class Home extends AppCompatActivity {
     }
 
     public void selectDrawerItem(MenuItem menuItem) {
-        // Create a new fragment and specify the fragment to show based on nav item clicked
-        Fragment fragment = null;
+        if (booleanSwitchPossible) {
+            // Create a new fragment and specify the fragment to show based on nav item clicked
+            Fragment fragment = null;
 
-        Class fragmentClass;
-        switch (menuItem.getItemId()) {
-            case R.id.nav_configurator:
-                fragmentClass = Configurator.class;
-                break;
-            case R.id.nav_training:
-                fragmentClass = Training_main.class;
-                break;
-            case R.id.nav_aboutus:
-                fragmentClass = AboutUs.class;
-                break;
-            case R.id.nav_shutdown:
-                System.exit(1);
-            default:
-                fragmentClass = TestFragment.class;
+            Class fragmentClass;
+            switch (menuItem.getItemId()) {
+                case R.id.nav_configurator:
+                    fragmentClass = Configurator.class;
+                    break;
+                case R.id.nav_training:
+                    fragmentClass = Training_main.class;
+                    break;
+                case R.id.nav_aboutus:
+                    fragmentClass = AboutUs.class;
+                    break;
+                case R.id.nav_credits:
+                    fragmentClass = Credits.class;
+                    break;
+                case R.id.nav_shutdown:
+                    System.exit(1);
+                default:
+                    fragmentClass = TestFragment.class;
+            }
+
+            try {
+                fragment = (Fragment) fragmentClass.newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            // Insert the fragment by replacing any existing fragment
+            fragmentManager = getSupportFragmentManager();
+            fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.add(R.id.flContent, fragment, "fragment");
+            fragmentTransaction.commit();
+            fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+
+            // Highlight the selected item has been done by NavigationView
+            menuItem.setChecked(true);
+            profileMenuItem = menuItem;
+            // Set action bar title
+            setTitle(menuItem.getTitle());
+            // Close the navigation drawer
+            mDrawer.closeDrawers();
+        } else {
+            switch (menuItem.getItemId()) {
+                case R.id.nav_shutdown:
+                    System.exit(1);
+            }
+            Toast.makeText(this, "Please fill in all Fields with '*'",
+                    Toast.LENGTH_LONG).show();
         }
 
-        try {
-            fragment = (Fragment) fragmentClass.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        // Insert the fragment by replacing any existing fragment
-        fragmentManager = getSupportFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.flContent, fragment, "fragment");
-        fragmentTransaction.commit();
-        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
-
-        // Highlight the selected item has been done by NavigationView
-        menuItem.setChecked(true);
-        profileMenuItem = menuItem;
-        // Set action bar title
-        setTitle(menuItem.getTitle());
-        // Close the navigation drawer
-        mDrawer.closeDrawers();
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
@@ -193,53 +209,6 @@ public class Home extends AppCompatActivity {
         drawerToggle.onConfigurationChanged(newConfig);
     }
 
-    /*//Backtaste gedrückt UND es wurde mind. ein Name eingeben, dann trotzdem speichern?
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (Profile.checkContent()) {
-                *//*if (TextUtils.isEmpty(editTextName.getText().toString())) {
-                    keypressCheck = false;
-                    finish();
-                    *//*
-            } else {
-                AlertDialog.Builder dialog = new AlertDialog.Builder(Objects.requireNonNull(this));
-                dialog.setTitle("Speichern?");
-                dialog.setMessage("Änderung abspeichern?");
-                dialog.setPositiveButton("Speichern", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //saveData();
-                    }
-                });
-                dialog.setNegativeButton("Verwerfen", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(Home.this, "Eintrag nicht hinzugefügt!",
-                                Toast.LENGTH_SHORT).show();
-                        hideKeyboard(Home.this);
-                        threadAdding.start();
-                    }
-                });
-                dialog.create();
-                dialog.show();
-                //Variable wird nach 1 ms wieder auf false gesetzt,
-                // damit man mit der backtaste nach dem Dialog wieder zum Dialog kommt!
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        backPressedCheck = false;
-                    }
-                }, 1);
-                return true;
-            }
-        } else {
-            backPressedCheck = false;
-            onBackPressed();
-        }
-        return super.onKeyDown(keyCode, event);
-    }*/
-
     public void setProfile() {
         database = new MyDatabase(this);
         Cursor cursor = database.selectProfile(1);
@@ -258,6 +227,7 @@ public class Home extends AppCompatActivity {
             Glide.with(this).load(uriProfileImage).crossFade().
                     diskCacheStrategy(DiskCacheStrategy.ALL).into(headerPic);
         } else {
+            booleanSwitchPossible = false;
             Fragment fragment = null;
             Class fragmentClass;
             fragmentClass = Profile.class;
@@ -276,6 +246,20 @@ public class Home extends AppCompatActivity {
         }
     }
 
+    private String getAge(int year, int month, int day) {
+        Calendar dateOfBirth = Calendar.getInstance();
+        Calendar today = Calendar.getInstance();
+        dateOfBirth.set(year, month, day);
+        int age = today.get(Calendar.YEAR) - dateOfBirth.get(Calendar.YEAR);
+
+        if (today.get(Calendar.DAY_OF_YEAR) < dateOfBirth.get(Calendar.DAY_OF_YEAR)) {
+            age--;
+        }
+        return String.valueOf((Integer) age);
+    }
+    public static void setBooleanSwitchPossible(){
+        booleanSwitchPossible = true;
+    }
     public static void hideKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager)
                 activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -301,15 +285,21 @@ public class Home extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Fragment fragment = fragmentManager.findFragmentById(R.id.flContent);
-        if (fragment != null) {
-            fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.remove(fragment);
-            fragmentTransaction.commit();
-            setTitle("");
+        if (booleanSwitchPossible) {
+            Fragment fragment = fragmentManager.findFragmentById(R.id.flContent);
+            if (fragment != null) {
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.remove(fragment);
+                fragmentTransaction.commit();
+                setTitle("");
+            } else {
+                super.onBackPressed();
+            }
         } else {
-            super.onBackPressed();
+            Toast.makeText(this, "Please fill in all Fields with '*'",
+                    Toast.LENGTH_LONG).show();
         }
+
     }
 
 

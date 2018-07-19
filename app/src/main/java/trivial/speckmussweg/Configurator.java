@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -101,13 +102,14 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             textViewConfiguratorHeaderArtContent, footerConfiguratorCaloriesContent,
             textViewMealLayoutId1, textViewMealLayoutId2, textViewMealLayoutId3,
             textViewMealLayoutId4,
-            textViewMealLayoutBread1, textViewMealLayoutBread2, textViewMealLayoutBread3, textViewMealLayoutBread4;
+            textViewMealLayoutBread1, textViewMealLayoutBread2, textViewMealLayoutBread3, textViewMealLayoutBread4,
+            textViewMealLayoutHeaderText1, textViewMealLayoutHeaderText2, textViewMealLayoutHeaderText3, textViewMealLayoutHeaderText4;
     LinearLayout.LayoutParams llParams1, llParams2, llParams3, llParams4;
     View viewParams1, viewParams2, viewParams3, viewParams4;
     ConstraintLayout constraintLayoutScrollviewConfigurator;
     View viewIncludeLayout;
 
-    RelativeLayout relativeLayoutScrollviewMainLeft, relativeLayoutScrollviewMainRight,
+    RelativeLayout relativeLayoutMealContent, relativeLayoutScrollviewMainRight,
             relativelayoutConfiguratorFooterSelected, relativeLayoutConfiguratorFooterFirstMeal;
 
     ImageView imageViewConfiguratorDeleteBreadContent, imageViewConfiguratorDeleteCheeseContent, imageViewConfiguratorDeleteMeatContent,
@@ -117,10 +119,10 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             imageViewMealLayoutDeleteContentId3, imageViewMealLayoutDeleteContentId4;
     View selectedView;
     boolean firstMealIsOn = true, firstAttempt = false, subIsLong = false,
-            id1IsFocused = false, id2IsFocused = false, id3IsFocused = false, id4IsFocused = false,
-            buildAllowed = false;
+            changeNothing = true, buildAllowed = false;
 
     MyDatabase database;
+
   /*  Sub sub1 = new Sub(1);
     Sub sub2 = new Sub(2);
     Sub sub3 = new Sub(3);
@@ -152,6 +154,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         buttonNext = viewMain.findViewById(R.id.button_configurator_next);
         linearLayoutFirstMeal = viewMain.findViewById(R.id.linearlayout_configurator_cheese_content);
         fab = viewMain.findViewById(R.id.fab_configurator);
+
         contactList = new ArrayList<>();
         breadList = new ArrayList<>();
 
@@ -186,72 +189,95 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if (relativeLayoutMealContent.getVisibility() == View.GONE) {
+                    relativeLayoutMealContent.setVisibility(View.VISIBLE);
+                }
+                if (!(recyclerView.getLayoutManager() == horizontalLayoutManager)) {
+                    fillList();
+                }
+
                 createMeal();
+                database = new MyDatabase(getActivity());
+                Cursor cursor = database.selectBread(focusIdMeal);
+                if (cursor.getCount() < 0) {
+                    breadIsChoosed = true;
+                } else {
+                    buttonCounter = 1;
+                    breadIsChoosed = false;
+                    fillList();
+                }
             }
         });
 
         buttonLast.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                switch (buttonCounter) {
-                    case 1:
-                        break;
-                    case 2:
-                        buttonCounter--;
-                        break;
-                    case 3:
-                        buttonCounter--;
-                        break;
-                    case 4:
-                        buttonCounter--;
-                        break;
-                    case 5:
-                        buttonCounter--;
-                        break;
-                    case 6:
-                        buttonCounter--;
-                        break;
-                    default:
-                        buttonCounter = 6;
+                if (buildAllowed) {
+                    switch (buttonCounter) {
+                        case 1:
+                            break;
+                        case 2:
+                            buttonCounter--;
+                            break;
+                        case 3:
+                            buttonCounter--;
+                            break;
+                        case 4:
+                            buttonCounter--;
+                            break;
+                        case 5:
+                            buttonCounter--;
+                            break;
+                        case 6:
+                            buttonCounter--;
+                            break;
+                        default:
+                            buttonCounter = 6;
+                    }
+                    fillList();
                 }
-                fillList();
             }
         });
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (breadIsChoosed) {
-                    switch (buttonCounter) {
-                        case 1:
-                            ++buttonCounter;
-                            fillList();
-                            break;
-                        case 2:
-                            ++buttonCounter;
-                            fillList();
-                            break;
-                        case 3:
-                            ++buttonCounter;
-                            fillList();
-                            break;
-                        case 4:
-                            ++buttonCounter;
-                            fillList();
-                            break;
-                        case 5:
-                            ++buttonCounter;
-                            fillList();
-                            break;
-                        case 6:
-                            buttonCounter = 1;
-                            fillList();
-                            break;
-                        default:
-                            buttonCounter = 1;
-                            fillList();
+                if (buildAllowed) {
+                    if (breadIsChoosed) {
+                        switch (buttonCounter) {
+                            case 1:
+                                ++buttonCounter;
+                                fillList();
+                                break;
+                            case 2:
+                                ++buttonCounter;
+                                fillList();
+                                break;
+                            case 3:
+                                ++buttonCounter;
+                                fillList();
+                                break;
+                            case 4:
+                                ++buttonCounter;
+                                fillList();
+                                break;
+                            case 5:
+                                ++buttonCounter;
+                                fillList();
+                                break;
+                            case 6:
+                                buttonCounter = 1;
+                                fillList();
+                                break;
+                            default:
+                                buttonCounter = 1;
+                                fillList();
+                        }
+                    } else {
+                        Toast.makeText(getActivity(), "Please choose a Bread first to continue.", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(getActivity(), "Please choose a Bread first to continue.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Please add a Meal first with the Plusbutton", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -270,6 +296,10 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
                     for (int i = 0; i < 10; i++) {
                         kcalList[0][i] = 0;
                     }
+                    deleteMealContentViews();
+                    buttonCounter = 1;
+                    breadIsChoosed = false;
+                    fillList();
 
                     currentSum = setSum();
                     setKcalText();
@@ -553,6 +583,11 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             linearLayoutConfiguratorBreadContent.setVisibility(View.VISIBLE);
             textViewConfiguratorBreadContent.setText(cursor.getString(1));
             kcalList[0][0] = cursor.getInt(2);
+            breadIsChoosed = true;
+        } else {
+            buttonCounter = 1;
+            fillList();
+            breadIsChoosed = false;
         }
         cursor = database.selectCheese(id);
         if (cursor != null && cursor.getCount() > 0) {
@@ -696,9 +731,24 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             viewParams4.setLayoutParams(llParams4);
             linearLayoutMealLayoutClickableLayout1.setBackgroundColor(0);
             linearLayoutMealLayoutClickableLayout1.setBackground(getResources().getDrawable(R.drawable.layout_shadow_darkyellow));
-            linearLayoutMealLayoutClickableLayout2.setBackgroundColor(getResources().getColor(R.color.backgroundColorDarkerYellow));
-            linearLayoutMealLayoutClickableLayout3.setBackgroundColor(getResources().getColor(R.color.backgroundColorDarkerYellow));
-            linearLayoutMealLayoutClickableLayout4.setBackgroundColor(getResources().getColor(R.color.backgroundColorDarkerYellow));
+            linearLayoutMealLayoutClickableLayout2.setBackground(getResources().getDrawable(R.drawable.layout_shadow_darkeryellow));
+            linearLayoutMealLayoutClickableLayout3.setBackground(getResources().getDrawable(R.drawable.layout_shadow_darkeryellow));
+            linearLayoutMealLayoutClickableLayout4.setBackground(getResources().getDrawable(R.drawable.layout_shadow_darkeryellow));
+
+            textViewMealLayoutHeaderText1.setTextColor(Color.WHITE);
+            textViewMealLayoutId1.setTextColor(Color.WHITE);
+            textViewMealLayoutBread1.setTextColor(getResources().getColor(R.color.textColorOnYellowBackground));
+            textViewMealLayoutHeaderText2.setTextColor(Color.GRAY);
+            textViewMealLayoutId2.setTextColor(Color.GRAY);
+            textViewMealLayoutBread2.setTextColor(Color.GRAY);
+            textViewMealLayoutHeaderText3.setTextColor(Color.GRAY);
+            textViewMealLayoutId3.setTextColor(Color.GRAY);
+            textViewMealLayoutBread3.setTextColor(Color.GRAY);
+            textViewMealLayoutHeaderText4.setTextColor(Color.GRAY);
+            textViewMealLayoutId4.setTextColor(Color.GRAY);
+            textViewMealLayoutBread4.setTextColor(Color.GRAY);
+
+
         }
         if (id == 2) {
             /*id1IsFocused = false;
@@ -716,9 +766,23 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             viewParams4.setLayoutParams(llParams4);
             linearLayoutMealLayoutClickableLayout2.setBackgroundColor(0);
             linearLayoutMealLayoutClickableLayout2.setBackground(getResources().getDrawable(R.drawable.layout_shadow_darkyellow));
-            linearLayoutMealLayoutClickableLayout1.setBackgroundColor(getResources().getColor(R.color.backgroundColorDarkerYellow));
-            linearLayoutMealLayoutClickableLayout3.setBackgroundColor(getResources().getColor(R.color.backgroundColorDarkerYellow));
-            linearLayoutMealLayoutClickableLayout4.setBackgroundColor(getResources().getColor(R.color.backgroundColorDarkerYellow));
+            linearLayoutMealLayoutClickableLayout1.setBackground(getResources().getDrawable(R.drawable.layout_shadow_darkeryellow));
+            linearLayoutMealLayoutClickableLayout3.setBackground(getResources().getDrawable(R.drawable.layout_shadow_darkeryellow));
+            linearLayoutMealLayoutClickableLayout4.setBackground(getResources().getDrawable(R.drawable.layout_shadow_darkeryellow));
+
+
+            textViewMealLayoutHeaderText1.setTextColor(Color.GRAY);
+            textViewMealLayoutId1.setTextColor(Color.GRAY);
+            textViewMealLayoutBread1.setTextColor(Color.GRAY);
+            textViewMealLayoutHeaderText2.setTextColor(Color.WHITE);
+            textViewMealLayoutId2.setTextColor(Color.WHITE);
+            textViewMealLayoutBread2.setTextColor(getResources().getColor(R.color.textColorOnYellowBackground));
+            textViewMealLayoutHeaderText3.setTextColor(Color.GRAY);
+            textViewMealLayoutId3.setTextColor(Color.GRAY);
+            textViewMealLayoutBread3.setTextColor(Color.GRAY);
+            textViewMealLayoutHeaderText4.setTextColor(Color.GRAY);
+            textViewMealLayoutId4.setTextColor(Color.GRAY);
+            textViewMealLayoutBread4.setTextColor(Color.GRAY);
         }
         if (id == 3) {
             /*id1IsFocused = false;
@@ -736,9 +800,22 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             viewParams4.setLayoutParams(llParams4);
             linearLayoutMealLayoutClickableLayout3.setBackgroundColor(0);
             linearLayoutMealLayoutClickableLayout3.setBackground(getResources().getDrawable(R.drawable.layout_shadow_darkyellow));
-            linearLayoutMealLayoutClickableLayout1.setBackgroundColor(getResources().getColor(R.color.backgroundColorDarkerYellow));
-            linearLayoutMealLayoutClickableLayout2.setBackgroundColor(getResources().getColor(R.color.backgroundColorDarkerYellow));
-            linearLayoutMealLayoutClickableLayout4.setBackgroundColor(getResources().getColor(R.color.backgroundColorDarkerYellow));
+            linearLayoutMealLayoutClickableLayout1.setBackground(getResources().getDrawable(R.drawable.layout_shadow_darkeryellow));
+            linearLayoutMealLayoutClickableLayout2.setBackground(getResources().getDrawable(R.drawable.layout_shadow_darkeryellow));
+            linearLayoutMealLayoutClickableLayout4.setBackground(getResources().getDrawable(R.drawable.layout_shadow_darkeryellow));
+
+            textViewMealLayoutHeaderText1.setTextColor(Color.GRAY);
+            textViewMealLayoutId1.setTextColor(Color.GRAY);
+            textViewMealLayoutBread1.setTextColor(Color.GRAY);
+            textViewMealLayoutHeaderText2.setTextColor(Color.GRAY);
+            textViewMealLayoutId2.setTextColor(Color.GRAY);
+            textViewMealLayoutBread2.setTextColor(Color.GRAY);
+            textViewMealLayoutHeaderText3.setTextColor(Color.WHITE);
+            textViewMealLayoutId3.setTextColor(Color.WHITE);
+            textViewMealLayoutBread3.setTextColor(getResources().getColor(R.color.textColorOnYellowBackground));
+            textViewMealLayoutHeaderText4.setTextColor(Color.GRAY);
+            textViewMealLayoutId4.setTextColor(Color.GRAY);
+            textViewMealLayoutBread4.setTextColor(Color.GRAY);
         }
         if (id == 4) {
             /*id1IsFocused = false;
@@ -756,9 +833,22 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             viewParams3.setLayoutParams(llParams3);
             linearLayoutMealLayoutClickableLayout4.setBackgroundColor(0);
             linearLayoutMealLayoutClickableLayout4.setBackground(getResources().getDrawable(R.drawable.layout_shadow_darkyellow));
-            linearLayoutMealLayoutClickableLayout1.setBackgroundColor(getResources().getColor(R.color.backgroundColorDarkerYellow));
-            linearLayoutMealLayoutClickableLayout2.setBackgroundColor(getResources().getColor(R.color.backgroundColorDarkerYellow));
-            linearLayoutMealLayoutClickableLayout3.setBackgroundColor(getResources().getColor(R.color.backgroundColorDarkerYellow));
+            linearLayoutMealLayoutClickableLayout1.setBackground(getResources().getDrawable(R.drawable.layout_shadow_darkeryellow));
+            linearLayoutMealLayoutClickableLayout2.setBackground(getResources().getDrawable(R.drawable.layout_shadow_darkeryellow));
+            linearLayoutMealLayoutClickableLayout3.setBackground(getResources().getDrawable(R.drawable.layout_shadow_darkeryellow));
+
+            textViewMealLayoutHeaderText1.setTextColor(Color.GRAY);
+            textViewMealLayoutId1.setTextColor(Color.GRAY);
+            textViewMealLayoutBread1.setTextColor(Color.GRAY);
+            textViewMealLayoutHeaderText2.setTextColor(Color.GRAY);
+            textViewMealLayoutId2.setTextColor(Color.GRAY);
+            textViewMealLayoutBread2.setTextColor(Color.GRAY);
+            textViewMealLayoutHeaderText3.setTextColor(Color.GRAY);
+            textViewMealLayoutId3.setTextColor(Color.GRAY);
+            textViewMealLayoutBread3.setTextColor(Color.GRAY);
+            textViewMealLayoutHeaderText4.setTextColor(Color.WHITE);
+            textViewMealLayoutId4.setTextColor(Color.WHITE);
+            textViewMealLayoutBread4.setTextColor(getResources().getColor(R.color.textColorOnYellowBackground));
         }
     }
 
@@ -767,6 +857,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
                 && linearLayoutMealLayoutClickableLayout2.getVisibility() == View.GONE
                 && linearLayoutMealLayoutClickableLayout3.getVisibility() == View.GONE
                 && linearLayoutMealLayoutClickableLayout4.getVisibility() == View.GONE) {
+            relativeLayoutMealContent.setVisibility(View.GONE);
             buildAllowed = false;
         }
     }
@@ -774,7 +865,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
     @Override
     public void onItemClick(View view, int position) {
         if (!buildAllowed) {
-            Toast.makeText(getActivity(), "Please add a Meal first on the Plusbutton",
+            Toast.makeText(getActivity(), "Please add a Meal first with the Plusbutton",
                     Toast.LENGTH_SHORT).show();
         } else {
             if (buttonCounter == 1) {
@@ -807,6 +898,11 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
                 prepareSum(position, true);
             }
         }
+    }
+
+    @Override
+    public void onLongClick(View view, int position) {
+
     }
 
     private void setKcalText() {
@@ -858,13 +954,6 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             }
         }
         return sum;
-    }
-
-    //TODO: noch machen - oder eher nicht
-    @Override
-    public void onLongClick(View view, int position) {
-        //view.animate().translationZ(300).scaleX(1.1f).scaleY(1.1f).setInterpolator(new AnticipateOvershootInterpolator()).start();
-        Toast.makeText(getActivity(), "You clicked long on" + adapter.getItem(position) + " " + position, Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -1035,7 +1124,6 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
                                     .show();
                         }
                     });
-
                 }
             } else {
                 Log.e(TAG, "Couldn't get json from server.");
@@ -1050,7 +1138,6 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
                 });
 
             }
-
             return null;
         }
 
@@ -1060,32 +1147,23 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             // Dismiss the progress dialog
             if (pDialog.isShowing())
                 pDialog.dismiss();
-            /**
-             * Updating parsed JSON data into ListView
-             * */
-
-/*            ListAdapter adapter = new SimpleAdapter(
-                    getActivity(), subList,
-                    R.layout.listview_configurator_sub, new String[]{"art", "kcal",
-                    "fett"}, new int[]{R.id.name,
-                    R.id.email, R.id.mobile});
-
-
-            lv.setAdapter(adapter);*/
-
-// set up the RecyclerView
-            fillList();
         }
-
     }
 
 
     @SuppressLint("ResourceType")
     private void createSub(final String content, final int position) {
+
         final CharSequence subSize[] = new CharSequence[]{"Small (15 cm)", "Long (30 cm)"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()));
         builder.setTitle("Choose the size of your Sub");
+        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                //if 0, then breadIsChoosed does not change
+            }
+        });
         builder.setItems(subSize, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int index) {
@@ -1099,12 +1177,31 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
                     linearLayoutConfiguratorBreadHeader.setVisibility(View.VISIBLE);
                     linearLayoutConfiguratorBreadContent.setVisibility(View.VISIBLE);
                     textViewConfiguratorBreadContent.setText(content);
+                    if (focusIdMeal == 1) {
+                        textViewMealLayoutBread1.setVisibility(View.VISIBLE);
+                        textViewMealLayoutBread1.setText(content);
+                    }
+                    if (focusIdMeal == 2) {
+                        textViewMealLayoutBread2.setVisibility(View.VISIBLE);
+                        textViewMealLayoutBread2.setText(content);
+                    }
+                    if (focusIdMeal == 3) {
+                        textViewMealLayoutBread3.setVisibility(View.VISIBLE);
+                        textViewMealLayoutBread3.setText(content);
+                    }
+                    if (focusIdMeal == 4) {
+                        textViewMealLayoutBread4.setVisibility(View.VISIBLE);
+                        textViewMealLayoutBread4.setText(content);
+                    }
 
                     if (!(position == -100)) {
                         database = new MyDatabase(getActivity());
                         database.deleteBread(focusIdMeal);
                         database.insertBread(focusIdMeal, textViewConfiguratorBreadContent.getText().toString(), kcalList[0][0], 0);
                         database.close();
+                    }
+                    if (!breadIsChoosed) {
+                        breadIsChoosed = true;
                     }
                 }
                 if (index == 1) {
@@ -1116,6 +1213,22 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
                     linearLayoutConfiguratorBreadHeader.setVisibility(View.VISIBLE);
                     linearLayoutConfiguratorBreadContent.setVisibility(View.VISIBLE);
                     textViewConfiguratorBreadContent.setText(content);
+                    if (focusIdMeal == 1) {
+                        textViewMealLayoutBread1.setVisibility(View.VISIBLE);
+                        textViewMealLayoutBread1.setText(content);
+                    }
+                    if (focusIdMeal == 2) {
+                        textViewMealLayoutBread2.setVisibility(View.VISIBLE);
+                        textViewMealLayoutBread2.setText(content);
+                    }
+                    if (focusIdMeal == 3) {
+                        textViewMealLayoutBread3.setVisibility(View.VISIBLE);
+                        textViewMealLayoutBread3.setText(content);
+                    }
+                    if (focusIdMeal == 4) {
+                        textViewMealLayoutBread4.setVisibility(View.VISIBLE);
+                        textViewMealLayoutBread4.setText(content);
+                    }
 
                     if (!(position == -100)) {
                         database = new MyDatabase(getActivity());
@@ -1123,17 +1236,14 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
                         database.insertBread(focusIdMeal, textViewConfiguratorBreadContent.getText().toString(), kcalList[0][0], 1);
                         database.close();
                     }
-
-
+                    if (!breadIsChoosed) {
+                        breadIsChoosed = true;
+                    }
                 }
             }
         });
         builder.show();
-        //objectBreadContent = String.valueOf(textViewConfiguratorBreadContent.getText());
-        //objectBreadCalories = String.valueOf(adapter.getCalories(position));
-        if (!breadIsChoosed) {
-            breadIsChoosed = true;
-        }
+
     }
 
     private void setCheese(String content, final int position) {
@@ -1151,7 +1261,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         if (!(num >= 9)) {
             TextView cheeseTextView = new TextView(getActivity());
             cheeseTextView.setText(content);
-
+            cheeseTextView.setTextColor(getResources().getColor(R.color.textColorOnYellowBackground));
             linearLayoutConfiguratorCheeseContent.addView(cheeseTextView);
 
             if (!(position == -100)) {
@@ -1183,6 +1293,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         if (!(num >= 9)) {
             TextView meatTextView = new TextView(getActivity());
             meatTextView.setText(content);
+            meatTextView.setTextColor(getResources().getColor(R.color.textColorOnYellowBackground));
             linearLayoutConfiguratorMeatContent.addView(meatTextView);
 
             if (!(position == -100)) {
@@ -1210,6 +1321,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         if (!(num >= 9)) {
             TextView saladTextView = new TextView(getActivity());
             saladTextView.setText(content);
+            saladTextView.setTextColor(getResources().getColor(R.color.textColorOnYellowBackground));
             linearLayoutConfiguratorSaladContent.addView(saladTextView);
 
             if (!(position == -100)) {
@@ -1237,6 +1349,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         if (!(num >= 9)) {
             TextView extraTextView = new TextView(getActivity());
             extraTextView.setText(content);
+            extraTextView.setTextColor(getResources().getColor(R.color.textColorOnYellowBackground));
             linearLayoutConfiguratorExtraContent.addView(extraTextView);
 
             if (!(position == -100)) {
@@ -1265,6 +1378,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         if (!(num >= 9)) {
             TextView sauceTextView = new TextView(getActivity());
             sauceTextView.setText(content);
+            sauceTextView.setTextColor(getResources().getColor(R.color.textColorOnYellowBackground));
             linearLayoutConfiguratorSauceContent.addView(sauceTextView);
 
             if (!(position == -100)) {
@@ -1290,10 +1404,6 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
     @SuppressLint("CutPasteId")
     private void initializeViews() {
 
-
-        //relativeLayoutScrollviewMainLeft = viewMain.findViewById(R.id.include_first_meal).findViewById(R.id.relativelayout_scrollview_main);
-        //relativeLayoutScrollviewMainRight =  viewMain.findViewById(R.id.include_second_meal).findViewById(R.id.relativelayout_scrollview_main);
-
         if (firstMealIsOn) {
             selectedView = viewMain.findViewById(R.id.include_first_meal);
         }
@@ -1315,6 +1425,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         linearLayoutConfiguratorSauceContent = selectedView.findViewById(R.id.linearlayout_configurator_sauce_content);
         textViewConfiguratorHeaderArtContent = viewMain.findViewById(R.id.textview_configurator_header_art_content);
         footerConfiguratorCaloriesContent = selectedView.findViewById(R.id.footer_configurator_calories_content);
+        relativeLayoutMealContent = viewMain.findViewById(R.id.relativelayout_scrollview_configurator_meal_content);
 
         linearLayoutConfiguratorMainTab = viewMain.findViewById(R.id.linearlayout_configurator_tablayout);
 
@@ -1329,6 +1440,18 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         textViewMealLayoutBread2 = viewMain.findViewById(R.id.layout_meallist_subart2);
         textViewMealLayoutBread3 = viewMain.findViewById(R.id.layout_meallist_subart3);
         textViewMealLayoutBread4 = viewMain.findViewById(R.id.layout_meallist_subart4);
+
+        textViewMealLayoutHeaderText1 = viewMain.findViewById(R.id.layout_meallist_header_text1);
+        textViewMealLayoutHeaderText2 = viewMain.findViewById(R.id.layout_meallist_header_text2);
+        textViewMealLayoutHeaderText3 = viewMain.findViewById(R.id.layout_meallist_header_text3);
+        textViewMealLayoutHeaderText4 = viewMain.findViewById(R.id.layout_meallist_header_text4);
+
+        textViewMealLayoutId1 = viewMain.findViewById(R.id.layout_meallist_id);
+        textViewMealLayoutId2 = viewMain.findViewById(R.id.layout_meallist_id2);
+        textViewMealLayoutId3 = viewMain.findViewById(R.id.layout_meallist_id3);
+        textViewMealLayoutId4 = viewMain.findViewById(R.id.layout_meallist_id4);
+
+
     }
 
     @Override
@@ -1337,6 +1460,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
@@ -1344,6 +1468,25 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             case R.id.optionsmenu_configurator_starttraining:
                 return true;
             case R.id.optionsmenu_configurator_showinfo:
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()), R.style.AlertDialogStyle);
+                alertDialogBuilder.setTitle("Information about Meals");
+                alertDialogBuilder.setIcon(R.drawable.ic_info_outline_white_24dp);
+                TextView content = new TextView(getActivity());
+                content.setTextColor(Color.WHITE);
+                String alert1 = "The nutritional information is based on a 15 cm sub.";
+                String alert2 = "Including lettuce, cucumbers, tomatoes, green peppers and red onions.";
+                String alert3 = "Desires of the guest to change the default occupancy lead to changed nutrition information.";
+                String alert4 = "The nutritional information of salad is based on the following contents:";
+                String alert5 = "lettuce, tomatoes, green peppers, cucumbers and red onions";
+                content.setText(alert1 +"\n"+ alert2 +"\n"+ alert3+"\n"+"\n"+alert4+"\n"+alert5);
+                alertDialogBuilder.setView(content);
+                alertDialogBuilder.setCancelable(false);
+                alertDialogBuilder.setPositiveButton("Got it", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                alertDialogBuilder.show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -1355,7 +1498,6 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
     public void createMeal() {
         deleteMealContentViews();
         buildAllowed = true;
-        //subListId.add(sub.getmId());
 
         if (firstAttempt) {
             if (linearLayoutMealLayoutClickableLayout4.getVisibility() == View.GONE) {
@@ -1374,49 +1516,29 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
 
         if (layoutId == 1) {
 
-            //sub1 = new Sub(1, objectBreadContent, objectBreadCalories, subIsLong, objectCheeseList, objectMeatList, objectExtraList, saucekcalList);
-            /*sub1.setmBread(objectBreadContent);
-            sub1.setmBreadCalories(objectBreadCalories);
-            sub1.setmSubIsLong(subIsLong);
-            sub1.setmCheese(objectCheeseList);
-            sub1.setmCheeseCalories(objectCheeseListCalories);
-            sub1.setmMeat(objectMeatList);
-            sub1.setmMeatCalories(objectMeatListCalories);
-            sub1.setmExtra(objectExtraList);
-            sub1.setmExtraCalories(objectExtraListCalories);
-            sub1.setmSauce(objectSauceList);
-            sub1.setmSauceCalories(objectSauceListCalories);*/
             linearLayoutMealLayoutClickableLayout1.setVisibility(View.VISIBLE);
-            textViewMealLayoutId1 = viewMain.findViewById(R.id.layout_meallist_id);
             textViewMealLayoutId1.setText(String.valueOf(layoutId));
             getFocusOnMeal(1);
 
         }
         if (layoutId == 2) {
-            //sub2 = new Sub(2, objectBreadContent, objectBreadCalories, subIsLong, objectCheeseList, objectMeatList, objectExtraList, saucekcalList);
             linearLayoutMealLayoutClickableLayout2.setVisibility(View.VISIBLE);
-            textViewMealLayoutId2 = viewMain.findViewById(R.id.layout_meallist_id2);
             textViewMealLayoutId2.setText(String.valueOf(layoutId));
             getFocusOnMeal(2);
         }
         if (layoutId == 3) {
-            //sub3 = new Sub(3, objectBreadContent, objectBreadCalories, subIsLong, objectCheeseList, objectMeatList, objectExtraList, saucekcalList);
             linearLayoutMealLayoutClickableLayout3.setVisibility(View.VISIBLE);
-            textViewMealLayoutId3 = viewMain.findViewById(R.id.layout_meallist_id3);
             textViewMealLayoutId3.setText(String.valueOf(layoutId));
             getFocusOnMeal(3);
         }
         if (layoutId == 4) {
-            //sub4 = new Sub(4, objectBreadContent, objectBreadCalories, subIsLong, objectCheeseList, objectMeatList, objectExtraList, saucekcalList);
             linearLayoutMealLayoutClickableLayout4.setVisibility(View.VISIBLE);
-            textViewMealLayoutId4 = viewMain.findViewById(R.id.layout_meallist_id4);
             textViewMealLayoutId4.setText(String.valueOf(layoutId));
             getFocusOnMeal(4);
             //first time all meals are visible
             if (!firstAttempt) {
                 firstAttempt = true;
             }
-
 
         }
 
@@ -1431,6 +1553,5 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         }
 
     }
-
 
 }

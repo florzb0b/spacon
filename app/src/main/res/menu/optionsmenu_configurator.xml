@@ -7,12 +7,12 @@
         android:orderInCategory="1"
         android:title="Shows Information about the Meals"
         app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_info_outline_black_24dp"/>
+        android:icon="@drawable/ic_info_outline_white_24dp"/>
 
     <item android:id="@+id/optionsmenu_configurator_starttraining"
         android:orderInCategory="1"
         android:title="Start Training"
         app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_done_black_24dp"/>
+        android:icon="@drawable/ic_fitness_center_white_24dp"/>
 
 </menu>

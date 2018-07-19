@@ -9,9 +9,15 @@
     </style>
 
     <style name="HeaderBar">
-        <item name="android:background">@color/backgroundColorDarkGreen</item>
         <item name="android:textColor">@android:color/white</item>
+        <item name="actionMenuTextColor">@android:color/white</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorSecondary">@android:color/white</item>
     </style>
 
-
+<style name="AlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+    <item name="android:background">@color/backgroundColorDarkGreen</item>
+    <item name="android:textColor">@android:color/white</item>
+    <item name="textColorAlertDialogListItem">@android:color/white</item>
+</style>
 </resources>

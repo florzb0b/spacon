@@ -39,7 +39,7 @@
                 android:contentDescription="TODO"
                 android:padding="5dp"
                 android:visibility="visible"
-                app:srcCompat="@drawable/ic_chevron_left_black_24dp"
+                app:srcCompat="@drawable/ic_chevron_left_white_24dp"
                 tools:ignore="VectorDrawableCompat" />
 
             <ImageView
@@ -51,7 +51,7 @@
                 android:contentDescription="TODO"
                 android:padding="5dp"
                 android:visibility="visible"
-                app:srcCompat="@drawable/ic_chevron_right_black_24dp"
+                app:srcCompat="@drawable/ic_chevron_right_white_24dp"
                 tools:ignore="VectorDrawableCompat" />
         </RelativeLayout>
 
@@ -121,7 +121,8 @@
                 android:layout_weight="1"
                 android:background="@drawable/layout_shadow_darkyellow"
                 android:elevation="10dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <include
                     android:id="@+id/include_first_meal"
@@ -163,18 +164,23 @@
                             android:orientation="horizontal">
 
                             <TextView
+                                android:id="@+id/layout_meallist_header_text1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="5dp"
                                 android:layout_weight="1"
-                                android:text="Meal Nr." />
+                                android:text="Meal Nr."
+                                android:textStyle="italic|bold"
+                                android:textColor="@android:color/white"/>
 
                             <TextView
                                 android:id="@+id/layout_meallist_id"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="5dp"
-                                android:hint="id" />
+                                android:hint="id"
+                                android:textStyle="italic|bold"
+                                android:textColor="@android:color/white"/>
 
                             <ImageView
                                 android:id="@+id/layout_meallist_delete_meal"
@@ -182,7 +188,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_margin="5dp"
                                 android:contentDescription="TODO"
-                                android:src="@drawable/ic_delete_black_24dp" />
+                                android:src="@drawable/ic_delete_white_24dp" />
 
                         </LinearLayout>
 
@@ -226,18 +232,23 @@
                             android:orientation="horizontal">
 
                             <TextView
+                                android:id="@+id/layout_meallist_header_text2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="5dp"
                                 android:layout_weight="1"
-                                android:text="Meal Nr." />
+                                android:text="Meal Nr."
+                                android:textStyle="italic|bold"
+                                android:textColor="@android:color/white"/>
 
                             <TextView
                                 android:id="@+id/layout_meallist_id2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="5dp"
-                                android:hint="id" />
+                                android:hint="id"
+                                android:textStyle="italic|bold"
+                                android:textColor="@android:color/white"/>
 
                             <ImageView
                                 android:id="@+id/layout_meallist_delete_meal2"
@@ -245,7 +256,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_margin="5dp"
                                 android:contentDescription="TODO"
-                                android:src="@drawable/ic_delete_black_24dp" />
+                                android:src="@drawable/ic_delete_white_24dp" />
 
                         </LinearLayout>
 
@@ -290,18 +301,23 @@
                             android:orientation="horizontal">
 
                             <TextView
+                                android:id="@+id/layout_meallist_header_text3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="5dp"
                                 android:layout_weight="1"
-                                android:text="Meal Nr." />
+                                android:text="Meal Nr."
+                                android:textStyle="italic|bold"
+                                android:textColor="@android:color/white"/>
 
                             <TextView
                                 android:id="@+id/layout_meallist_id3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="5dp"
-                                android:hint="id" />
+                                android:hint="id"
+                                android:textColor="@android:color/white"
+                                android:textStyle="italic|bold"/>
 
                             <ImageView
                                 android:id="@+id/layout_meallist_delete_meal3"
@@ -309,7 +325,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_margin="5dp"
                                 android:contentDescription="TODO"
-                                android:src="@drawable/ic_delete_black_24dp" />
+                                android:src="@drawable/ic_delete_white_24dp" />
 
                         </LinearLayout>
 
@@ -353,18 +369,23 @@
                             android:orientation="horizontal">
 
                             <TextView
+                                android:id="@+id/layout_meallist_header_text4"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="5dp"
                                 android:layout_weight="1"
-                                android:text="Meal Nr." />
+                                android:text="Meal Nr."
+                                android:textStyle="italic|bold"
+                                android:textColor="@android:color/white"/>
 
                             <TextView
                                 android:id="@+id/layout_meallist_id4"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="5dp"
-                                android:hint="id" />
+                                android:hint="id"
+                                android:textStyle="italic|bold"
+                                android:textColor="@android:color/white"/>
 
                             <ImageView
                                 android:id="@+id/layout_meallist_delete_meal4"
@@ -372,7 +393,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_margin="5dp"
                                 android:contentDescription="TODO"
-                                android:src="@drawable/ic_delete_black_24dp" />
+                                android:src="@drawable/ic_delete_white_24dp" />
 
                         </LinearLayout>
 

@@ -11,7 +11,7 @@
             android:title="@string/fragment_title_Configurator" />
         <item
             android:id="@+id/nav_training"
-            android:icon="@drawable/ic_fitness_center_black_24dp"
+            android:icon="@drawable/ic_fitness_center_white_24dp"
             android:title="@string/fragment_title_Training" />
     </group>
 
