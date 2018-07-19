@@ -1,6 +1,5 @@
 package trivial.speckmussweg;
 
-import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
@@ -10,7 +9,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -24,13 +22,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,7 +39,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-//import trivial.speckmussweg.Objects.Sub;
 import trivial.speckmussweg.adapter.RecyclerViewAdapter;
 import trivial.speckmussweg.database.MyDatabase;
 import trivial.speckmussweg.internet.*;
@@ -57,12 +51,6 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
     private String TAG = Home.class.getSimpleName();
 
     private ProgressDialog pDialog;
-    private ListView lv;
-
-    // URL to get contacts JSON
-    // http://thelegendsrising.de/test.json
-    // https://api.androidhive.info/contacts/
-    private static String url = "http://thelegendsrising.de/subs.json";
 
     ArrayList<HashMap<String, String>> contactList;
     ArrayList<HashMap<String, String>> breadList;
@@ -74,7 +62,6 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
 
     List<String> breadNameList, cheeseNameList, meatNameList, saladNameList, extrasNameList, sauceNameList;
     List<String> breadkcalList, cheesekcalList, meatkcalList, saladkcalList, extraskcalList, saucekcalList;
-    //List<String> sumCaloriesFirstMeal, sumCaloriesSecondMeal;
 
     LinearLayoutManager horizontalLayoutManager;
     List<Integer> subListId;
@@ -102,7 +89,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             linearLayoutConfiguratorMainTab,
             linearLayoutMealLayoutClickableLayout1, linearLayoutMealLayoutClickableLayout2,
             linearLayoutMealLayoutClickableLayout3, linearLayoutMealLayoutClickableLayout4,
-    linearLayoutListViewItem;
+            linearLayoutListViewItem;
     TextView textViewConfiguratorBreadContent, textViewConfiguratorBreadSizeContent,
             textViewConfiguratorHeaderArtContent, footerConfiguratorCaloriesContent,
             textViewMealLayoutId1, textViewMealLayoutId2, textViewMealLayoutId3,
@@ -111,11 +98,8 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             textViewMealLayoutHeaderText1, textViewMealLayoutHeaderText2, textViewMealLayoutHeaderText3, textViewMealLayoutHeaderText4;
     LinearLayout.LayoutParams llParams1, llParams2, llParams3, llParams4;
     View viewParams1, viewParams2, viewParams3, viewParams4;
-    ConstraintLayout constraintLayoutScrollviewConfigurator;
-    View viewIncludeLayout;
 
-    RelativeLayout relativeLayoutMealContent, relativeLayoutScrollviewMainRight,
-            relativelayoutConfiguratorFooterSelected, relativeLayoutConfiguratorFooterFirstMeal;
+    RelativeLayout relativeLayoutMealContent, relativeLayoutConfiguratorFooterFirstMeal;
 
     ImageView imageViewConfiguratorDeleteBreadContent, imageViewConfiguratorDeleteCheeseContent, imageViewConfiguratorDeleteMeatContent,
             imageViewConfiguratorDeleteSaladContent, imageViewConfiguratorDeleteExtraContent,
@@ -123,16 +107,11 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
     ImageView imageViewMealLayoutDeleteContentId1, imageViewMealLayoutDeleteContentId2,
             imageViewMealLayoutDeleteContentId3, imageViewMealLayoutDeleteContentId4;
     View selectedView;
-    boolean firstMealIsOn = true, firstAttempt = false, subIsLong = false,
-            changeNothing = true, buildAllowed = false;
+    boolean firstMealIsOn = true, firstAttempt = false, subIsLong = false, buildAllowed = false;
 
 
     MyDatabase database;
 
-  /*  Sub sub1 = new Sub(1);
-    Sub sub2 = new Sub(2);
-    Sub sub3 = new Sub(3);
-    Sub sub4 = new Sub(4);*/
 
     @Nullable
     @Override
@@ -222,73 +201,83 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         buttonLast.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (buildAllowed) {
-                    switch (buttonCounter) {
-                        case 1:
-                            break;
-                        case 2:
-                            buttonCounter--;
-                            break;
-                        case 3:
-                            buttonCounter--;
-                            break;
-                        case 4:
-                            buttonCounter--;
-                            break;
-                        case 5:
-                            buttonCounter--;
-                            break;
-                        case 6:
-                            buttonCounter--;
-                            break;
-                        default:
-                            buttonCounter = 6;
+                    if (buildAllowed) {
+                        switch (buttonCounter) {
+                            case 1:
+                                buttonCounter = 6;
+                                fillList();
+                                break;
+                            case 2:
+                                buttonCounter--;
+                                fillList();
+                                break;
+                            case 3:
+                                buttonCounter--;
+                                fillList();
+                                break;
+                            case 4:
+                                buttonCounter--;
+                                fillList();
+                                break;
+                            case 5:
+                                buttonCounter--;
+                                fillList();
+                                break;
+                            case 6:
+                                buttonCounter--;
+                                fillList();
+                                break;
+                            default:
+                                buttonCounter = 6;
+                                fillList();
+                        }
+
                     }
-                    fillList();
-                }
+
             }
         });
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (buildAllowed) {
-                    if (breadIsChoosed) {
-                        switch (buttonCounter) {
-                            case 1:
-                                ++buttonCounter;
-                                fillList();
-                                break;
-                            case 2:
-                                ++buttonCounter;
-                                fillList();
-                                break;
-                            case 3:
-                                ++buttonCounter;
-                                fillList();
-                                break;
-                            case 4:
-                                ++buttonCounter;
-                                fillList();
-                                break;
-                            case 5:
-                                ++buttonCounter;
-                                fillList();
-                                break;
-                            case 6:
-                                buttonCounter = 1;
-                                fillList();
-                                break;
-                            default:
-                                buttonCounter = 1;
-                                fillList();
+                    if (buildAllowed) {
+                        if (breadIsChoosed) {
+                            switch (buttonCounter) {
+                                case 1:
+                                    ++buttonCounter;
+                                    fillList();
+                                    break;
+                                case 2:
+                                    ++buttonCounter;
+                                    fillList();
+                                    break;
+                                case 3:
+                                    ++buttonCounter;
+                                    fillList();
+                                    break;
+                                case 4:
+                                    ++buttonCounter;
+                                    fillList();
+                                    break;
+                                case 5:
+                                    ++buttonCounter;
+                                    fillList();
+                                    break;
+                                case 6:
+                                    buttonCounter = 1;
+                                    fillList();
+                                    break;
+                                default:
+                                    buttonCounter = 1;
+                                    fillList();
+                            }
+                        } else {
+                            Toast.makeText(getActivity(), "Please choose a Bread first to continue.", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        Toast.makeText(getActivity(), "Please choose a Bread first to continue.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Please add a Meal first with the Plusbutton", Toast.LENGTH_SHORT).show();
                     }
-                } else {
-                    Toast.makeText(getActivity(), "Please add a Meal first with the Plusbutton", Toast.LENGTH_SHORT).show();
                 }
-            }
+
         });
 
         imageViewConfiguratorDeleteBreadContent.setOnClickListener(new View.OnClickListener() {
@@ -424,7 +413,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
                         linearLayoutMealLayoutClickableLayout1.setVisibility(View.GONE);
                         checkBuildIsAllowed();
                     }
-                },500);
+                }, 500);
 
                 deleteMealContentViews();
                 deleteMealInDatabase(layoutId);
@@ -444,7 +433,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
                         linearLayoutMealLayoutClickableLayout2.setVisibility(View.GONE);
                         checkBuildIsAllowed();
                     }
-                },500);
+                }, 500);
                 deleteMealContentViews();
                 deleteMealInDatabase(layoutId);
 
@@ -463,7 +452,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
                         linearLayoutMealLayoutClickableLayout3.setVisibility(View.GONE);
                         checkBuildIsAllowed();
                     }
-                },500);
+                }, 500);
                 deleteMealContentViews();
                 deleteMealInDatabase(layoutId);
 
@@ -482,7 +471,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
                         linearLayoutMealLayoutClickableLayout4.setVisibility(View.GONE);
                         checkBuildIsAllowed();
                     }
-                },500);
+                }, 500);
                 deleteMealContentViews();
                 deleteMealInDatabase(layoutId);
 
@@ -599,12 +588,11 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
 
     }
 
-    //SHOULDBEDONE####################################################################################
-    //cursor.getString(1); NAME
-    //cursor.getString(2); CALORIES
-    //cursor.getString(3); ID FOR ALL
+    @SuppressLint("SetTextI18n")
     private void setMealFromDatabase(int id) {
-
+        //cursor.getString(1); NAME
+        //cursor.getString(2); CALORIES
+        //cursor.getString(3); ID FOR ALL
 
         database = new MyDatabase(getActivity());
         Cursor cursor;
@@ -704,6 +692,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         database.close();
     }
 
+    @SuppressLint("SetTextI18n")
     private void fillList() {
 
         ValueAnimator slideAnimator = ValueAnimator
@@ -721,30 +710,31 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         slideAnimator.setDuration(300);
         slideAnimator.start();
         recyclerView.setLayoutManager(horizontalLayoutManager);
-        if (!breadIsChoosed || buttonCounter == 1) {
-            adapter = new RecyclerViewAdapter(getActivity(), breadNameList, breadkcalList, buttonCounter);
-            textViewConfiguratorHeaderArtContent.setText("Bread");
-        }
-        if (buttonCounter == 2) {
-            adapter = new RecyclerViewAdapter(getActivity(), cheeseNameList, cheesekcalList, buttonCounter);
-            textViewConfiguratorHeaderArtContent.setText("Cheese");
-        }
-        if (buttonCounter == 3) {
-            adapter = new RecyclerViewAdapter(getActivity(), meatNameList, meatkcalList, buttonCounter);
-            textViewConfiguratorHeaderArtContent.setText("Meat");
-        }
-        if (buttonCounter == 4) {
-            adapter = new RecyclerViewAdapter(getActivity(), saladNameList, saladkcalList, buttonCounter);
-            textViewConfiguratorHeaderArtContent.setText("Salad");
-        }
-        if (buttonCounter == 5) {
-            adapter = new RecyclerViewAdapter(getActivity(), extrasNameList, extraskcalList, buttonCounter);
-            textViewConfiguratorHeaderArtContent.setText("Extra");
-        }
-        if (buttonCounter == 6) {
-            adapter = new RecyclerViewAdapter(getActivity(), sauceNameList, saucekcalList, buttonCounter);
-            textViewConfiguratorHeaderArtContent.setText("Sauce");
-        }
+
+            if (!breadIsChoosed || buttonCounter == 1) {
+                adapter = new RecyclerViewAdapter(getActivity(), breadNameList, breadkcalList, buttonCounter);
+                textViewConfiguratorHeaderArtContent.setText("Bread");
+            }
+            if (buttonCounter == 2) {
+                adapter = new RecyclerViewAdapter(getActivity(), cheeseNameList, cheesekcalList, buttonCounter);
+                textViewConfiguratorHeaderArtContent.setText("Cheese");
+            }
+            if (buttonCounter == 3) {
+                adapter = new RecyclerViewAdapter(getActivity(), meatNameList, meatkcalList, buttonCounter);
+                textViewConfiguratorHeaderArtContent.setText("Meat");
+            }
+           if (buttonCounter == 4) {
+                adapter = new RecyclerViewAdapter(getActivity(), saladNameList, saladkcalList, buttonCounter);
+                textViewConfiguratorHeaderArtContent.setText("Salad");
+            }
+            if (buttonCounter == 5) {
+                adapter = new RecyclerViewAdapter(getActivity(), extrasNameList, extraskcalList, buttonCounter);
+                textViewConfiguratorHeaderArtContent.setText("Extra");
+            }
+            if (buttonCounter == 6) {
+                adapter = new RecyclerViewAdapter(getActivity(), sauceNameList, saucekcalList, buttonCounter);
+                textViewConfiguratorHeaderArtContent.setText("Sauce");
+            }
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -989,7 +979,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
                                 Integer.parseInt(adapter.getCalories(position)) * 2;
 
                     } else {
-                        if (position != 0) {
+                        if (position >= 0) {
                             kcalList[buttonCounter - 1][i] =
                                     Integer.parseInt(adapter.getCalories(position));
                         }
@@ -1046,6 +1036,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             HttpHandler sh = new HttpHandler();
 
             // Making a request to url and getting response
+            String url = "http://thelegendsrising.de/subs.json";
             String jsonStr = sh.makeServiceCall(url);
 
             //Log.e(TAG, "Response from url: " + jsonStr);
@@ -1058,19 +1049,10 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
 
                         JSONObject s = bread.getJSONObject(i);
 
-                        String id = s.getString("id");
                         String art = s.getString("name");
                         String kcal = s.getString("kcal");
-                        String fett = s.getString("fett");
-
-                   /*     HashMap<String, String> tempSubs = new HashMap<>();
-                        tempSubs.put("id", id);
-                        tempSubs.put("art", art);
-                        tempSubs.put("kcal", kcal);
-                        tempSubs.put("fett", fett);*/
 
 
-                        //breadList.add(tempSubs);
                         breadNameList.add(art);
                         breadkcalList.add(kcal);
                     }
@@ -1079,10 +1061,9 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
                     for (int i = 0; i < cheese.length(); i++) {
                         JSONObject s = cheese.getJSONObject(i);
 
-                        String id = s.getString("id");
+
                         String art = s.getString("name");
                         String kcal = s.getString("kcal");
-                        String fett = s.getString("fett");
 
 
                         cheeseNameList.add(art);
@@ -1094,10 +1075,9 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
                     for (int i = 0; i < meat.length(); i++) {
                         JSONObject s = meat.getJSONObject(i);
 
-                        String id = s.getString("id");
+
                         String art = s.getString("name");
                         String kcal = s.getString("kcal");
-                        String fett = s.getString("fett");
 
 
                         meatNameList.add(art);
@@ -1109,10 +1089,9 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
                     for (int i = 0; i < salad.length(); i++) {
                         JSONObject s = salad.getJSONObject(i);
 
-                        String id = s.getString("id");
+
                         String art = s.getString("name");
                         String kcal = s.getString("kcal");
-                        String fett = s.getString("fett");
 
 
                         saladNameList.add(art);
@@ -1124,10 +1103,9 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
                     for (int i = 0; i < extras.length(); i++) {
                         JSONObject s = extras.getJSONObject(i);
 
-                        String id = s.getString("id");
+
                         String art = s.getString("name");
                         String kcal = s.getString("kcal");
-                        String fett = s.getString("fett");
 
 
                         extrasNameList.add(art);
@@ -1139,48 +1117,15 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
                     for (int i = 0; i < sauce.length(); i++) {
                         JSONObject s = sauce.getJSONObject(i);
 
-                        String id = s.getString("id");
+
                         String art = s.getString("name");
                         String kcal = s.getString("kcal");
-                        String fett = s.getString("fett");
+
 
                         sauceNameList.add(art);
                         saucekcalList.add(kcal);
                     }
-                /*try {
-                    JSONObject jsonObj = new JSONObject(jsonStr);
 
-                    // Getting JSON Array node
-                    JSONArray contacts = jsonObj.getJSONArray("contacts");
-
-                    // looping through All Contacts
-                    for (int i = 0; i < contacts.length(); i++) {
-                        JSONObject c = contacts.getJSONObject(i);
-
-                        String id = c.getString("id");
-                        String name = c.getString("name");
-                        String email = c.getString("email");
-                        String address = c.getString("address");
-                        String gender = c.getString("gender");
-
-                        // Phone node is JSON Object
-                        JSONObject phone = c.getJSONObject("phone");
-                        String mobile = phone.getString("mobile");
-                        String home = phone.getString("home");
-                        String office = phone.getString("office");
-
-                        // tmp hash map for single contact
-                        HashMap<String, String> contact = new HashMap<>();
-
-                        // adding each child node to HashMap key => value
-                        contact.put("id", id);
-                        contact.put("name", name);
-                        contact.put("email", email);
-                        contact.put("mobile", mobile);
-
-                        // adding contact to contact list
-                        contactList.add(contact);
-                    }*/
                 } catch (final JSONException e) {
                     Log.e(TAG, "Json parsing error: " + e.getMessage());
                     Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
@@ -1224,7 +1169,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
 
         final CharSequence subSize[] = new CharSequence[]{"Small (15 cm)", "Long (30 cm)"};
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()));
+        AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()), R.style.AlertDialogStyle);
         builder.setTitle("Choose the size of your Sub");
         builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
@@ -1233,11 +1178,12 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             }
         });
         builder.setItems(subSize, new DialogInterface.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(DialogInterface dialog, int index) {
                 if (index == 0) {
                     subIsLong = false;
-                    if (position != 0) {
+                    if (position >= 0) {
                         prepareSum(position, true);
                     }
 
@@ -1274,7 +1220,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
                 }
                 if (index == 1) {
                     subIsLong = true;
-                    if (position != 0) {
+                    if (position >= 0) {
                         prepareSum(position, true);
                     }
                     textViewConfiguratorBreadSizeContent.setText("30");
@@ -1315,9 +1261,6 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
     }
 
     private void setCheese(String content, final int position) {
-//TextView textView = new TextView(getActivity());
-        //textView.setText(content);
-        //linearLayoutFirstMeal.addView(textView);
 
         if (linearLayoutConfiguratorCheeseHeader.getVisibility() == View.GONE &&
                 linearLayoutConfiguratorCheeseContent.getVisibility() == View.GONE) {
@@ -1326,7 +1269,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         }
         int num = linearLayoutConfiguratorCheeseContent.getChildCount();
 
-        if (!(num >= 9)) {
+        if (!(num >= 10)) {
             TextView cheeseTextView = new TextView(getActivity());
             cheeseTextView.setText(content);
             cheeseTextView.setTextColor(getResources().getColor(R.color.textColorOnYellowBackground));
@@ -1348,9 +1291,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
     }
 
     private void setMeat(String content, final int position) {
-//TextView textView = new TextView(getActivity());
-        //textView.setText(content);
-        //linearLayoutFirstMeal.addView(textView);
+
         if (linearLayoutConfiguratorMeatHeader.getVisibility() == View.GONE &&
                 linearLayoutConfiguratorMeatContent.getVisibility() == View.GONE) {
             linearLayoutConfiguratorMeatHeader.setVisibility(View.VISIBLE);
@@ -1358,7 +1299,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         }
         int num = linearLayoutConfiguratorMeatContent.getChildCount();
 
-        if (!(num >= 9)) {
+        if (!(num >= 10)) {
             TextView meatTextView = new TextView(getActivity());
             meatTextView.setText(content);
             meatTextView.setTextColor(getResources().getColor(R.color.textColorOnYellowBackground));
@@ -1376,9 +1317,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
     }
 
     private void setSalad(String content, final int position) {
-//TextView textView = new TextView(getActivity());
-        //textView.setText(content);
-        //linearLayoutFirstMeal.addView(textView);
+
         if (linearLayoutConfiguratorSaladHeader.getVisibility() == View.GONE &&
                 linearLayoutConfiguratorSaladContent.getVisibility() == View.GONE) {
             linearLayoutConfiguratorSaladHeader.setVisibility(View.VISIBLE);
@@ -1386,7 +1325,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         }
         int num = linearLayoutConfiguratorSaladContent.getChildCount();
 
-        if (!(num >= 9)) {
+        if (!(num >= 10)) {
             TextView saladTextView = new TextView(getActivity());
             saladTextView.setText(content);
             saladTextView.setTextColor(getResources().getColor(R.color.textColorOnYellowBackground));
@@ -1404,17 +1343,15 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
     }
 
     private void setExtras(String content, final int position) {
-//TextView textView = new TextView(getActivity());
-        //textView.setText(content);
-        //linearLayoutFirstMeal.addView(textView);
+
         if (linearLayoutConfiguratorExtraHeader.getVisibility() == View.GONE &&
                 linearLayoutConfiguratorExtraContent.getVisibility() == View.GONE) {
             linearLayoutConfiguratorExtraHeader.setVisibility(View.VISIBLE);
             linearLayoutConfiguratorExtraContent.setVisibility(View.VISIBLE);
         }
-        int num = linearLayoutConfiguratorMeatContent.getChildCount();
+        int num = linearLayoutConfiguratorExtraContent.getChildCount();
 
-        if (!(num >= 9)) {
+        if (!(num >= 10)) {
             TextView extraTextView = new TextView(getActivity());
             extraTextView.setText(content);
             extraTextView.setTextColor(getResources().getColor(R.color.textColorOnYellowBackground));
@@ -1433,9 +1370,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
     }
 
     private void setSauce(String content, final int position) {
-//TextView textView = new TextView(getActivity());
-        //textView.setText(content);
-        //linearLayoutFirstMeal.addView(textView);
+
         if (linearLayoutConfiguratorSauceHeader.getVisibility() == View.GONE &&
                 linearLayoutConfiguratorSauceContent.getVisibility() == View.GONE) {
             linearLayoutConfiguratorSauceHeader.setVisibility(View.VISIBLE);
@@ -1443,7 +1378,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         }
         int num = linearLayoutConfiguratorSauceContent.getChildCount();
 
-        if (!(num >= 9)) {
+        if (!(num >= 10)) {
             TextView sauceTextView = new TextView(getActivity());
             sauceTextView.setText(content);
             sauceTextView.setTextColor(getResources().getColor(R.color.textColorOnYellowBackground));
@@ -1475,7 +1410,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         if (firstMealIsOn) {
             selectedView = viewMain.findViewById(R.id.include_first_meal);
         }
-//        relativelayoutConfiguratorFooterSelected = selectedView.findViewById(R.id.relativelayout_configurator_footer_selected);
+
         relativeLayoutConfiguratorFooterFirstMeal = selectedView.findViewById(R.id.relativelayout_configurator_footer);
         linearLayoutConfiguratorBreadHeader = selectedView.findViewById(R.id.linearlayout_configurator_bread_header);
         linearLayoutConfiguratorBreadContent = selectedView.findViewById(R.id.linearlayout_configurator_bread_content);
@@ -1534,6 +1469,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.optionsmenu_configurator_starttraining:
+                Toast.makeText(getActivity(), String.valueOf(Home.getKcalFromDatabaseForTraining(getActivity())), Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.optionsmenu_configurator_showinfo:
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()), R.style.AlertDialogStyle);
@@ -1546,7 +1482,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
                 String alert3 = "Desires of the guest to change the default occupancy lead to changed nutrition information.";
                 String alert4 = "The nutritional information of salad is based on the following contents:";
                 String alert5 = "lettuce, tomatoes, green peppers, cucumbers and red onions";
-                content.setText(alert1 +"\n"+ alert2 +"\n"+ alert3+"\n"+"\n"+alert4+"\n"+alert5);
+                content.setText(alert1 + "\n" + alert2 + "\n" + alert3 + "\n" + "\n" + alert4 + "\n" + alert5);
                 alertDialogBuilder.setView(content);
                 alertDialogBuilder.setCancelable(false);
                 alertDialogBuilder.setPositiveButton("Got it", new DialogInterface.OnClickListener() {

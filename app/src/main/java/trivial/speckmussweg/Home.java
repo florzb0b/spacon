@@ -1,6 +1,7 @@
 package trivial.speckmussweg;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.net.Uri;
@@ -43,7 +44,7 @@ public class Home extends AppCompatActivity implements OnStateChangeListener {
     Boolean backPressedCheck = false;
     private ActionBarDrawerToggle drawerToggle;
     FillableLoader fillableLoader;
-    MyDatabase database;
+    static MyDatabase database;
     Uri uriProfileImage;
     View headerview;
     FragmentTransaction fragmentTransaction;
@@ -52,6 +53,7 @@ public class Home extends AppCompatActivity implements OnStateChangeListener {
     public static boolean booleanSwitchPossible = true;
     TextView headerText;
     ImageView spaconIcon;
+    public static int kcalSum = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -348,7 +350,80 @@ public class Home extends AppCompatActivity implements OnStateChangeListener {
 
     }
 
+    public static int getKcalFromDatabaseForTraining(Context cxt) {
+        int kcal = 0;
+        database = new MyDatabase(cxt);
+        Cursor cursor = database.selectBread(1);
+        for (int i = 1; i<= 4; i++){
+            cursor = database.selectBread(i);
+            if (cursor.getCount() > 0) {
+                if (cursor.moveToFirst()) {
+                    do {
+                        kcal += cursor.getInt(2);
+                    } while (cursor.moveToNext());
+                }
+            }
+        }
 
+        for (int i = 1; i<= 4; i++){
+            cursor = database.selectCheese(i);
+            if (cursor.getCount() > 0) {
+                if (cursor.moveToFirst()) {
+                    do {
+                        kcal += cursor.getInt(2);
+                    } while (cursor.moveToNext());
+                }
+            }
+        }
+
+        for (int i = 1; i<= 4; i++){
+            cursor = database.selectMeat(i);
+            if (cursor.getCount() > 0) {
+                if (cursor.moveToFirst()) {
+                    do {
+                        kcal += cursor.getInt(2);
+                    } while (cursor.moveToNext());
+                }
+            }
+        }
+
+        for (int i = 1; i<= 4; i++){
+            cursor = database.selectSalad(i);
+            if (cursor.getCount() > 0) {
+                if (cursor.moveToFirst()) {
+                    do {
+                        kcal += cursor.getInt(2);
+                    } while (cursor.moveToNext());
+                }
+            }
+        }
+
+        for (int i = 1; i<= 4; i++){
+            cursor = database.selectExtras(i);
+            if (cursor.getCount() > 0) {
+                if (cursor.moveToFirst()) {
+                    do {
+                        kcal += cursor.getInt(2);
+                    } while (cursor.moveToNext());
+                }
+            }
+        }
+
+        for (int i = 1; i<= 4; i++){
+            cursor = database.selectSauce(i);
+            if (cursor.getCount() > 0) {
+                if (cursor.moveToFirst()) {
+                    do {
+                        kcal += cursor.getInt(2);
+                    } while (cursor.moveToNext());
+                }
+            }
+        }
+        cursor.close();
+        database.close();
+        kcalSum = kcal;
+        return kcal;
+    }
 }
 
 
