@@ -320,12 +320,35 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textview_credits_center9"
-                android:layout_marginBottom="20dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginStart="5dp"
                 android:autoLink="all"
                 android:gravity="center_horizontal"
                 android:text="https://www.shareicon.net/dinner-meal-vegetables-restaurant-lunch-food-gi-106533"
+                android:textColor="@color/textColorOnYellowBackground"
+                android:textColorLink="@color/backgroundColorDarkerGreen" />
+
+            <TextView
+                android:id="@+id/textview_credits_center11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textview_credits_center10"
+                android:gravity="center_horizontal"
+                android:text="Fat Person by priyanka from the Noun Project    Body Fat by Hopkins from the Noun Project"
+                android:textColor="@color/textColorOnYellowBackground"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textview_credits_center12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textview_credits_center11"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginBottom="20dp"
+                android:autoLink="all"
+                android:gravity="center_horizontal"
+                android:text="https://thenounproject.com/term/unhealthy/1784978/      https://thenounproject.com/search/?q=fat&amp;i=945288"
                 android:textColor="@color/textColorOnYellowBackground"
                 android:textColorLink="@color/backgroundColorDarkerGreen" />
         </RelativeLayout>
