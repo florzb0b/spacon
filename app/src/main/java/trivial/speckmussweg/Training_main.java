@@ -21,6 +21,12 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
+import trivial.speckmussweg.internet.*;
 
 public class Training_main extends Fragment {
 
@@ -28,6 +34,9 @@ public class Training_main extends Fragment {
     AlertDialog.Builder alertDialog;
     ArrayList<String> myList;
     TextView sportTextView;
+
+    private ProgressDialog pDialog;
+    private static String url;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
