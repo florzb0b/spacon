@@ -1,144 +1,84 @@
+//* #################################### FÜR DICH CHRIS
+
+
+
+
+
 /*
-package trivial.speckmussweg.Objects;
 
+@SuppressLint("StaticFieldLeak")
+public class getData extends AsyncTask<Void, Void, Void> {
 
-import java.util.List;
-
-public class Sub {
-
-    private int mId = 0;
-
-    private String mBread;
-    private Boolean mSubIsLong;
-    private String mBreadCalories;
-    private List<String> mCheese;
-    private List<String> mCheeseCalories;
-    private List<String> mMeat;
-    private List<String> mMeatCalories;
-    private List<String> mExtra;
-    private List<String> mExtraCalories;
-    private List<String> mSauce;
-    private List<String> mSauceCalories;
-
-
-    public Sub (int id){
-mId = id;
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        // Showing progress dialog
+        pDialog = new ProgressDialog(getActivity());
+        pDialog.setMessage("Please wait...");
+        pDialog.setCancelable(false);
+        pDialog.show();
 
     }
 
-    public Sub(int id, String bread, String breadCalories, Boolean subIsLong, List<String> cheese, List<String> meat, List<String> extra, List<String> sauce) {
-        mId = id;
-        mBread = bread;
-        mSubIsLong = subIsLong;
-        mCheese = cheese;
-        mMeat = meat;
-        mExtra = extra;
-        mSauce = sauce;
-        mBreadCalories = breadCalories;
+    @Override
+    protected Void doInBackground(Void... arg0) {
+        HttpHandler sh = new HttpHandler();
+
+        // Making a request to url and getting response
+        String jsonStr = sh.makeServiceCall(url); //die url ist die url der json datei
+
+        //Log.e(TAG, "Response from url: " + jsonStr);
+
+        if (jsonStr != null) {
+            try {
+                JSONObject sportJsonObject = new JSONObject(jsonStr);
+                JSONArray sports = breadJsonObj.getJSONArray("sport");
+                for (int i = 0; i < sports.length(); i++) {
+
+                    JSONObject s = sports.getJSONObject(i);
+
+
+                    String name = s.getString("name");
+
+
+                    sportList.add(art); // die musste anlegen als klassenvariable ArrayList<String> sportList;!!
+                                        // ab dann kannst du immer mit sportList.get(positionListView) den Namen herbekommen
+                                        // die kcal müssen wir selbst von hand machen
+
+            } catch (final JSONException e) {
+                Log.e(TAG, "Json parsing error: " + e.getMessage());
+                Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getActivity(),
+                                "Json parsing error: " + e.getMessage(),
+                                Toast.LENGTH_LONG)
+                                .show();
+                    }
+                });
+            }
+        } else {
+            Log.e(TAG, "Couldn't get json from server.");
+            Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getActivity(),
+                            "Couldn't get json from server. Check LogCat for possible errors!",
+                            Toast.LENGTH_LONG)
+                            .show();
+                }
+            });
+
+        }
+        return null;
     }
 
-    public String getmBreadCalories() {
-        return mBreadCalories;
-    }
-
-    public void setmBreadCalories(String mBreadCalories) {
-        this.mBreadCalories = mBreadCalories;
-    }
-
-    public void setmCheeseCalories(List<String> mCheeseCalories) {
-        this.mCheeseCalories = mCheeseCalories;
-    }
-
-    public void setmMeatCalories(List<String> mMeatCalories) {
-        this.mMeatCalories = mMeatCalories;
-    }
-
-    public void setmExtraCalories(List<String> mExtraCalories) {
-        this.mExtraCalories = mExtraCalories;
-    }
-
-    public void setmSauceCalories(List<String> mSauceCalories) {
-        this.mSauceCalories = mSauceCalories;
-    }
-
-    public List<String> getmCheeseCalories() {
-        return mCheeseCalories;
-    }
-
-    public List<String> getmMeatCalories() {
-        return mMeatCalories;
-    }
-
-    public List<String> getmExtraCalories() {
-        return mExtraCalories;
-    }
-
-    public List<String> getmSauceCalories() {
-        return mExtraCalories;
-    }
-
-    public int getmId() {
-        return mId;
-    }
-
-    public String getmBread() {
-        return mBread;
-    }
-
-    public Boolean getmSubIsLong() {
-        return mSubIsLong;
-    }
-
-    public List<String> getmCheese() {
-        return mCheese;
-    }
-
-    public List<String> getmMeat() {
-        return mMeat;
-    }
-
-    public List<String> getmExtra() {
-        return mExtra;
-    }
-
-    public List<String> getmSauce() {
-        return mSauce;
-    }
-
-    public void setmBread(String mBread) {
-        this.mBread = mBread;
-    }
-
-    public void setmSubIsLong(Boolean mSubIsLong) {
-        this.mSubIsLong = mSubIsLong;
-    }
-
-    public void setmCheese(List<String> mCheese) {
-        this.mCheese = mCheese;
-    }
-
-    public void setmMeat(List<String> mMeat) {
-        this.mMeat = mMeat;
-    }
-
-    public void setmExtra(List<String> mExtra) {
-        this.mExtra = mExtra;
-    }
-
-    public void setmSauce(List<String> mSauce) {
-        this.mSauce = mSauce;
-    }
-
-    public void reInitialize(){
-        this.mBread = "";
-        this.mCheese.clear();
-        this.mCheeseCalories.clear();
-        this.mMeat.clear();
-        this.mMeatCalories.clear();
-        this.mExtra.clear();
-        this.mExtraCalories.clear();
-        this.mSauce.clear();
-        this.mSauceCalories.clear();
+    @Override
+    protected void onPostExecute(Void result) {
+        super.onPostExecute(result);
+        // Dismiss the progress dialog
+        if (pDialog.isShowing())
+            pDialog.dismiss();
     }
 }
 */
