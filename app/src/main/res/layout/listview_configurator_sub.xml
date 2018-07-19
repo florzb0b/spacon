@@ -1,67 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/idvonglistview"
     android:layout_width="150dp"
     android:layout_height="170dp"
+    android:layout_margin="5dp"
     android:orientation="vertical"
-    tools:ignore="UseCompoundDrawables"
-    android:id="@+id/idvonglistview"
-    android:layout_margin="5dp">
+    tools:ignore="UseCompoundDrawables">
 
     <ImageView
         android:id="@+id/header_configurator_icon"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
+        android:contentDescription="TODO"
         android:paddingBottom="2dp"
         android:paddingTop="6dp"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="16sp"
-        android:textStyle="bold"
-        android:contentDescription="TODO" />
+        android:textStyle="bold" />
 
     <TextView
-        android:layout_weight="1"
-        android:gravity="center"
-        android:layout_gravity="center"
         android:id="@+id/header_configurator_name"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
         android:paddingBottom="2dp"
-        android:textStyle="bold"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center">
+
         <TextView
-            android:textColor="@android:color/white"
-            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:paddingBottom="2dp"
             android:text="("
-            />
+            android:textColor="@android:color/white" />
+
         <TextView
-            android:textColor="@android:color/white"
-            android:layout_gravity="center"
             android:id="@+id/header_configurator_calories"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:paddingBottom="2dp"
-            />
+            android:textColor="@android:color/white" />
 
         <TextView
-            android:textColor="@android:color/white"
-            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:paddingBottom="2dp"
             android:text=" kcal)"
-            />
+            android:textColor="@android:color/white" />
     </LinearLayout>
-
 
 
 </LinearLayout>

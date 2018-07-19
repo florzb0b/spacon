@@ -1,5 +1,7 @@
 package trivial.speckmussweg;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -22,6 +24,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -97,7 +101,8 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             linearLayoutConfiguratorSauceHeader, linearLayoutConfiguratorSauceContent,
             linearLayoutConfiguratorMainTab,
             linearLayoutMealLayoutClickableLayout1, linearLayoutMealLayoutClickableLayout2,
-            linearLayoutMealLayoutClickableLayout3, linearLayoutMealLayoutClickableLayout4;
+            linearLayoutMealLayoutClickableLayout3, linearLayoutMealLayoutClickableLayout4,
+    linearLayoutListViewItem;
     TextView textViewConfiguratorBreadContent, textViewConfiguratorBreadSizeContent,
             textViewConfiguratorHeaderArtContent, footerConfiguratorCaloriesContent,
             textViewMealLayoutId1, textViewMealLayoutId2, textViewMealLayoutId3,
@@ -120,6 +125,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
     View selectedView;
     boolean firstMealIsOn = true, firstAttempt = false, subIsLong = false,
             changeNothing = true, buildAllowed = false;
+
 
     MyDatabase database;
 
@@ -154,6 +160,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         buttonNext = viewMain.findViewById(R.id.button_configurator_next);
         linearLayoutFirstMeal = viewMain.findViewById(R.id.linearlayout_configurator_cheese_content);
         fab = viewMain.findViewById(R.id.fab_configurator);
+        linearLayoutListViewItem = viewMain.findViewById(R.id.idvonglistview);
 
         contactList = new ArrayList<>();
         breadList = new ArrayList<>();
@@ -186,11 +193,13 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         objectBreadCalories = "";
         objectBreadContent = "";
 
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 if (relativeLayoutMealContent.getVisibility() == View.GONE) {
+                    relativeLayoutMealContent.setAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.view_fadein_short));
                     relativeLayoutMealContent.setVisibility(View.VISIBLE);
                 }
                 if (!(recyclerView.getLayoutManager() == horizontalLayoutManager)) {
@@ -408,10 +417,17 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
                 layoutId = 1;
                 textViewMealLayoutBread1.setText("");
                 textViewMealLayoutBread1.setVisibility(View.GONE);
-                linearLayoutMealLayoutClickableLayout1.setVisibility(View.GONE);
+                linearLayoutMealLayoutClickableLayout1.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.view_fadeout_short));
+                linearLayoutMealLayoutClickableLayout1.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        linearLayoutMealLayoutClickableLayout1.setVisibility(View.GONE);
+                        checkBuildIsAllowed();
+                    }
+                },500);
+
                 deleteMealContentViews();
                 deleteMealInDatabase(layoutId);
-                checkBuildIsAllowed();
 
             }
         });
@@ -421,10 +437,17 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
                 layoutId = 2;
                 textViewMealLayoutBread2.setText("");
                 textViewMealLayoutBread2.setVisibility(View.GONE);
-                linearLayoutMealLayoutClickableLayout2.setVisibility(View.GONE);
+                linearLayoutMealLayoutClickableLayout2.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.view_fadeout_short));
+                linearLayoutMealLayoutClickableLayout2.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        linearLayoutMealLayoutClickableLayout2.setVisibility(View.GONE);
+                        checkBuildIsAllowed();
+                    }
+                },500);
                 deleteMealContentViews();
                 deleteMealInDatabase(layoutId);
-                checkBuildIsAllowed();
+
             }
         });
         imageViewMealLayoutDeleteContentId3.setOnClickListener(new View.OnClickListener() {
@@ -433,10 +456,17 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
                 layoutId = 3;
                 textViewMealLayoutBread3.setText("");
                 textViewMealLayoutBread3.setVisibility(View.GONE);
-                linearLayoutMealLayoutClickableLayout3.setVisibility(View.GONE);
+                linearLayoutMealLayoutClickableLayout3.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.view_fadeout_short));
+                linearLayoutMealLayoutClickableLayout3.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        linearLayoutMealLayoutClickableLayout3.setVisibility(View.GONE);
+                        checkBuildIsAllowed();
+                    }
+                },500);
                 deleteMealContentViews();
                 deleteMealInDatabase(layoutId);
-                checkBuildIsAllowed();
+
             }
         });
         imageViewMealLayoutDeleteContentId4.setOnClickListener(new View.OnClickListener() {
@@ -445,10 +475,17 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
                 layoutId = 4;
                 textViewMealLayoutBread4.setText("");
                 textViewMealLayoutBread4.setVisibility(View.GONE);
-                linearLayoutMealLayoutClickableLayout4.setVisibility(View.GONE);
+                linearLayoutMealLayoutClickableLayout4.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.view_fadeout_short));
+                linearLayoutMealLayoutClickableLayout4.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        linearLayoutMealLayoutClickableLayout4.setVisibility(View.GONE);
+                        checkBuildIsAllowed();
+                    }
+                },500);
                 deleteMealContentViews();
                 deleteMealInDatabase(layoutId);
-                checkBuildIsAllowed();
+
 
             }
         });
@@ -669,6 +706,20 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
 
     private void fillList() {
 
+        ValueAnimator slideAnimator = ValueAnimator
+                .ofInt(recyclerView.getHeight(), +480)
+                .setDuration(300);
+        slideAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                int val = (Integer) valueAnimator.getAnimatedValue();
+                ViewGroup.LayoutParams layoutParams = recyclerView.getLayoutParams();
+                layoutParams.height = val;
+                recyclerView.setLayoutParams(layoutParams);
+            }
+        });
+        slideAnimator.setDuration(300);
+        slideAnimator.start();
         recyclerView.setLayoutManager(horizontalLayoutManager);
         if (!breadIsChoosed || buttonCounter == 1) {
             adapter = new RecyclerViewAdapter(getActivity(), breadNameList, breadkcalList, buttonCounter);
@@ -729,6 +780,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             viewParams3.setLayoutParams(llParams3);
             llParams4.weight = .2f;
             viewParams4.setLayoutParams(llParams4);
+
             linearLayoutMealLayoutClickableLayout1.setBackgroundColor(0);
             linearLayoutMealLayoutClickableLayout1.setBackground(getResources().getDrawable(R.drawable.layout_shadow_darkyellow));
             linearLayoutMealLayoutClickableLayout2.setBackground(getResources().getDrawable(R.drawable.layout_shadow_darkeryellow));
@@ -857,8 +909,26 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
                 && linearLayoutMealLayoutClickableLayout2.getVisibility() == View.GONE
                 && linearLayoutMealLayoutClickableLayout3.getVisibility() == View.GONE
                 && linearLayoutMealLayoutClickableLayout4.getVisibility() == View.GONE) {
+            relativeLayoutMealContent.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.view_fadeout_short));
             relativeLayoutMealContent.setVisibility(View.GONE);
             buildAllowed = false;
+            adapter = new RecyclerViewAdapter(getActivity(), new ArrayList<String>(), new ArrayList<String>(), 1);
+            recyclerView.setAdapter(adapter);
+
+            ValueAnimator slideAnimator = ValueAnimator
+                    .ofInt(recyclerView.getHeight(), -480)
+                    .setDuration(300);
+            slideAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                    int val = (Integer) valueAnimator.getAnimatedValue();
+                    ViewGroup.LayoutParams layoutParams = recyclerView.getLayoutParams();
+                    layoutParams.height = val;
+                    recyclerView.setLayoutParams(layoutParams);
+                }
+            });
+            slideAnimator.setDuration(300);
+            slideAnimator.start();
         }
     }
 
@@ -920,7 +990,8 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
 
                     } else {
                         if (position != 0) {
-                            kcalList[buttonCounter - 1][i] = Integer.parseInt(adapter.getCalories(position));
+                            kcalList[buttonCounter - 1][i] =
+                                    Integer.parseInt(adapter.getCalories(position));
                         }
                     }
                     sum += setSum();
@@ -928,7 +999,8 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
                     break;
                 } else { //everything else
                     if (kcalList[buttonCounter - 1][i] == 0) {
-                        kcalList[buttonCounter - 1][i] = Integer.parseInt(adapter.getCalories(position));
+                        kcalList[buttonCounter - 1][i] =
+                                Integer.parseInt(adapter.getCalories(position));
                         sum += setSum();
                         currentSum = sum;
                         break;
@@ -1511,23 +1583,26 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         }
 
         if (layoutId == 1) {
-
+            linearLayoutMealLayoutClickableLayout1.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.view_fadein_short));
             linearLayoutMealLayoutClickableLayout1.setVisibility(View.VISIBLE);
             textViewMealLayoutId1.setText(String.valueOf(layoutId));
             getFocusOnMeal(1);
 
         }
         if (layoutId == 2) {
+            linearLayoutMealLayoutClickableLayout2.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.view_fadein_short));
             linearLayoutMealLayoutClickableLayout2.setVisibility(View.VISIBLE);
             textViewMealLayoutId2.setText(String.valueOf(layoutId));
             getFocusOnMeal(2);
         }
         if (layoutId == 3) {
+            linearLayoutMealLayoutClickableLayout3.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.view_fadein_short));
             linearLayoutMealLayoutClickableLayout3.setVisibility(View.VISIBLE);
             textViewMealLayoutId3.setText(String.valueOf(layoutId));
             getFocusOnMeal(3);
         }
         if (layoutId == 4) {
+            linearLayoutMealLayoutClickableLayout4.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.view_fadein_short));
             linearLayoutMealLayoutClickableLayout4.setVisibility(View.VISIBLE);
             textViewMealLayoutId4.setText(String.valueOf(layoutId));
             getFocusOnMeal(4);
@@ -1550,4 +1625,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
 
     }
 
+
 }
+
+

@@ -334,7 +334,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textview_credits_center10"
                 android:gravity="center_horizontal"
-                android:text="Fat Person by priyanka from the Noun Project    Body Fat by Hopkins from the Noun Project"
+                android:text="Body Fat by Hopkins from the Noun Project"
                 android:textColor="@color/textColorOnYellowBackground"
                 android:textStyle="bold" />
 
@@ -348,7 +348,7 @@
                 android:layout_marginBottom="20dp"
                 android:autoLink="all"
                 android:gravity="center_horizontal"
-                android:text="https://thenounproject.com/term/unhealthy/1784978/      https://thenounproject.com/search/?q=fat&amp;i=945288"
+                android:text="https://thenounproject.com/search/?q=fat&amp;i=945288&amp;i=945288"
                 android:textColor="@color/textColorOnYellowBackground"
                 android:textColorLink="@color/backgroundColorDarkerGreen" />
         </RelativeLayout>

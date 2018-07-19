@@ -121,6 +121,8 @@ public class Training_main extends Fragment {
         FillableLoader fillableLoader = viewMain.findViewById(R.id.home_fillableLoader);
         fillableLoader.setSvgPath(SVGPath.NEW_FAT_PIG);
         fillableLoader.start();
+
+        new Training_main.getData().execute();
         return viewMain;
     }
 
@@ -168,7 +170,7 @@ public class Training_main extends Fragment {
                 holder = (ViewHolder) view.getTag();
             }
 
-            holder.tvSname.setText(newList.get(position).toString());
+            holder.tvSname.setText(newList.get(position));
             return view;
 
         }
@@ -214,9 +216,6 @@ public class Training_main extends Fragment {
                         String name = s.getString("name");
 
                         sportList.add(name);
-                        // die musste anlegen als klassenvariable ArrayList<String> sportList;!!
-                        // ab dann kannst du immer mit sportList.get(positionListView) den Namen herbekommen
-                        // die kcal müssen wir selbst von hand machen
 
                     }
                 } catch (final JSONException e) {

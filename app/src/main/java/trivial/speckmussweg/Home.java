@@ -1,7 +1,6 @@
 package trivial.speckmussweg;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.net.Uri;
@@ -14,13 +13,12 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -34,12 +32,11 @@ import com.github.jorgecastillo.State;
 import com.github.jorgecastillo.listener.OnStateChangeListener;
 
 import java.util.Calendar;
-import java.util.Objects;
 
 import trivial.speckmussweg.database.MyDatabase;
 import trivial.speckmussweg.database.SVGPath;
 
-public class Home extends AppCompatActivity implements OnStateChangeListener{
+public class Home extends AppCompatActivity implements OnStateChangeListener {
 
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
@@ -53,6 +50,8 @@ public class Home extends AppCompatActivity implements OnStateChangeListener{
     FragmentManager fragmentManager;
     MenuItem profileMenuItem;
     public static boolean booleanSwitchPossible = true;
+    TextView headerText;
+    ImageView spaconIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +73,11 @@ public class Home extends AppCompatActivity implements OnStateChangeListener{
         headerview = nvDrawer.getHeaderView(0);
 
         RelativeLayout header = headerview.findViewById(R.id.nav_header);
+        fillableLoader = findViewById(R.id.home_fillableLoader);
+        headerText = findViewById(R.id.spacon_textview);
+        spaconIcon = findViewById(R.id.spacon_imageview);
+        fillableLoader.setSvgPath(SVGPath.NEW_FAT_PIG);
+        animateViews(1000);
 
 
         header.setOnClickListener(new View.OnClickListener() {
@@ -101,11 +105,35 @@ public class Home extends AppCompatActivity implements OnStateChangeListener{
             }
         });
 
-        fillableLoader = findViewById(R.id.home_fillableLoader);
-        fillableLoader.setSvgPath(SVGPath.NEW_FAT_PIG);
-        fillableLoader.start();
 
         setProfile();
+    }
+
+
+    private void animateViews(int duration) {
+        if (headerText.getVisibility() == View.VISIBLE) {
+            headerText.setVisibility(View.GONE);
+        }
+        if (spaconIcon.getVisibility() == View.VISIBLE) {
+            spaconIcon.setVisibility(View.GONE);
+        }
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //Do something after 1 second
+                headerText.startAnimation(AnimationUtils.loadAnimation(Home.this, R.anim.view_fallingfromsky));
+                headerText.setVisibility(View.VISIBLE);
+
+                spaconIcon.startAnimation(AnimationUtils.loadAnimation(Home.this, R.anim.view_fadein_long));
+                spaconIcon.setVisibility(View.VISIBLE);
+
+
+                fillableLoader.start();
+            }
+        }, duration);
+
+
     }
 
     @Override
@@ -124,8 +152,9 @@ public class Home extends AppCompatActivity implements OnStateChangeListener{
         return super.onOptionsItemSelected(item);
     }
 
-    @Override public void onStateChange(int state) {
-        switch(state) {
+    @Override
+    public void onStateChange(int state) {
+        switch (state) {
             case State.FILL_STARTED:
                 break;
             case State.FINISHED:
@@ -268,9 +297,11 @@ public class Home extends AppCompatActivity implements OnStateChangeListener{
         }
         return String.valueOf((Integer) age);
     }
-    public static void setBooleanSwitchPossible(){
+
+    public static void setBooleanSwitchPossible() {
         booleanSwitchPossible = true;
     }
+
     public static void hideKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager)
                 activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -297,14 +328,18 @@ public class Home extends AppCompatActivity implements OnStateChangeListener{
     @Override
     public void onBackPressed() {
         if (booleanSwitchPossible) {
-            Fragment fragment = fragmentManager.findFragmentById(R.id.flContent);
-            if (fragment != null) {
-                fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.remove(fragment);
-                fragmentTransaction.commit();
-                setTitle("");
-            } else {
-                super.onBackPressed();
+            try {
+                Fragment fragment = fragmentManager.findFragmentById(R.id.flContent);
+                if (fragment != null) {
+                    fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.remove(fragment);
+                    fragmentTransaction.commit();
+                    setTitle("Speck muss weg");
+                    animateViews(100);
+                } else {
+                    super.onBackPressed();
+                }
+            } catch (NullPointerException ignored) {
             }
         } else {
             Toast.makeText(this, "Please fill in all Fields with '*'",
