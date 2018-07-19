@@ -3,7 +3,6 @@ package trivial.speckmussweg;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
 import android.os.Bundle;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -29,13 +28,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-
 import com.github.jorgecastillo.FillableLoader;
-
 import trivial.speckmussweg.database.SVGPath;
 import trivial.speckmussweg.internet.*;
 import android.os.AsyncTask;
-
 import static android.support.constraint.Constraints.TAG;
 
 public class Training_main extends Fragment {
@@ -121,6 +117,7 @@ public class Training_main extends Fragment {
         FillableLoader fillableLoader = viewMain.findViewById(R.id.home_fillableLoader);
         fillableLoader.setSvgPath(SVGPath.NEW_FAT_PIG);
         fillableLoader.start();
+        new Training_main.getData().execute();
         return viewMain;
     }
 
