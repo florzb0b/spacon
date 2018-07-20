@@ -80,7 +80,7 @@ public class Training_main extends Fragment {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity(), R.style.AlertDialogStyle);
                 LayoutInflater inflater = getLayoutInflater();
 
                 // create view for add item in dialog
@@ -112,7 +112,7 @@ public class Training_main extends Fragment {
                         new CountDownTimer(timeForSport, 10){
                             public void onTick (long timeForSport){
                                 String text = String.format(Locale.getDefault(), "%d min %d sec",
-                                        TimeUnit.MILLISECONDS.toMinutes( timeForSport),
+                                        TimeUnit.MILLISECONDS.toMinutes(timeForSport),
                                         TimeUnit.MILLISECONDS.toSeconds(timeForSport) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(timeForSport)));
 
                                 trainingTime.setText(text);
@@ -273,13 +273,17 @@ public class Training_main extends Fragment {
             long timeinmilli;
             int kcalSum = Home.kcalSum;
             int weight = Integer.parseInt(cursor.getString(6));
-            double multi = Double.parseDouble(sportMultiList.get(0));
+            double multi = 0.0;
+
+            //getting position of listview for setting multiplicator
+            for (int position = 0; position < sportMultiList.size(); position++){
+                multi = Double.parseDouble(sportMultiList.get(position));
+            }
+
             double time = ((kcalSum /(weight*multi))*60)*1000; // Calculating time and convert to milliseconds
-            timeinmilli = (long) time;
+            timeinmilli = (long) time; // casting to long because CountDownTimer expect a long value
 
             return timeinmilli;
         }
 
     }
-
-
