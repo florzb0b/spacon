@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:background="@drawable/background"
     android:clipToPadding="false"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="HardcodedText">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -233,45 +234,43 @@
                 android:textColor="@color/textColorOnYellowBackground"
                 android:textColorLink="@color/backgroundColorDarkerGreen" />
 
-
             <TextView
                 android:id="@+id/textview_credits_center4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textview_credits_center3"
-                android:layout_marginTop="20dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:autoLink="all"
                 android:gravity="center_horizontal"
-                android:text="Shareicon.net"
+                android:text="https://www.flaticon.com/free-icon/genders_152502"
                 android:textColor="@color/textColorOnYellowBackground"
-                android:textStyle="bold" />
+                android:textColorLink="@color/backgroundColorDarkerGreen" />
 
             <TextView
                 android:id="@+id/textview_credits_center5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textview_credits_center4"
-                android:layout_marginBottom="5dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginStart="5dp"
                 android:autoLink="all"
                 android:gravity="center_horizontal"
-                android:text="https://www.shareicon.net/food-lunch-meal-snack-bread-sandwich-844970"
+                android:text="https://www.flaticon.com/free-icon/sandwich_604945#term=sandwich&amp;page=3&amp;position=36"
                 android:textColor="@color/textColorOnYellowBackground"
                 android:textColorLink="@color/backgroundColorDarkerGreen" />
+
 
             <TextView
                 android:id="@+id/textview_credits_center6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textview_credits_center5"
-                android:layout_marginBottom="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginStart="5dp"
-                android:autoLink="all"
+                android:layout_marginTop="20dp"
                 android:gravity="center_horizontal"
-                android:text="https://www.shareicon.net/healthy-food-fattening-milky-food-and-restaurant-food-cheese-798475"
+                android:text="Shareicon.net"
                 android:textColor="@color/textColorOnYellowBackground"
-                android:textColorLink="@color/backgroundColorDarkerGreen" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textview_credits_center7"
@@ -283,7 +282,7 @@
                 android:layout_marginStart="5dp"
                 android:autoLink="all"
                 android:gravity="center_horizontal"
-                android:text="https://www.shareicon.net/food-cookie-dessert-bakery-biscuit-baker-food-and-restaurant-820722"
+                android:text="https://www.shareicon.net/food-lunch-meal-snack-bread-sandwich-844970"
                 android:textColor="@color/textColorOnYellowBackground"
                 android:textColorLink="@color/backgroundColorDarkerGreen" />
 
@@ -297,7 +296,7 @@
                 android:layout_marginStart="5dp"
                 android:autoLink="all"
                 android:gravity="center_horizontal"
-                android:text="https://www.shareicon.net/organic-food-food-and-restaurant-vegetables-vegetarian-salad-vegan-healthy-food-798444"
+                android:text="https://www.shareicon.net/healthy-food-fattening-milky-food-and-restaurant-food-cheese-798475"
                 android:textColor="@color/textColorOnYellowBackground"
                 android:textColorLink="@color/backgroundColorDarkerGreen" />
 
@@ -311,7 +310,7 @@
                 android:layout_marginStart="5dp"
                 android:autoLink="all"
                 android:gravity="center_horizontal"
-                android:text="https://www.shareicon.net/bottle-ketchup-dressing-sauce-salad-dressing-bottles-food-786515"
+                android:text="https://www.shareicon.net/food-cookie-dessert-bakery-biscuit-baker-food-and-restaurant-820722"
                 android:textColor="@color/textColorOnYellowBackground"
                 android:textColorLink="@color/backgroundColorDarkerGreen" />
 
@@ -320,6 +319,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textview_credits_center9"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:autoLink="all"
+                android:gravity="center_horizontal"
+                android:text="https://www.shareicon.net/organic-food-food-and-restaurant-vegetables-vegetarian-salad-vegan-healthy-food-798444"
+                android:textColor="@color/textColorOnYellowBackground"
+                android:textColorLink="@color/backgroundColorDarkerGreen" />
+
+            <TextView
+                android:id="@+id/textview_credits_center11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textview_credits_center10"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:autoLink="all"
+                android:gravity="center_horizontal"
+                android:text="https://www.shareicon.net/bottle-ketchup-dressing-sauce-salad-dressing-bottles-food-786515"
+                android:textColor="@color/textColorOnYellowBackground"
+                android:textColorLink="@color/backgroundColorDarkerGreen" />
+
+            <TextView
+                android:id="@+id/textview_credits_center12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textview_credits_center11"
                 android:layout_marginEnd="5dp"
                 android:layout_marginStart="5dp"
                 android:autoLink="all"
@@ -329,20 +356,34 @@
                 android:textColorLink="@color/backgroundColorDarkerGreen" />
 
             <TextView
-                android:id="@+id/textview_credits_center11"
+                android:id="@+id/textview_credits_center13"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textview_credits_center10"
+                android:layout_below="@id/textview_credits_center12"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginBottom="20dp"
+                android:autoLink="all"
+                android:gravity="center_horizontal"
+                android:text="https://www.shareicon.net/female-sex-male-masculine-people-symbol-feminine-718200"
+                android:textColor="@color/textColorOnYellowBackground"
+                android:textColorLink="@color/backgroundColorDarkerGreen" />
+
+            <TextView
+                android:id="@+id/textview_credits_center14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textview_credits_center13"
                 android:gravity="center_horizontal"
                 android:text="Body Fat by Hopkins from the Noun Project"
                 android:textColor="@color/textColorOnYellowBackground"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textview_credits_center12"
+                android:id="@+id/textview_credits_center15"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textview_credits_center11"
+                android:layout_below="@id/textview_credits_center14"
                 android:layout_marginEnd="5dp"
                 android:layout_marginStart="5dp"
                 android:layout_marginBottom="20dp"
@@ -351,6 +392,8 @@
                 android:text="https://thenounproject.com/search/?q=fat&amp;i=945288&amp;i=945288"
                 android:textColor="@color/textColorOnYellowBackground"
                 android:textColorLink="@color/backgroundColorDarkerGreen" />
+
+
         </RelativeLayout>
     </LinearLayout>
 </ScrollView>

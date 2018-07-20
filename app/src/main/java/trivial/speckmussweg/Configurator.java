@@ -1469,21 +1469,43 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.optionsmenu_configurator_starttraining:
-                Toast.makeText(getActivity(), String.valueOf(Home.getKcalFromDatabaseForTraining(getActivity())), Toast.LENGTH_SHORT).show();
+
+                AlertDialog.Builder builderTraining = new AlertDialog.Builder(Objects.requireNonNull(getActivity()), R.style.AlertDialogStyle);
+                builderTraining.setTitle("Are you sure that you are ready?");
+                builderTraining.setIcon(R.drawable.ic_fitness_center_white_24dp);
+                builderTraining.setMessage("You start the Training now.\n" + "It's not possible to change anything on the Meals later...");
+                builderTraining.setPositiveButton("Go to Training", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getActivity(), String.valueOf(Home.getKcalFromDatabaseForTraining(getActivity())), Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builderTraining.setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                builderTraining.show();
                 return true;
             case R.id.optionsmenu_configurator_showinfo:
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()), R.style.AlertDialogStyle);
                 alertDialogBuilder.setTitle("Information about Meals");
                 alertDialogBuilder.setIcon(R.drawable.ic_info_outline_white_24dp);
-                TextView content = new TextView(getActivity());
-                content.setTextColor(Color.WHITE);
-                String alert1 = "The nutritional information is based on a 15 cm sub.";
-                String alert2 = "Including lettuce, cucumbers, tomatoes, green peppers and red onions.";
-                String alert3 = "Desires of the guest to change the default occupancy lead to changed nutrition information.";
-                String alert4 = "The nutritional information of salad is based on the following contents:";
-                String alert5 = "lettuce, tomatoes, green peppers, cucumbers and red onions";
+                //TextView content = new TextView(getActivity());
+                //content.setTextColor(Color.WHITE);
+                alertDialogBuilder.setMessage("The nutritional information is based on a 15 cm sub.\n"
+                + "The nutritional information is based on a 15 cm sub. " + "Including lettuce, cucumbers, tomatoes, green peppers and red onions.\n"
+                + "Desires of the guest to change the default occupancy lead to changed nutrition information.\n\n"
+                + "The nutritional information of salad is based on the following contents:\n"
+                + "Lettuce, tomatoes, green peppers, cucumbers and red onions.");
+                /*String alert1 = "";
+                String alert2 = "";
+                String alert3 = "";
+                String alert4 = "";
+                String alert5 = "";
                 content.setText(alert1 + "\n" + alert2 + "\n" + alert3 + "\n" + "\n" + alert4 + "\n" + alert5);
-                alertDialogBuilder.setView(content);
+                alertDialogBuilder.setView(content);*/
                 alertDialogBuilder.setCancelable(false);
                 alertDialogBuilder.setPositiveButton("Got it", new DialogInterface.OnClickListener() {
                     @Override

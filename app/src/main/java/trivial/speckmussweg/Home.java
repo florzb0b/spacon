@@ -47,8 +47,8 @@ public class Home extends AppCompatActivity implements OnStateChangeListener {
     static MyDatabase database;
     Uri uriProfileImage;
     View headerview;
-    FragmentTransaction fragmentTransaction;
-    FragmentManager fragmentManager;
+    static FragmentTransaction fragmentTransaction;
+    static FragmentManager fragmentManager;
     MenuItem profileMenuItem;
     public static boolean booleanSwitchPossible = true;
     TextView headerText;
@@ -423,6 +423,26 @@ public class Home extends AppCompatActivity implements OnStateChangeListener {
         database.close();
         kcalSum = kcal;
         return kcal;
+    }
+
+    public void startTraining(){
+        Fragment fragment = null;
+
+        Class fragmentClass;
+        fragmentClass = Training_main.class;
+
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Insert the fragment by replacing any existing fragment
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.flContent, fragment, "fragment");
+        fragmentTransaction.commit();
+        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
     }
 }
 

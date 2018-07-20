@@ -19,5 +19,6 @@
     <item name="android:background">@color/backgroundColorDarkGreen</item>
     <item name="android:textColor">@android:color/white</item>
     <item name="textColorAlertDialogListItem">@android:color/white</item>
+    <item name="android:colorAccent">@android:color/white</item>
 </style>
 </resources>

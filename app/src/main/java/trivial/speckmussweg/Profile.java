@@ -162,6 +162,7 @@ public class Profile extends Fragment {
                 CharSequence genders[] = new CharSequence[]{"Female", "Male"};
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()), R.style.AlertDialogStyle);
+                builder.setIcon(R.drawable.ic_genders_white);
                 builder.setTitle("I identify myself as a...");
                 builder.setItems(genders, new DialogInterface.OnClickListener() {
                     @Override
