@@ -83,7 +83,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
+                        android:layout_marginStart="20dp"
                         android:text="Information Meal"
                         android:textColor="#FFFFFF"
                         android:textSize="15sp" />
@@ -134,7 +134,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
+                        android:layout_marginStart="10dp"
                         android:text="Information Training"
                         android:textColor="#FFFFFF"
                         android:textSize="15sp" />
