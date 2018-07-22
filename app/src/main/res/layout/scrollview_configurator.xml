@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="false"
-
     >
 
     <RelativeLayout
@@ -48,6 +47,7 @@
                             android:layout_weight="1"
                             android:gravity="center|start"
                             android:text="Bread:"
+                            android:textSize="16sp"
                             android:textStyle="italic|bold"
                             android:textColor="@android:color/white"/>
 
@@ -126,6 +126,7 @@
                             android:layout_weight="1"
                             android:gravity="center|start"
                             android:text="Cheese:"
+                            android:textSize="16sp"
                             android:textStyle="italic|bold"
                             android:textColor="@android:color/white"/>
 
@@ -172,6 +173,7 @@
                             android:layout_weight="1"
                             android:gravity="center|start"
                             android:text="Meat:"
+                            android:textSize="16sp"
                             android:textStyle="italic|bold"
                             android:textColor="@android:color/white"/>
 
@@ -218,6 +220,7 @@
                             android:layout_weight="1"
                             android:gravity="center|start"
                             android:text="Salad:"
+                            android:textSize="16sp"
                             android:textStyle="italic|bold"
                             android:textColor="@android:color/white"/>
 
@@ -264,6 +267,7 @@
                             android:layout_weight="1"
                             android:gravity="center|start"
                             android:text="Extras:"
+                            android:textSize="16sp"
                             android:textStyle="italic|bold"
                             android:textColor="@android:color/white"/>
 
@@ -310,6 +314,7 @@
                             android:layout_weight="1"
                             android:gravity="center|start"
                             android:text="Sauce:"
+                            android:textSize="16sp"
                             android:textStyle="italic|bold"
                             android:textColor="@android:color/white"/>
 
@@ -354,6 +359,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:text="Total:"
+                android:textSize="16sp"
                 android:textColor="@android:color/white"
                 android:textStyle="italic|bold" />
 
@@ -364,6 +370,7 @@
                 android:layout_margin="5dp"
                 android:layout_toEndOf="@+id/footer_configurator_max_calories_text"
                 android:gravity="center_horizontal"
+                android:textSize="16sp"
                 android:text="0"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />
@@ -377,6 +384,7 @@
                 android:layout_toEndOf="@+id/footer_configurator_calories_content"
                 android:gravity="center_horizontal"
                 android:text="kcal"
+                android:textSize="16sp"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />
         </RelativeLayout>

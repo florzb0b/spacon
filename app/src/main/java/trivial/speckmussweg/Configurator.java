@@ -24,6 +24,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -201,82 +202,82 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         buttonLast.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    if (buildAllowed) {
-                        switch (buttonCounter) {
-                            case 1:
-                                buttonCounter = 6;
-                                fillList();
-                                break;
-                            case 2:
-                                buttonCounter--;
-                                fillList();
-                                break;
-                            case 3:
-                                buttonCounter--;
-                                fillList();
-                                break;
-                            case 4:
-                                buttonCounter--;
-                                fillList();
-                                break;
-                            case 5:
-                                buttonCounter--;
-                                fillList();
-                                break;
-                            case 6:
-                                buttonCounter--;
-                                fillList();
-                                break;
-                            default:
-                                buttonCounter = 6;
-                                fillList();
-                        }
-
+                if (buildAllowed) {
+                    switch (buttonCounter) {
+                        case 1:
+                            buttonCounter = 6;
+                            fillList();
+                            break;
+                        case 2:
+                            buttonCounter--;
+                            fillList();
+                            break;
+                        case 3:
+                            buttonCounter--;
+                            fillList();
+                            break;
+                        case 4:
+                            buttonCounter--;
+                            fillList();
+                            break;
+                        case 5:
+                            buttonCounter -= 2;
+                            fillList();
+                            break;
+                        case 6:
+                            buttonCounter--;
+                            fillList();
+                            break;
+                        default:
+                            buttonCounter = 6;
+                            fillList();
                     }
+
+                }
 
             }
         });
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    if (buildAllowed) {
-                        if (breadIsChoosed) {
-                            switch (buttonCounter) {
-                                case 1:
-                                    ++buttonCounter;
-                                    fillList();
-                                    break;
-                                case 2:
-                                    ++buttonCounter;
-                                    fillList();
-                                    break;
-                                case 3:
-                                    ++buttonCounter;
-                                    fillList();
-                                    break;
-                                case 4:
-                                    ++buttonCounter;
-                                    fillList();
-                                    break;
-                                case 5:
-                                    ++buttonCounter;
-                                    fillList();
-                                    break;
-                                case 6:
-                                    buttonCounter = 1;
-                                    fillList();
-                                    break;
-                                default:
-                                    buttonCounter = 1;
-                                    fillList();
-                            }
-                        } else {
-                            Toast.makeText(getActivity(), "Please choose a Bread first to continue.", Toast.LENGTH_SHORT).show();
+                if (buildAllowed) {
+                    if (breadIsChoosed) {
+                        switch (buttonCounter) {
+                            case 1:
+                                ++buttonCounter;
+                                fillList();
+                                break;
+                            case 2:
+                                ++buttonCounter;
+                                fillList();
+                                break;
+                            case 3:
+                                buttonCounter += 2;
+                                fillList();
+                                break;
+                            case 4:
+                                ++buttonCounter;
+                                fillList();
+                                break;
+                            case 5:
+                                ++buttonCounter;
+                                fillList();
+                                break;
+                            case 6:
+                                buttonCounter = 1;
+                                fillList();
+                                break;
+                            default:
+                                buttonCounter = 1;
+                                fillList();
                         }
                     } else {
-                        Toast.makeText(getActivity(), "Please add a Meal first with the Plusbutton", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Please choose a Bread first to continue.", Toast.LENGTH_SHORT).show();
                     }
+                } else {
+                    Toast.makeText(getActivity(), "Please add a Meal first with the Plusbutton", Toast.LENGTH_SHORT).show();
                 }
+            }
 
         });
 
@@ -711,30 +712,30 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         slideAnimator.start();
         recyclerView.setLayoutManager(horizontalLayoutManager);
 
-            if (!breadIsChoosed || buttonCounter == 1) {
-                adapter = new RecyclerViewAdapter(getActivity(), breadNameList, breadkcalList, buttonCounter);
-                textViewConfiguratorHeaderArtContent.setText("Bread");
-            }
-            if (buttonCounter == 2) {
-                adapter = new RecyclerViewAdapter(getActivity(), cheeseNameList, cheesekcalList, buttonCounter);
-                textViewConfiguratorHeaderArtContent.setText("Cheese");
-            }
-            if (buttonCounter == 3) {
-                adapter = new RecyclerViewAdapter(getActivity(), meatNameList, meatkcalList, buttonCounter);
-                textViewConfiguratorHeaderArtContent.setText("Meat");
-            }
-           if (buttonCounter == 4) {
-                adapter = new RecyclerViewAdapter(getActivity(), saladNameList, saladkcalList, buttonCounter);
-                textViewConfiguratorHeaderArtContent.setText("Salad");
-            }
-            if (buttonCounter == 5) {
-                adapter = new RecyclerViewAdapter(getActivity(), extrasNameList, extraskcalList, buttonCounter);
-                textViewConfiguratorHeaderArtContent.setText("Extra");
-            }
-            if (buttonCounter == 6) {
-                adapter = new RecyclerViewAdapter(getActivity(), sauceNameList, saucekcalList, buttonCounter);
-                textViewConfiguratorHeaderArtContent.setText("Sauce");
-            }
+        if (!breadIsChoosed || buttonCounter == 1) {
+            adapter = new RecyclerViewAdapter(getActivity(), breadNameList, breadkcalList, buttonCounter);
+            textViewConfiguratorHeaderArtContent.setText("Bread");
+        }
+        if (buttonCounter == 2) {
+            adapter = new RecyclerViewAdapter(getActivity(), cheeseNameList, cheesekcalList, buttonCounter);
+            textViewConfiguratorHeaderArtContent.setText("Cheese");
+        }
+        if (buttonCounter == 3) {
+            adapter = new RecyclerViewAdapter(getActivity(), meatNameList, meatkcalList, buttonCounter);
+            textViewConfiguratorHeaderArtContent.setText("Meat");
+        }
+        if (buttonCounter == 4) {
+            adapter = new RecyclerViewAdapter(getActivity(), saladNameList, saladkcalList, buttonCounter);
+            textViewConfiguratorHeaderArtContent.setText("Salad");
+        }
+        if (buttonCounter == 5) {
+            adapter = new RecyclerViewAdapter(getActivity(), extrasNameList, extraskcalList, buttonCounter);
+            textViewConfiguratorHeaderArtContent.setText("Extra");
+        }
+        if (buttonCounter == 6) {
+            adapter = new RecyclerViewAdapter(getActivity(), sauceNameList, saucekcalList, buttonCounter);
+            textViewConfiguratorHeaderArtContent.setText("Sauce");
+        }
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -1469,43 +1470,73 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.optionsmenu_configurator_starttraining:
+                if (buildAllowed && breadIsChoosed) {
+                    AlertDialog.Builder builderTraining = new AlertDialog.Builder(Objects.requireNonNull(getActivity()), R.style.AlertDialogStyle);
+                    builderTraining.setTitle("Are you sure that you are ready?");
+                    builderTraining.setIcon(R.drawable.ic_fitness_center_white_24dp);
+                    String alert1 = "You start the Training now.";
+                    String alert2 = "It's not possible to change anything on the Meals later...";
+                    TextView content = new TextView(getActivity());
+                    content.setTextColor(Color.WHITE);
+                    content.setText(alert1 + "\n" + alert2);
+                    content.setTextSize(16);
+                    FrameLayout container = new FrameLayout(getActivity());
+                    FrameLayout.LayoutParams params = new  FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    params.setMargins(20,20,20,20);
+                    content.setLayoutParams(params);
+                    container.addView(content);
+                    builderTraining.setView(container);
+                    builderTraining.setPositiveButton("Go to Training", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Fragment fragment = null;
+                            Class fragmentClass = Training_main.class;
+                            try {
+                                fragment = (Fragment) fragmentClass.newInstance();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            Home.getKcalFromDatabaseForTraining(getContext());
+                            android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                            android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.flContent, fragment, "tag");
+                            fragmentTransaction.addToBackStack(null);
+                            fragmentTransaction.commit();
+                        }
+                    });
+                    builderTraining.setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
 
-                AlertDialog.Builder builderTraining = new AlertDialog.Builder(Objects.requireNonNull(getActivity()), R.style.AlertDialogStyle);
-                builderTraining.setTitle("Are you sure that you are ready?");
-                builderTraining.setIcon(R.drawable.ic_fitness_center_white_24dp);
-                builderTraining.setMessage("You start the Training now.\n" + "It's not possible to change anything on the Meals later...");
-                builderTraining.setPositiveButton("Go to Training", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getActivity(), String.valueOf(Home.getKcalFromDatabaseForTraining(getActivity())), Toast.LENGTH_SHORT).show();
-                    }
-                });
-                builderTraining.setNegativeButton("Back", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                        }
+                    });
+                    builderTraining.show();
+                    return true;
+                } else {
+                    Toast.makeText(getActivity(), "You have to add a Meal and select a Sub.", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
 
-                    }
-                });
-                builderTraining.show();
-                return true;
             case R.id.optionsmenu_configurator_showinfo:
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()), R.style.AlertDialogStyle);
                 alertDialogBuilder.setTitle("Information about Meals");
                 alertDialogBuilder.setIcon(R.drawable.ic_info_outline_white_24dp);
-                //TextView content = new TextView(getActivity());
-                //content.setTextColor(Color.WHITE);
-                alertDialogBuilder.setMessage("The nutritional information is based on a 15 cm sub.\n"
-                + "The nutritional information is based on a 15 cm sub. " + "Including lettuce, cucumbers, tomatoes, green peppers and red onions.\n"
-                + "Desires of the guest to change the default occupancy lead to changed nutrition information.\n\n"
-                + "The nutritional information of salad is based on the following contents:\n"
-                + "Lettuce, tomatoes, green peppers, cucumbers and red onions.");
-                /*String alert1 = "";
-                String alert2 = "";
-                String alert3 = "";
-                String alert4 = "";
-                String alert5 = "";
+                TextView content = new TextView(getActivity());
+                content.setTextColor(Color.WHITE);
+                content.setTextSize(16);
+                String alert1 = "The nutritional information is based on a 15 cm sub.";
+                String alert2 = "Including lettuce, cucumbers, tomatoes, green peppers and red onions.";
+                String alert3 = "Desires of the guest to change the default occupancy lead to changed nutrition information.";
+                String alert4 = "The nutritional information of salad is based on the following contents:";
+                String alert5 = "Lettuce, tomatoes, green peppers, cucumbers and red onions.";
                 content.setText(alert1 + "\n" + alert2 + "\n" + alert3 + "\n" + "\n" + alert4 + "\n" + alert5);
-                alertDialogBuilder.setView(content);*/
+                FrameLayout container = new FrameLayout(getActivity());
+                FrameLayout.LayoutParams params = new  FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                params.setMargins(20,20,20,20);
+                content.setLayoutParams(params);
+                container.addView(content);
+
+                alertDialogBuilder.setView(container);
                 alertDialogBuilder.setCancelable(false);
                 alertDialogBuilder.setPositiveButton("Got it", new DialogInterface.OnClickListener() {
                     @Override

@@ -1,6 +1,5 @@
 package trivial.speckmussweg;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.database.Cursor;
@@ -20,7 +19,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -32,8 +30,6 @@ import com.github.jorgecastillo.FillableLoader;
 import com.github.jorgecastillo.State;
 import com.github.jorgecastillo.listener.OnStateChangeListener;
 
-import java.util.Calendar;
-
 import trivial.speckmussweg.database.MyDatabase;
 import trivial.speckmussweg.database.SVGPath;
 
@@ -41,7 +37,6 @@ public class Home extends AppCompatActivity implements OnStateChangeListener {
 
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
-    Boolean backPressedCheck = false;
     private ActionBarDrawerToggle drawerToggle;
     FillableLoader fillableLoader;
     static MyDatabase database;
@@ -86,6 +81,7 @@ public class Home extends AppCompatActivity implements OnStateChangeListener {
             @Override
             public void onClick(View v) {
                 if (booleanSwitchPossible) {
+                    fillableLoader.setVisibility(View.GONE);
                     mDrawer.closeDrawer(GravityCompat.START);
                     Fragment fragment = null;
                     Class fragmentClass;
@@ -130,7 +126,9 @@ public class Home extends AppCompatActivity implements OnStateChangeListener {
                 spaconIcon.startAnimation(AnimationUtils.loadAnimation(Home.this, R.anim.view_fadein_long));
                 spaconIcon.setVisibility(View.VISIBLE);
 
-
+                if (fillableLoader.getVisibility() == View.GONE) {
+                    fillableLoader.setVisibility(View.VISIBLE);
+                }
                 fillableLoader.start();
             }
         }, duration);
@@ -158,8 +156,9 @@ public class Home extends AppCompatActivity implements OnStateChangeListener {
     public void onStateChange(int state) {
         switch (state) {
             case State.FILL_STARTED:
-                break;
+
             case State.FINISHED:
+
         }
     }
 
@@ -198,7 +197,7 @@ public class Home extends AppCompatActivity implements OnStateChangeListener {
                 default:
                     fragmentClass = TestFragment.class;
             }
-
+            fillableLoader.setVisibility(View.GONE);
             try {
                 fragment = (Fragment) fragmentClass.newInstance();
             } catch (Exception e) {
@@ -288,44 +287,9 @@ public class Home extends AppCompatActivity implements OnStateChangeListener {
         }
     }
 
-    private String getAge(int year, int month, int day) {
-        Calendar dateOfBirth = Calendar.getInstance();
-        Calendar today = Calendar.getInstance();
-        dateOfBirth.set(year, month, day);
-        int age = today.get(Calendar.YEAR) - dateOfBirth.get(Calendar.YEAR);
-
-        if (today.get(Calendar.DAY_OF_YEAR) < dateOfBirth.get(Calendar.DAY_OF_YEAR)) {
-            age--;
-        }
-        return String.valueOf((Integer) age);
-    }
-
     public static void setBooleanSwitchPossible() {
         booleanSwitchPossible = true;
     }
-
-    public static void hideKeyboard(Activity activity) {
-        InputMethodManager imm = (InputMethodManager)
-                activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        View view = activity.getCurrentFocus();
-        if (view == null) {
-            view = new View(activity);
-        }
-        assert imm != null;
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
-
-    Thread threadAdding = new Thread() {
-        @Override
-        public void run() {
-            try {
-                Thread.sleep(2000); //2000 ms wegen length-short, 3500 bei length-long
-                finish();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    };
 
     @Override
     public void onBackPressed() {
@@ -336,7 +300,7 @@ public class Home extends AppCompatActivity implements OnStateChangeListener {
                     fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.remove(fragment);
                     fragmentTransaction.commit();
-                    setTitle("Speck muss weg");
+                    setTitle("");
                     animateViews(100);
                 } else {
                     super.onBackPressed();
@@ -350,11 +314,11 @@ public class Home extends AppCompatActivity implements OnStateChangeListener {
 
     }
 
-    public static int getKcalFromDatabaseForTraining(Context cxt) {
+    public static void getKcalFromDatabaseForTraining(Context cxt) {
         int kcal = 0;
         database = new MyDatabase(cxt);
         Cursor cursor = database.selectBread(1);
-        for (int i = 1; i<= 4; i++){
+        for (int i = 1; i <= 4; i++) {
             cursor = database.selectBread(i);
             if (cursor.getCount() > 0) {
                 if (cursor.moveToFirst()) {
@@ -365,7 +329,7 @@ public class Home extends AppCompatActivity implements OnStateChangeListener {
             }
         }
 
-        for (int i = 1; i<= 4; i++){
+        for (int i = 1; i <= 4; i++) {
             cursor = database.selectCheese(i);
             if (cursor.getCount() > 0) {
                 if (cursor.moveToFirst()) {
@@ -376,7 +340,7 @@ public class Home extends AppCompatActivity implements OnStateChangeListener {
             }
         }
 
-        for (int i = 1; i<= 4; i++){
+        for (int i = 1; i <= 4; i++) {
             cursor = database.selectMeat(i);
             if (cursor.getCount() > 0) {
                 if (cursor.moveToFirst()) {
@@ -387,7 +351,7 @@ public class Home extends AppCompatActivity implements OnStateChangeListener {
             }
         }
 
-        for (int i = 1; i<= 4; i++){
+        for (int i = 1; i <= 4; i++) {
             cursor = database.selectSalad(i);
             if (cursor.getCount() > 0) {
                 if (cursor.moveToFirst()) {
@@ -398,7 +362,7 @@ public class Home extends AppCompatActivity implements OnStateChangeListener {
             }
         }
 
-        for (int i = 1; i<= 4; i++){
+        for (int i = 1; i <= 4; i++) {
             cursor = database.selectExtras(i);
             if (cursor.getCount() > 0) {
                 if (cursor.moveToFirst()) {
@@ -409,7 +373,7 @@ public class Home extends AppCompatActivity implements OnStateChangeListener {
             }
         }
 
-        for (int i = 1; i<= 4; i++){
+        for (int i = 1; i <= 4; i++) {
             cursor = database.selectSauce(i);
             if (cursor.getCount() > 0) {
                 if (cursor.moveToFirst()) {
@@ -422,28 +386,8 @@ public class Home extends AppCompatActivity implements OnStateChangeListener {
         cursor.close();
         database.close();
         kcalSum = kcal;
-        return kcal;
     }
 
-    public void startTraining(){
-        Fragment fragment = null;
-
-        Class fragmentClass;
-        fragmentClass = Training_main.class;
-
-        try {
-            fragment = (Fragment) fragmentClass.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        // Insert the fragment by replacing any existing fragment
-        fragmentManager = getSupportFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.flContent, fragment, "fragment");
-        fragmentTransaction.commit();
-        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
-    }
 }
 
 

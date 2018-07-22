@@ -17,7 +17,6 @@
         android:paddingBottom="2dp"
         android:paddingTop="6dp"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="16sp"
         android:textStyle="bold" />
 
     <TextView
@@ -26,6 +25,7 @@
         android:layout_height="0dp"
         android:layout_gravity="center"
         android:layout_weight="1"
+        android:textSize="16sp"
         android:gravity="center"
         android:paddingBottom="2dp"
         android:textColor="@android:color/white"
@@ -42,7 +42,7 @@
             android:layout_gravity="center"
             android:paddingBottom="2dp"
             android:text="("
-            android:textColor="@android:color/white" />
+            android:textColor="@color/backgroundColorDarkestYellow" />
 
         <TextView
             android:id="@+id/header_configurator_calories"
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:paddingBottom="2dp"
-            android:textColor="@android:color/white" />
+            android:textColor="@color/backgroundColorDarkestYellow" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -58,7 +58,7 @@
             android:layout_gravity="center"
             android:paddingBottom="2dp"
             android:text=" kcal)"
-            android:textColor="@android:color/white" />
+            android:textColor="@color/backgroundColorDarkestYellow" />
     </LinearLayout>
 
 

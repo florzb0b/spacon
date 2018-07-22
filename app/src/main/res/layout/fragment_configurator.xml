@@ -79,8 +79,9 @@
                 android:gravity="center"
                 android:hint="Art"
                 android:textColor="@android:color/white"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textSize="24sp"
+                android:textStyle="bold"
+                tools:ignore="RelativeOverlap" />
 
             <Button
                 android:id="@+id/button_configurator_next"
@@ -169,6 +170,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_margin="5dp"
                                 android:layout_weight="1"
+                                android:textSize="16sp"
                                 android:text="Meal Nr."
                                 android:textStyle="italic|bold"
                                 android:textColor="@android:color/white"/>
@@ -179,6 +181,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_margin="5dp"
                                 android:hint="id"
+                                android:textSize="16sp"
                                 android:textStyle="italic|bold"
                                 android:textColor="@android:color/white"/>
 
@@ -223,6 +226,7 @@
                         android:clickable="true"
                         android:elevation="5dp"
                         android:focusable="true"
+                        android:textSize="16sp"
                         android:orientation="vertical"
                         android:visibility="gone">
 
@@ -238,6 +242,7 @@
                                 android:layout_margin="5dp"
                                 android:layout_weight="1"
                                 android:text="Meal Nr."
+                                android:textSize="16sp"
                                 android:textStyle="italic|bold"
                                 android:textColor="@android:color/white"/>
 
@@ -247,6 +252,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_margin="5dp"
                                 android:hint="id"
+                                android:textSize="16sp"
                                 android:textStyle="italic|bold"
                                 android:textColor="@android:color/white"/>
 
@@ -307,6 +313,7 @@
                                 android:layout_margin="5dp"
                                 android:layout_weight="1"
                                 android:text="Meal Nr."
+                                android:textSize="16sp"
                                 android:textStyle="italic|bold"
                                 android:textColor="@android:color/white"/>
 
@@ -316,6 +323,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_margin="5dp"
                                 android:hint="id"
+                                android:textSize="16sp"
                                 android:textColor="@android:color/white"
                                 android:textStyle="italic|bold"/>
 
@@ -375,6 +383,7 @@
                                 android:layout_margin="5dp"
                                 android:layout_weight="1"
                                 android:text="Meal Nr."
+                                android:textSize="16sp"
                                 android:textStyle="italic|bold"
                                 android:textColor="@android:color/white"/>
 
@@ -385,6 +394,7 @@
                                 android:layout_margin="5dp"
                                 android:hint="id"
                                 android:textStyle="italic|bold"
+                                android:textSize="16sp"
                                 android:textColor="@android:color/white"/>
 
                             <ImageView
