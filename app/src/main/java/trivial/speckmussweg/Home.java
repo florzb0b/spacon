@@ -107,7 +107,7 @@ public class Home extends AppCompatActivity implements OnStateChangeListener {
         setProfile();
     }
 
-
+    //method to animate the views on startscreen
     private void animateViews(int duration) {
         if (headerText.getVisibility() == View.VISIBLE) {
             headerText.setVisibility(View.GONE);
@@ -287,6 +287,7 @@ public class Home extends AppCompatActivity implements OnStateChangeListener {
         }
     }
 
+    //if true, then user can leave profile at start
     public static void setBooleanSwitchPossible() {
         booleanSwitchPossible = true;
     }
@@ -314,6 +315,7 @@ public class Home extends AppCompatActivity implements OnStateChangeListener {
 
     }
 
+    //get all meals from database for training
     public static void getKcalFromDatabaseForTraining(Context cxt) {
         int kcal = 0;
         database = new MyDatabase(cxt);

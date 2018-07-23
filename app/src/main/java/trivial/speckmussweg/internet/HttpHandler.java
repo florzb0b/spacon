@@ -44,6 +44,7 @@ public class HttpHandler {
         return response;
     }
 
+    //get the content and convert it into String
     private String convertStreamToString(InputStream is) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         StringBuilder sb = new StringBuilder();

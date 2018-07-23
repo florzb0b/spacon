@@ -22,7 +22,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     private List<String> mName;
     private List<String> mKcal;
-    private List<String> mFett;
     int mId;
 
     private LayoutInflater mInflater;
@@ -33,7 +32,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         this.mName = names;
         this.mKcal = calories;
         this.mId = id;
-        //this.mFett = fett;
     }
 
     // inflates the row layout from xml when needed
@@ -44,20 +42,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return new ViewHolder(view);
     }
 
+    //sets the content to each Listitem
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        /*for (Entry<String, String> entry : map.entrySet()) {
-            System.out.println(entry.getKey() + "=" + entry.getValue());
-        }*/
-
 
         String name = mName.get(position);
         String kcal = mKcal.get(position);
-        //String fett = mFett.get(position);
         holder.nameTextView.setText(name);
         holder.kcalTextView.setText(kcal);
-        //holder.kcalTextView.setText(kcal);
-        //holder.fettTextView.setText(fett);
 
         //1= brot, 2 = cheese, 3 = Meat, 4 = salad, 5 = extra, 6 = sauce
         if (mId == 1){
@@ -83,6 +75,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     }
 
+    // get the count of all Items
     @Override
     public int getItemCount() {
         return mName.size();
@@ -118,7 +111,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             kcalTextView = itemView.findViewById(R.id.header_configurator_calories);
             iconImageView = itemView.findViewById(R.id.header_configurator_icon);
 
-            //fettTextView = itemView.findViewById(R.id.mobile);
             itemView.setOnClickListener(this);
         }
 

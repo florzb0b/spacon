@@ -79,15 +79,7 @@ public class Profile extends Fragment {
         database = new MyDatabase(getActivity());
         Cursor cursor = database.selectProfile(1);
         if (cursor.getCount() >= 1) {
-            /*
-    "firstname";
-    "lastname";
-    "gender";
-    "birthday";
-    "height";
-    "weight";
-    "picture";
- */
+
             editTextFirstName.setText(cursor.getString(1));
             editTextLastName.setText(cursor.getString(2));
             if (cursor.getInt(3) == 0) {
@@ -189,6 +181,7 @@ public class Profile extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+    //check if all contents are filled
     public Boolean savePossible() {
         return TextUtils.isEmpty(editTextFirstName.getText().toString())
                 || TextUtils.isEmpty(editTextLastName.getText().toString())
@@ -244,7 +237,7 @@ public class Profile extends Fragment {
     }
 
 
-
+    //set the date for DateOfBirth
     private void setDate() {
         String myFormat = "dd/MM/yyyy";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
@@ -255,6 +248,7 @@ public class Profile extends Fragment {
         }
     }
 
+    //opens the implicit Intent for choosing a picture
     public void openAlbum(View v) {
         // Intent to open Album on Device
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
@@ -281,6 +275,7 @@ public class Profile extends Fragment {
         }
     }
 
+    //result of the picture choosed
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == REQUEST_CODE) {

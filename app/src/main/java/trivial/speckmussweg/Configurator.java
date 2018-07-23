@@ -47,23 +47,15 @@ import trivial.speckmussweg.internet.*;
 import static android.support.v7.widget.RecyclerView.HORIZONTAL;
 
 public class Configurator extends Fragment implements RecyclerViewAdapter.ItemClickListener {
-    int currentSum = 0, layoutId = 1, focusIdMeal = 1;
+
+    int currentSum = 0, layoutId = 1, focusIdMeal = 1, buttonCounter = 1;
     View viewMain;
     private String TAG = Home.class.getSimpleName();
-
     private ProgressDialog pDialog;
-
-    ArrayList<HashMap<String, String>> contactList;
-    ArrayList<HashMap<String, String>> breadList;
     int[][] kcalList = new int[6][10];
-
     private RecyclerViewAdapter adapter;
-
-    LinearLayout linearLayoutFirstMeal;
-
     List<String> breadNameList, cheeseNameList, meatNameList, saladNameList, extrasNameList, sauceNameList;
     List<String> breadkcalList, cheesekcalList, meatkcalList, saladkcalList, extraskcalList, saucekcalList;
-
     LinearLayoutManager horizontalLayoutManager;
     List<Integer> subListId;
     String objectBreadContent, objectBreadCalories;
@@ -71,16 +63,10 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             objectCheeseListCalories, objectMeatList, objectMeatListCalories, objectSaladList,
             objectSaladListCalories, objectExtraList, objectExtraListCalories, objectSauceList,
             objectSauceListCalories;
-
-
     RecyclerView recyclerView;
     ImageView leftArrow, rightArrow;
     Button buttonLast, buttonNext;
     FloatingActionButton fab;
-
-
-    Boolean breadIsChoosed = false;
-    int buttonCounter = 1;
     LinearLayout linearLayoutConfiguratorBreadHeader, linearLayoutConfiguratorBreadContent,
             linearLayoutConfiguratorCheeseHeader, linearLayoutConfiguratorCheeseContent,
             linearLayoutConfiguratorMeatHeader, linearLayoutConfiguratorMeatContent,
@@ -99,18 +85,14 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             textViewMealLayoutHeaderText1, textViewMealLayoutHeaderText2, textViewMealLayoutHeaderText3, textViewMealLayoutHeaderText4;
     LinearLayout.LayoutParams llParams1, llParams2, llParams3, llParams4;
     View viewParams1, viewParams2, viewParams3, viewParams4;
-
     RelativeLayout relativeLayoutMealContent, relativeLayoutConfiguratorFooterFirstMeal;
-
     ImageView imageViewConfiguratorDeleteBreadContent, imageViewConfiguratorDeleteCheeseContent, imageViewConfiguratorDeleteMeatContent,
             imageViewConfiguratorDeleteSaladContent, imageViewConfiguratorDeleteExtraContent,
             imageViewConfiguratorDeleteSauceContent;
     ImageView imageViewMealLayoutDeleteContentId1, imageViewMealLayoutDeleteContentId2,
             imageViewMealLayoutDeleteContentId3, imageViewMealLayoutDeleteContentId4;
     View selectedView;
-    boolean firstMealIsOn = true, firstAttempt = false, subIsLong = false, buildAllowed = false;
-
-
+    boolean firstMealIsOn = true, firstAttempt = false, subIsLong = false, buildAllowed = false, breadIsChoosed = false;
     MyDatabase database;
 
 
@@ -138,12 +120,8 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         rightArrow = viewMain.findViewById(R.id.recyclerViewRightArrow);
         buttonLast = viewMain.findViewById(R.id.button_configurator_last);
         buttonNext = viewMain.findViewById(R.id.button_configurator_next);
-        linearLayoutFirstMeal = viewMain.findViewById(R.id.linearlayout_configurator_cheese_content);
         fab = viewMain.findViewById(R.id.fab_configurator);
         linearLayoutListViewItem = viewMain.findViewById(R.id.idvonglistview);
-
-        contactList = new ArrayList<>();
-        breadList = new ArrayList<>();
 
         horizontalLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         breadNameList = new ArrayList<>();
@@ -169,10 +147,8 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         objectExtraListCalories = new ArrayList<>();
         objectSauceList = new ArrayList<>();
         objectSauceListCalories = new ArrayList<>();
-
         objectBreadCalories = "";
         objectBreadContent = "";
-
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -486,6 +462,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         return viewMain;
     }
 
+    //delete content of bread in meal layout
     private void deleteBreadTemporary() {
         if (linearLayoutConfiguratorBreadHeader.getVisibility() == View.VISIBLE &&
                 linearLayoutConfiguratorBreadContent.getVisibility() == View.VISIBLE) {
@@ -503,6 +480,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         setKcalText();
     }
 
+    //delete content of cheese in meal layout
     private void deleteCheeseLayout() {
         if (linearLayoutConfiguratorCheeseHeader.getVisibility() == View.VISIBLE &&
                 linearLayoutConfiguratorCheeseContent.getVisibility() == View.VISIBLE) {
@@ -520,6 +498,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         }
     }
 
+    //delete content of meat in meal layout
     private void deleteMeatLayout() {
         if (linearLayoutConfiguratorMeatHeader.getVisibility() == View.VISIBLE &&
                 linearLayoutConfiguratorMeatContent.getVisibility() == View.VISIBLE) {
@@ -537,6 +516,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         }
     }
 
+    //delete content of salad in meal layout
     private void deleteSaladLayout() {
         if (linearLayoutConfiguratorSaladHeader.getVisibility() == View.VISIBLE &&
                 linearLayoutConfiguratorSaladContent.getVisibility() == View.VISIBLE) {
@@ -554,6 +534,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         }
     }
 
+    //delete content of extras in meal layout
     private void deleteExtraLayout() {
         if (linearLayoutConfiguratorExtraHeader.getVisibility() == View.VISIBLE &&
                 linearLayoutConfiguratorExtraContent.getVisibility() == View.VISIBLE) {
@@ -571,6 +552,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         }
     }
 
+    //delete content of sauce in meal layout
     private void deleteSauceLayout() {
         if (linearLayoutConfiguratorSauceHeader.getVisibility() == View.VISIBLE &&
                 linearLayoutConfiguratorSauceContent.getVisibility() == View.VISIBLE) {
@@ -589,6 +571,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
 
     }
 
+    //get data of a Meal from Database
     @SuppressLint("SetTextI18n")
     private void setMealFromDatabase(int id) {
         //cursor.getString(1); NAME
@@ -666,6 +649,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         database.close();
     }
 
+    //delete every Meal in Database
     private void deleteAllMealsInDatabase() {
         database = new MyDatabase(getActivity());
 
@@ -682,6 +666,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
 
     }
 
+    //delete 1 meal in database
     private void deleteMealInDatabase(int i) {
         database = new MyDatabase(getActivity());
         database.deleteBread(i);
@@ -693,6 +678,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         database.close();
     }
 
+    //fill the Recyclerview
     @SuppressLint("SetTextI18n")
     private void fillList() {
 
@@ -756,6 +742,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         });
     }
 
+    //chosse the current clicked Meal
     private void getFocusOnMeal(int id) {
         if (id == 1) {
             /*id1IsFocused = true;
@@ -895,6 +882,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         }
     }
 
+    //check if 1 meal is added
     private void checkBuildIsAllowed() {
         if (linearLayoutMealLayoutClickableLayout1.getVisibility() == View.GONE
                 && linearLayoutMealLayoutClickableLayout2.getVisibility() == View.GONE
@@ -961,11 +949,12 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         }
     }
 
-
+    //set the total kcal textview
     private void setKcalText() {
         footerConfiguratorCaloriesContent.setText(String.valueOf(currentSum));
     }
 
+    //prepare the Value of all meals
     private void prepareSum(int position, boolean normalPrepare) {
         int sum = 0;
         if (normalPrepare) {
@@ -1005,6 +994,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         setKcalText();
     }
 
+    //fill the Calorieslist with content
     private int setSum() {
         int sum = 0;
         for (int k = 0; k < 6; k++) {
@@ -1165,6 +1155,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
     }
 
 
+    //create a Meal
     @SuppressLint("ResourceType")
     private void createSub(final String content, final int position) {
 
@@ -1261,6 +1252,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
 
     }
 
+    //set cheese content
     private void setCheese(String content, final int position) {
 
         if (linearLayoutConfiguratorCheeseHeader.getVisibility() == View.GONE &&
@@ -1285,12 +1277,13 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
 //            objectCheeseList.add(String.valueOf(cheeseTextView.getText()));
 
         } else {
-            Toast.makeText(getActivity(), "et is jetz mo genuch du haufen scheisse", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Shall i call you a Doctor? Its enough!", Toast.LENGTH_SHORT).show();
         }
 
 
     }
 
+    //set meat content
     private void setMeat(String content, final int position) {
 
         if (linearLayoutConfiguratorMeatHeader.getVisibility() == View.GONE &&
@@ -1313,10 +1306,11 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             }
 
         } else {
-            Toast.makeText(getActivity(), "et is jetz mo genuch du haufen scheisse", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Shall i call you a Doctor? Its enough!", Toast.LENGTH_SHORT).show();
         }
     }
 
+    //set salad content
     private void setSalad(String content, final int position) {
 
         if (linearLayoutConfiguratorSaladHeader.getVisibility() == View.GONE &&
@@ -1339,10 +1333,11 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             }
 
         } else {
-            Toast.makeText(getActivity(), "et is jetz mo genuch du haufen scheisse", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Shall i call you a Doctor? Its enough!", Toast.LENGTH_SHORT).show();
         }
     }
 
+    //set extras content
     private void setExtras(String content, final int position) {
 
         if (linearLayoutConfiguratorExtraHeader.getVisibility() == View.GONE &&
@@ -1365,11 +1360,12 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             }
 
         } else {
-            Toast.makeText(getActivity(), "et is jetz mo genuch du haufen scheisse", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Shall i call you a Doctor? Its enough!", Toast.LENGTH_SHORT).show();
         }
 
     }
 
+    //set sauce content
     private void setSauce(String content, final int position) {
 
         if (linearLayoutConfiguratorSauceHeader.getVisibility() == View.GONE &&
@@ -1392,10 +1388,11 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             }
 
         } else {
-            Toast.makeText(getActivity(), "et is jetz mo genuch du haufen scheisse", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Shall i call you a Doctor? Its enough!", Toast.LENGTH_SHORT).show();
         }
     }
 
+    //delete all views of a meal
     private void deleteMealContentViews() {
         deleteCheeseLayout();
         deleteBreadTemporary();
@@ -1609,7 +1606,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             layoutId += 1;
             firstAttempt = true;
         } else {
-            Toast.makeText(getActivity(), "Its enough", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "Dont you think you have enough you fat pig???", Toast.LENGTH_LONG).show();
         }
 
     }
