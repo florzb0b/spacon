@@ -195,7 +195,8 @@ public class Home extends AppCompatActivity implements OnStateChangeListener {
                 case R.id.nav_shutdown:
                     System.exit(1);
                 default:
-                    fragmentClass = TestFragment.class;
+                    fragmentClass = Home.class;
+                    break;
             }
             fillableLoader.setVisibility(View.GONE);
             try {
