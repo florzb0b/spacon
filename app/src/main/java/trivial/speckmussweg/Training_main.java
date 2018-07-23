@@ -57,6 +57,7 @@ public class Training_main extends Fragment {
     ArrayList<String> sportMultiList;
     MyDatabase database;
     Cursor cursor;
+    FillableLoader fillableLoader;
 
 
     @Override
@@ -64,6 +65,7 @@ public class Training_main extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         View viewMain = inflater.inflate(R.layout.fragment_training_main_new, container, false);
+        fillableLoader = viewMain.findViewById(R.id.home_fillableLoader);
 
         sportNameList = new ArrayList<String>();
         sportMultiList = new ArrayList<String>();
@@ -108,14 +110,17 @@ public class Training_main extends Fragment {
                         // TODO Auto-generated method stub
                         sportTextView.setText(sportNameList.get(position));
                         long timeForSport = calcTime();
+                        fillableLoader.reset();
+                        fillableLoader.start();
 
                         // CountDownTimer for training
-                        new CountDownTimer (timeForSport, 10){
+                        new CountDownTimer (timeForSport, 1000){
                             public void onTick (long timeForSport){
                                 final String text = String.format(Locale.getDefault(), "%d min %d sec",
                                         TimeUnit.MILLISECONDS.toMinutes(timeForSport),
                                         TimeUnit.MILLISECONDS.toSeconds(timeForSport) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(timeForSport)));
                                 trainingTime.setText(text);
+                                fillableLoader.setFillDuration((int)(calcTime()));
                             }
                             public void onFinish() {
                                 Toast.makeText(getActivity(), "Yeah, you finished you fat shit", Toast.LENGTH_LONG).show();
@@ -128,16 +133,12 @@ public class Training_main extends Fragment {
                 alert.show();
             }
         });
-        final long Maxtime = calcTime();
-        int maxinint = (int)Maxtime;
-        int percentage = (text/maxinint)*100;
-       final FillableLoader fillableLoader = viewMain.findViewById(R.id.home_fillableLoader);
+
+
         fillableLoader.setSvgPath(SVGPath.NEW_FAT_PIG);
         fillableLoader.start();
-        fillableLoader.setPercentage(maxinint);
+
         new Training_main.getData().execute();
-
-
         return viewMain;
 
 
@@ -221,7 +222,7 @@ public class Training_main extends Fragment {
             HttpHandler sh = new HttpHandler();
 
             // Making a request to url and getting response
-            String jsonStr = sh.makeServiceCall(url); //die url ist die url der json datei
+            String jsonStr = sh.makeServiceCall(url);
 
             //Log.e(TAG, "Response from url: " + jsonStr);
 
