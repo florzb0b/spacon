@@ -43,7 +43,7 @@ import android.os.CountDownTimer;
 import static android.support.constraint.Constraints.TAG;
 
 public class Training_main extends Fragment {
-    int test= 0;
+
 
 
     Button btnDialog;
@@ -110,12 +110,11 @@ public class Training_main extends Fragment {
                         long timeForSport = calcTime();
 
                         // CountDownTimer for training
-                        new CountDownTimer(timeForSport, 10){
+                        new CountDownTimer (timeForSport, 10){
                             public void onTick (long timeForSport){
-                                String text = String.format(Locale.getDefault(), "%d min %d sec",
+                                final String text = String.format(Locale.getDefault(), "%d min %d sec",
                                         TimeUnit.MILLISECONDS.toMinutes(timeForSport),
                                         TimeUnit.MILLISECONDS.toSeconds(timeForSport) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(timeForSport)));
-
                                 trainingTime.setText(text);
                             }
                             public void onFinish() {
@@ -129,25 +128,22 @@ public class Training_main extends Fragment {
                 alert.show();
             }
         });
-        Timer timer = new Timer();
-
-        TimerTask task =new TimerTask() {
-            @Override
-            public void run() {
-                test++;
-            }
-
-        };
-        timer.scheduleAtFixedRate(task, 1000, 1000);
-        FillableLoader fillableLoader = viewMain.findViewById(R.id.home_fillableLoader);
+        final long Maxtime = calcTime();
+        int maxinint = (int)Maxtime;
+        int percentage = (text/maxinint)*100;
+       final FillableLoader fillableLoader = viewMain.findViewById(R.id.home_fillableLoader);
         fillableLoader.setSvgPath(SVGPath.NEW_FAT_PIG);
         fillableLoader.start();
+        fillableLoader.setPercentage(maxinint);
         new Training_main.getData().execute();
-            fillableLoader.setPercentage(test);
+
 
         return viewMain;
 
-        }
+
+
+
+    }
 
 
     private class ViewHolder {
