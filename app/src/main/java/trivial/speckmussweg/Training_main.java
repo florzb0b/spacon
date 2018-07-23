@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 import android.database.Cursor;
@@ -41,6 +43,8 @@ import android.os.CountDownTimer;
 import static android.support.constraint.Constraints.TAG;
 
 public class Training_main extends Fragment {
+    int test= 0;
+
 
     Button btnDialog;
     AlertDialog.Builder alertDialog;
@@ -57,10 +61,8 @@ public class Training_main extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-
         View viewMain = inflater.inflate(R.layout.fragment_training_main_new, container, false);
 
         sportNameList = new ArrayList<String>();
@@ -74,7 +76,6 @@ public class Training_main extends Fragment {
         trainingTime = viewMain.findViewById(R.id.training_time);
         trainingCalories = viewMain.findViewById(R.id.training_calories);
         trainingCalories.setText(String.valueOf(Home.kcalSum));
-
 
         btnDialog.setOnClickListener(new OnClickListener() {
             @Override
@@ -128,13 +129,25 @@ public class Training_main extends Fragment {
                 alert.show();
             }
         });
+        Timer timer = new Timer();
 
+        TimerTask task =new TimerTask() {
+            @Override
+            public void run() {
+                test++;
+            }
+
+        };
+        timer.scheduleAtFixedRate(task, 1000, 1000);
         FillableLoader fillableLoader = viewMain.findViewById(R.id.home_fillableLoader);
         fillableLoader.setSvgPath(SVGPath.NEW_FAT_PIG);
         fillableLoader.start();
         new Training_main.getData().execute();
+            fillableLoader.setPercentage(test);
+
         return viewMain;
-    }
+
+        }
 
 
     private class ViewHolder {
@@ -279,10 +292,8 @@ public class Training_main extends Fragment {
             for (int position = 0; position < sportMultiList.size(); position++){
                 multi = Double.parseDouble(sportMultiList.get(position));
             }
-
             double time = ((kcalSum /(weight*multi))*60)*1000; // Calculating time and convert to milliseconds
             timeinmilli = (long) time; // casting to long because CountDownTimer expect a long value
-
             return timeinmilli;
         }
 
