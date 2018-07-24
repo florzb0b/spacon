@@ -180,8 +180,8 @@ public class Training_main extends Fragment {
                     trainingTime.setText(text);
                     fillableLoader.setFillDuration((int) (calcTime()));
                     int sumkcal = 10;
-                    int timepast = sumkcal - burnedkcal()*(int)timeForSport/1000/60;
-                    burnedCalories.setText(""+timepast);
+                    double timepast = sumkcal - (double)burnedkcal()*(double) (timeForSport/1000)/60; //Calculate difference between Mealcalories and burdnedcalories
+                    burnedCalories.setText(String.format(Locale.getDefault(), "%.2f", timepast));
                 }
 
                 public void onFinish() {
@@ -346,22 +346,23 @@ public class Training_main extends Fragment {
             return timeinmilli;
         }
 
-    public int burnedkcal(){
-        double time = (double)((calcTime()/1000)/60);
-        double burnedCalories=0;
-        int burnedCaloriesret= 0;
-        double multi = 0.0;
-        int weight = Integer.parseInt(cursor.getString(6));
 
-        //getting position of listview for setting multiplicator
-        for (int position = 0; position < sportMultiList.size(); position++){
-            multi = Double.parseDouble(sportMultiList.get(position));
-        }
+        //Function calculation burned Calories per minute
+        public int burnedkcal(){
+            double burnedCalories=0;
+            int burnedCaloriesret= 0;
+            double multi = 0.0;
+            int weight = Integer.parseInt(cursor.getString(6));
 
-        burnedCalories= ((weight * multi));
-        burnedCaloriesret= (int) burnedCalories;
+            //getting position of listview for setting multiplicator
+            for (int position = 0; position < sportMultiList.size(); position++){
+               multi = Double.parseDouble(sportMultiList.get(position));
+         }
 
-        return burnedCaloriesret;
+            burnedCalories= ((weight * multi));
+            burnedCaloriesret= (int) burnedCalories;
+
+            return burnedCaloriesret;
     }
 
 
