@@ -47,10 +47,9 @@
                             android:layout_weight="1"
                             android:gravity="center|start"
                             android:text="Bread:"
-                            android:textSize="16sp"
-                            android:textStyle="italic|bold"
                             android:textColor="@android:color/white"
-                             />
+                            android:textSize="16sp"
+                            android:textStyle="italic|bold" />
 
                         <ImageView
                             android:id="@+id/imageview_configurator_delete_bread"
@@ -82,7 +81,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textColor="@color/textColorOnYellowBackground"/>
+                        android:textColor="@color/textColorOnYellowBackground" />
 
                     <LinearLayout
                         android:id="@+id/linearlayout_configurator_bread_size"
@@ -128,16 +127,16 @@
                             android:layout_weight="1"
                             android:gravity="center|start"
                             android:text="Cheese:"
+                            android:textColor="@android:color/white"
                             android:textSize="16sp"
-                            android:textStyle="italic|bold"
-                            android:textColor="@android:color/white"/>
+                            android:textStyle="italic|bold" />
 
                         <ImageView
                             android:id="@+id/imageview_configurator_delete_cheese"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_delete_white_24dp"
-                            android:contentDescription="Delete Cheese" />
+                            android:contentDescription="Delete Cheese"
+                            android:src="@drawable/ic_delete_white_24dp" />
 
                     </LinearLayout>
 
@@ -176,16 +175,16 @@
                             android:layout_weight="1"
                             android:gravity="center|start"
                             android:text="Meat:"
+                            android:textColor="@android:color/white"
                             android:textSize="16sp"
-                            android:textStyle="italic|bold"
-                            android:textColor="@android:color/white"/>
+                            android:textStyle="italic|bold" />
 
                         <ImageView
                             android:id="@+id/imageview_configurator_delete_meat"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_delete_white_24dp"
-                            android:contentDescription="Delete Meat" />
+                            android:contentDescription="Delete Meat"
+                            android:src="@drawable/ic_delete_white_24dp" />
 
                     </LinearLayout>
 
@@ -224,16 +223,16 @@
                             android:layout_weight="1"
                             android:gravity="center|start"
                             android:text="Salad:"
+                            android:textColor="@android:color/white"
                             android:textSize="16sp"
-                            android:textStyle="italic|bold"
-                            android:textColor="@android:color/white"/>
+                            android:textStyle="italic|bold" />
 
                         <ImageView
                             android:id="@+id/imageview_configurator_delete_salad"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_delete_white_24dp"
-                            android:contentDescription="Delete Salad"/>
+                            android:contentDescription="Delete Salad"
+                            android:src="@drawable/ic_delete_white_24dp" />
 
                     </LinearLayout>
 
@@ -272,16 +271,16 @@
                             android:layout_weight="1"
                             android:gravity="center|start"
                             android:text="Extras:"
+                            android:textColor="@android:color/white"
                             android:textSize="16sp"
-                            android:textStyle="italic|bold"
-                            android:textColor="@android:color/white"/>
+                            android:textStyle="italic|bold" />
 
                         <ImageView
                             android:id="@+id/imageview_configurator_delete_extras"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_delete_white_24dp"
-                            android:contentDescription="Delete Extras"/>
+                            android:contentDescription="Delete Extras"
+                            android:src="@drawable/ic_delete_white_24dp" />
 
                     </LinearLayout>
 
@@ -320,16 +319,16 @@
                             android:layout_weight="1"
                             android:gravity="center|start"
                             android:text="Sauce:"
+                            android:textColor="@android:color/white"
                             android:textSize="16sp"
-                            android:textStyle="italic|bold"
-                            android:textColor="@android:color/white"/>
+                            android:textStyle="italic|bold" />
 
                         <ImageView
                             android:id="@+id/imageview_configurator_delete_sauce"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_delete_white_24dp"
-                            android:contentDescription="Delete Sauce"/>
+                            android:contentDescription="Delete Sauce"
+                            android:src="@drawable/ic_delete_white_24dp" />
 
                     </LinearLayout>
 
@@ -366,8 +365,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:text="Total:"
-                android:textSize="16sp"
                 android:textColor="@android:color/white"
+                android:textSize="16sp"
                 android:textStyle="italic|bold" />
 
             <TextView
@@ -377,9 +376,9 @@
                 android:layout_margin="5dp"
                 android:layout_toEndOf="@+id/footer_configurator_max_calories_text"
                 android:gravity="center_horizontal"
-                android:textSize="16sp"
                 android:text="0"
                 android:textColor="@android:color/white"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -391,8 +390,8 @@
                 android:layout_toEndOf="@+id/footer_configurator_calories_content"
                 android:gravity="center_horizontal"
                 android:text="kcal"
-                android:textSize="16sp"
                 android:textColor="@android:color/white"
+                android:textSize="16sp"
                 android:textStyle="bold" />
         </RelativeLayout>
 

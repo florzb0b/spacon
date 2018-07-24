@@ -32,261 +32,261 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight=".5">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp">
 
-
-        <LinearLayout
-            android:id="@+id/user_profile_myprofiletag_layout"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/layout_shadow_darkyellow"
-            android:baselineAligned="false"
-            android:elevation="5dp"
-            android:weightSum="4">
+            android:layout_height="0dp">
 
 
             <LinearLayout
-                android:id="@+id/user_profile_header_leftlayout"
-                android:layout_width="wrap_content"
+                android:id="@+id/user_profile_myprofiletag_layout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/user_profile_textview_firstname"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="First Name*"
-                    android:textColor="@color/textColorOnYellowBackground"
-                    android:textStyle="bold"
-                     />
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="Last Name*"
-                    android:textColor="@color/textColorOnYellowBackground"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/user_profile_header_rightlayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_weight="2"
-                android:orientation="vertical">
-
-                <EditText
-                    android:id="@+id/user_profile_content_firstname"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="First Name"
-                    android:inputType="text"
-                    android:scrollbars="vertical"
-                    android:textColor="@color/textColorOnYellowBackground"
-                    android:textColorHint="@color/textColorOnYellowBackground"
-                    android:textSize="14sp" />
-
-                <EditText
-                    android:id="@+id/user_profile_content_lastname"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Last Name"
-                    android:inputType="text"
-                    android:scrollbars="vertical"
-                    android:textColor="@color/textColorOnYellowBackground"
-                    android:textColorHint="@color/textColorOnYellowBackground"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="end">
-
-                <ImageView
-                    android:id="@+id/user_profile_button_deleteContent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="12dp"
-                    android:contentDescription="Delete all Fields"
-                    android:src="@drawable/ic_delete_white_24dp" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/user_profile_content_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/user_profile_myprofiletag_layout"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/layout_shadow_darkyellow"
-            android:baselineAligned="false"
-            android:elevation="5dp"
-            android:weightSum="4">
-
-
-            <LinearLayout
-                android:id="@+id/user_profile_leftlayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="Date of Birth*"
-                    android:textColor="@color/textColorOnYellowBackground"
-                    android:textStyle="bold" />
-
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="Weight*"
-                    android:textColor="@color/textColorOnYellowBackground"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="Height*"
-                    android:textColor="@color/textColorOnYellowBackground"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="Gender*"
-                    android:textColor="@color/textColorOnYellowBackground"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/user_profile_centerlayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_weight="3"
-                android:orientation="vertical">
+                android:layout_marginTop="15dp"
+                android:background="@drawable/layout_shadow_darkyellow"
+                android:baselineAligned="false"
+                android:elevation="5dp"
+                android:weightSum="4">
 
 
                 <LinearLayout
-                    android:id="@+id/user_profile_linearlayout_age"
+                    android:id="@+id/user_profile_header_leftlayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:orientation="horizontal">
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/user_profile_content_dateofbirth"
+                        android:id="@+id/user_profile_textview_firstname"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="First Name*"
+                        android:textColor="@color/textColorOnYellowBackground"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="Last Name*"
+                        android:textColor="@color/textColorOnYellowBackground"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/user_profile_header_rightlayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_weight="2"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/user_profile_content_firstname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="First Name"
+                        android:inputType="text"
+                        android:scrollbars="vertical"
+                        android:textColor="@color/textColorOnYellowBackground"
+                        android:textColorHint="@color/textColorOnYellowBackground"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:id="@+id/user_profile_content_lastname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Last Name"
+                        android:inputType="text"
+                        android:scrollbars="vertical"
+                        android:textColor="@color/textColorOnYellowBackground"
+                        android:textColorHint="@color/textColorOnYellowBackground"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end">
+
+                    <ImageView
+                        android:id="@+id/user_profile_button_deleteContent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="12dp"
+                        android:contentDescription="Delete all Fields"
+                        android:src="@drawable/ic_delete_white_24dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/user_profile_content_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/user_profile_myprofiletag_layout"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/layout_shadow_darkyellow"
+                android:baselineAligned="false"
+                android:elevation="5dp"
+                android:weightSum="4">
+
+
+                <LinearLayout
+                    android:id="@+id/user_profile_leftlayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="Date of Birth*"
+                        android:textColor="@color/textColorOnYellowBackground"
+                        android:textStyle="bold" />
+
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="Weight*"
+                        android:textColor="@color/textColorOnYellowBackground"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="Height*"
+                        android:textColor="@color/textColorOnYellowBackground"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="Gender*"
+                        android:textColor="@color/textColorOnYellowBackground"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/user_profile_centerlayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_weight="3"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:id="@+id/user_profile_linearlayout_age"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/user_profile_content_dateofbirth"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="3dp"
+                            android:layout_marginTop="9dp"
+                            android:hint="dd/mm/yyyy"
+                            android:textColor="@color/textColorOnYellowBackground"
+                            android:textColorHint="@color/textColorOnYellowBackground" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/user_profile_content_weight"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center|start"
+                            android:layout_marginTop="8dp"
+                            android:hint="Weight in kg"
+                            android:inputType="number"
+                            android:maxLength="3"
+                            android:scrollbars="vertical"
+                            android:textColor="@color/textColorOnYellowBackground"
+                            android:textColorHint="@color/textColorOnYellowBackground"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center|end"
+                            android:layout_marginStart="70dp"
+                            android:layout_marginTop="12dp"
+                            android:scrollbars="vertical"
+                            android:text="kg"
+                            android:textColor="@color/textColorOnYellowBackground" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/user_profile_content_height"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center|start"
+                            android:layout_marginTop="1dp"
+                            android:hint="Height in cm"
+                            android:inputType="number"
+                            android:maxLength="3"
+                            android:textColor="@color/textColorOnYellowBackground"
+                            android:textColorHint="@color/textColorOnYellowBackground"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center|end"
+                            android:layout_marginStart="65dp"
+                            android:layout_marginTop="1dp"
+                            android:text="cm"
+                            android:textColor="@color/textColorOnYellowBackground" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/user_profile_content_gender"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="3dp"
-                        android:layout_marginTop="9dp"
-                        android:hint="dd/mm/yyyy"
+                        android:layout_marginTop="11dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:hint="Choose your Gender"
                         android:textColor="@color/textColorOnYellowBackground"
                         android:textColorHint="@color/textColorOnYellowBackground" />
+
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <EditText
-                        android:id="@+id/user_profile_content_weight"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center|start"
-                        android:layout_marginTop="8dp"
-                        android:hint="Weight in kg"
-                        android:inputType="number"
-                        android:maxLength="3"
-                        android:scrollbars="vertical"
-                        android:textColor="@color/textColorOnYellowBackground"
-                        android:textColorHint="@color/textColorOnYellowBackground"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center|end"
-                        android:layout_marginStart="70dp"
-                        android:layout_marginTop="12dp"
-                        android:scrollbars="vertical"
-                        android:text="kg"
-                        android:textColor="@color/textColorOnYellowBackground" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <EditText
-                        android:id="@+id/user_profile_content_height"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center|start"
-                        android:layout_marginTop="1dp"
-                        android:hint="Height in cm"
-                        android:inputType="number"
-                        android:maxLength="3"
-                        android:textColor="@color/textColorOnYellowBackground"
-                        android:textColorHint="@color/textColorOnYellowBackground"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center|end"
-                        android:layout_marginStart="65dp"
-                        android:layout_marginTop="1dp"
-                        android:text="cm"
-                        android:textColor="@color/textColorOnYellowBackground" />
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/user_profile_content_gender"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="3dp"
-                    android:layout_marginTop="11dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:hint="Choose your Gender"
-                    android:textColor="@color/textColorOnYellowBackground"
-                    android:textColorHint="@color/textColorOnYellowBackground" />
 
             </LinearLayout>
 
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/user_profile_content_layout"
-            android:text="* Please fill in all fields."
-            android:textColor="@color/textColorOnYellowBackground" />
-    </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/user_profile_content_layout"
+                android:text="* Please fill in all fields."
+                android:textColor="@color/textColorOnYellowBackground" />
+        </RelativeLayout>
     </ScrollView>
 
 </LinearLayout>

@@ -25,10 +25,10 @@
         android:layout_height="0dp"
         android:layout_gravity="center"
         android:layout_weight="1"
-        android:textSize="16sp"
         android:gravity="center"
         android:paddingBottom="2dp"
         android:textColor="@android:color/white"
+        android:textSize="16sp"
         android:textStyle="bold" />
 
     <LinearLayout
@@ -42,8 +42,7 @@
             android:layout_gravity="center"
             android:paddingBottom="2dp"
             android:text="("
-            android:textColor="@color/backgroundColorDarkestYellow"
-             />
+            android:textColor="@color/backgroundColorDarkestYellow" />
 
         <TextView
             android:id="@+id/header_configurator_calories"

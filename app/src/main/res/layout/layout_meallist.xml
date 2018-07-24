@@ -55,8 +55,7 @@
             android:hint="Subart"
             android:textColor="@color/textColorOnYellowBackground"
             android:textStyle="italic"
-            android:visibility="gone"
-             />
+            android:visibility="gone" />
 
 
     </LinearLayout>
