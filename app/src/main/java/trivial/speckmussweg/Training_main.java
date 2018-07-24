@@ -179,7 +179,7 @@ public class Training_main extends Fragment {
                             TimeUnit.MILLISECONDS.toSeconds(timeForSport) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(timeForSport)));
                     trainingTime.setText(text);
                     fillableLoader.setFillDuration((int) (calcTime()));
-                    int sumkcal = 10;
+                    int sumkcal = Home.kcalSum;
                     double timepast = sumkcal - (double)burnedkcal()*(double) (timeForSport/1000)/60; //Calculate difference between Mealcalories and burdnedcalories
                     burnedCalories.setText(String.format(Locale.getDefault(), "%.2f", timepast));
                 }
@@ -333,7 +333,7 @@ public class Training_main extends Fragment {
         //Function calculating the time for training
         public long calcTime(){
             long timeinmilli;
-            int kcalSum = 10;
+            int kcalSum = Home.kcalSum;
             int weight = Integer.parseInt(cursor.getString(6));
             double multi = 0.0;
 
