@@ -170,7 +170,7 @@ public class Training_main extends Fragment {
 
     public void timerStart(long timeForSport){
         //if(!isPause){
-            timer = new CountDownTimer (timeForSport, 1) {
+            timer = new CountDownTimer (timeForSport, 1000) {
                 @Override
                 public void onTick(long timeForSport) {
                     milliLeft = timeForSport;
