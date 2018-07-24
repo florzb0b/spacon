@@ -27,21 +27,26 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+
 import com.github.jorgecastillo.FillableLoader;
+
 import trivial.speckmussweg.database.MyDatabase;
 import trivial.speckmussweg.database.SVGPath;
 import trivial.speckmussweg.internet.*;
+
 import android.os.AsyncTask;
 import android.os.CountDownTimer;
+
 import static android.support.constraint.Constraints.TAG;
 
 public class Training_main extends Fragment {
-
 
 
     Button btnStart;
@@ -99,11 +104,11 @@ public class Training_main extends Fragment {
 
                 // on dialog cancel button listener
                 alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 
-                            }
-                        });
+                    }
+                });
 
                 // add custom view in dialog
                 alertDialog.setView(convertView);
@@ -158,45 +163,44 @@ public class Training_main extends Fragment {
 
     }
 
-    public void timerPause(){
+    public void timerPause() {
         timer.cancel();
         isPause = true;
     }
 
-    public void timerResume(){
+    public void timerResume() {
         timerStart(milliLeft);
         isPause = false;
     }
 
-    public void timerStart(long timeForSport){
+    public void timerStart(long timeForSport) {
         //if(!isPause){
-            timer = new CountDownTimer (timeForSport, 1000) {
-                @Override
-                public void onTick(long timeForSport) {
-                    milliLeft = timeForSport;
-                    final String text = String.format(Locale.getDefault(), "%d min %d sec",
-                            TimeUnit.MILLISECONDS.toMinutes(timeForSport),
-                            TimeUnit.MILLISECONDS.toSeconds(timeForSport) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(timeForSport)));
-                    trainingTime.setText(text);
-                    fillableLoader.setFillDuration((int) (calcTime()));
-                    int sumkcal = Home.kcalSum;
-                    double timepast = sumkcal - (double)burnedkcal()*(double) (timeForSport/1000)/60; //Calculate difference between Mealcalories and burdnedcalories
-                    burnedCalories.setText(String.format(Locale.getDefault(), "%.2f", timepast));
-                }
+        timer = new CountDownTimer(timeForSport, 1000) {
+            @Override
+            public void onTick(long timeForSport) {
+                milliLeft = timeForSport;
+                final String text = String.format(Locale.getDefault(), "%d min %d sec",
+                        TimeUnit.MILLISECONDS.toMinutes(timeForSport),
+                        TimeUnit.MILLISECONDS.toSeconds(timeForSport) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(timeForSport)));
+                trainingTime.setText(text);
+                fillableLoader.setFillDuration((int) (calcTime()));
+                int sumkcal = Home.kcalSum;
+                double timepast = sumkcal - (double) burnedkcal() * (double) (timeForSport / 1000) / 60; //Calculate difference between Mealcalories and burdnedcalories
+                burnedCalories.setText(String.format(Locale.getDefault(), "%.2f", timepast));
+            }
 
-                public void onFinish() {
-                    Toast.makeText(getActivity(), "Yeah, you finished you fat shit", Toast.LENGTH_LONG).show();
-                    btnPause.setVisibility(View.GONE);
-                    btnStart.setVisibility(View.VISIBLE);
-                }
-            };
-            timer.start();
+            public void onFinish() {
+                Toast.makeText(getActivity(), "Yeah, you finished you fat shit", Toast.LENGTH_LONG).show();
+                btnPause.setVisibility(View.GONE);
+                btnStart.setVisibility(View.VISIBLE);
+            }
+        };
+        timer.start();
         //} else {
-            //TODO Flo ich hab kein plan...
-       // }
+        //TODO Flo ich hab kein plan...
+        // }
 
     }
-
 
 
     private class ViewHolder {
@@ -228,7 +232,7 @@ public class Training_main extends Fragment {
 
         @Override
         @NonNull
-        public View getView(final int position, View view,@NonNull ViewGroup parent) {
+        public View getView(final int position, View view, @NonNull ViewGroup parent) {
 
             final ViewHolder holder;
 
@@ -305,64 +309,64 @@ public class Training_main extends Fragment {
                         }
                     });
                 }
-            }else{
-                    Log.e(TAG, "Couldn't get json from server.");
-                    Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getActivity(),
-                                    "Couldn't get json from server. Check LogCat for possible errors!",
-                                    Toast.LENGTH_LONG)
-                                    .show();
-                        }
-                    });
+            } else {
+                Log.e(TAG, "Couldn't get json from server.");
+                Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getActivity(),
+                                "Couldn't get json from server. Check LogCat for possible errors!",
+                                Toast.LENGTH_LONG)
+                                .show();
+                    }
+                });
 
-                }
-                return null;
             }
-
-            @Override
-            protected void onPostExecute (Void result){
-                super.onPostExecute(result);
-                // Dismiss the progress dialog
-                if (pDialog.isShowing())
-                    pDialog.dismiss();
-            }
+            return null;
         }
 
-        //Function calculating the time for training
-        public long calcTime(){
-            long timeinmilli;
-            int kcalSum = Home.kcalSum;
-            int weight = Integer.parseInt(cursor.getString(6));
-            double multi = 0.0;
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            // Dismiss the progress dialog
+            if (pDialog.isShowing())
+                pDialog.dismiss();
+        }
+    }
 
-            //getting position of listview for setting multiplicator
-            for (int position = 0; position < sportMultiList.size(); position++){
-                multi = Double.parseDouble(sportMultiList.get(position));
-            }
-            double time = ((kcalSum /(weight*multi))*60)*1000; // Calculating time and convert to milliseconds
-            timeinmilli = (long) time; // casting to long because CountDownTimer expect a long value
-            return timeinmilli;
+    //Function calculating the time for training
+    public long calcTime() {
+        long timeinmilli;
+        int kcalSum = Home.kcalSum;
+        int weight = Integer.parseInt(cursor.getString(6));
+        double multi = 0.0;
+
+        //getting position of listview for setting multiplicator
+        for (int position = 0; position < sportMultiList.size(); position++) {
+            multi = Double.parseDouble(sportMultiList.get(position));
+        }
+        double time = ((kcalSum / (weight * multi)) * 60) * 1000; // Calculating time and convert to milliseconds
+        timeinmilli = (long) time; // casting to long because CountDownTimer expect a long value
+        return timeinmilli;
+    }
+
+
+    //Function calculation burned Calories per minute
+    public int burnedkcal() {
+        double burnedCalories = 0;
+        int burnedCaloriesret = 0;
+        double multi = 0.0;
+        int weight = Integer.parseInt(cursor.getString(6));
+
+        //getting position of listview for setting multiplicator
+        for (int position = 0; position < sportMultiList.size(); position++) {
+            multi = Double.parseDouble(sportMultiList.get(position));
         }
 
+        burnedCalories = ((weight * multi));
+        burnedCaloriesret = (int) burnedCalories;
 
-        //Function calculation burned Calories per minute
-        public int burnedkcal(){
-            double burnedCalories=0;
-            int burnedCaloriesret= 0;
-            double multi = 0.0;
-            int weight = Integer.parseInt(cursor.getString(6));
-
-            //getting position of listview for setting multiplicator
-            for (int position = 0; position < sportMultiList.size(); position++){
-               multi = Double.parseDouble(sportMultiList.get(position));
-         }
-
-            burnedCalories= ((weight * multi));
-            burnedCaloriesret= (int) burnedCalories;
-
-            return burnedCaloriesret;
+        return burnedCaloriesret;
     }
 
 
