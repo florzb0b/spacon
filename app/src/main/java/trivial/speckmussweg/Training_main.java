@@ -43,12 +43,15 @@ import static android.support.constraint.Constraints.TAG;
 public class Training_main extends Fragment {
 
 
-    TextView burnedCalories;
-    Button btnDialog;
+
+    Button btnStart;
+    Button btnPause;
+    Button btnResume;
     AlertDialog.Builder alertDialog;
     TextView sportTextView;
     TextView trainingTime;
     TextView trainingCalories;
+    TextView burnedCalories;
     private ProgressDialog pDialog;
     private static String url = "http://thelegendsrising.de/sports.json";
     ArrayList<String> sportNameList;
@@ -56,6 +59,9 @@ public class Training_main extends Fragment {
     MyDatabase database;
     Cursor cursor;
     FillableLoader fillableLoader;
+    CountDownTimer timer;
+    long milliLeft;
+    boolean isPause;
 
 
     @Override
@@ -69,18 +75,22 @@ public class Training_main extends Fragment {
         sportMultiList = new ArrayList<String>();
         database = new MyDatabase(getActivity());
         cursor = database.selectProfile(1);
-        burnedCalories=viewMain.findViewById(R.id.burnedCalories);
+        isPause = false;
+
         alertDialog = new AlertDialog.Builder(getActivity());
         sportTextView = viewMain.findViewById(R.id.training_sport_textview);
-        btnDialog = viewMain.findViewById(R.id.training_btn_start_new);
+        btnStart = viewMain.findViewById(R.id.training_btn_start_new);
+        btnPause = viewMain.findViewById(R.id.training_btn_pause);
+        btnResume = viewMain.findViewById(R.id.training_btn_resume);
         trainingTime = viewMain.findViewById(R.id.training_time);
         trainingCalories = viewMain.findViewById(R.id.training_calories);
+        burnedCalories = viewMain.findViewById(R.id.burnedCalories);
+
         trainingCalories.setText(String.valueOf(Home.kcalSum));
 
-        btnDialog.setOnClickListener(new OnClickListener() {
+        btnStart.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity(), R.style.AlertDialogStyle);
                 LayoutInflater inflater = getLayoutInflater();
 
@@ -91,9 +101,10 @@ public class Training_main extends Fragment {
                 alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                // TODO Auto-generated method stub
+
                             }
                         });
+
                 // add custom view in dialog
                 alertDialog.setView(convertView);
                 ListView lv = (ListView) convertView.findViewById(R.id.listview_sport);
@@ -105,27 +116,14 @@ public class Training_main extends Fragment {
                 lv.setOnItemClickListener(new OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                        // TODO Auto-generated method stub
                         sportTextView.setText(sportNameList.get(position));
+                        btnStart.setVisibility(View.GONE);
+                        btnResume.setVisibility(View.GONE);
+                        btnPause.setVisibility(View.VISIBLE);
                         long timeForSport = calcTime();
                         fillableLoader.reset();
                         fillableLoader.start();
-
-
-                        // CountDownTimer for training
-                        new CountDownTimer (timeForSport, 1000){
-                            public void onTick (long timeForSport){
-                                final String text = String.format(Locale.getDefault(), "%d min %d sec",
-                                        TimeUnit.MILLISECONDS.toMinutes(timeForSport),
-                                        TimeUnit.MILLISECONDS.toSeconds(timeForSport) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(timeForSport)));
-                                trainingTime.setText(text);
-                                fillableLoader.setFillDuration((int)(calcTime()));
-                                
-                            }
-                            public void onFinish() {
-                                Toast.makeText(getActivity(), "Yeah, you finished you fat shit", Toast.LENGTH_LONG).show();
-                            }
-                        }.start();
+                        timerStart(timeForSport);
                         alert.cancel();
                     }
                 });
@@ -134,6 +132,23 @@ public class Training_main extends Fragment {
             }
         });
 
+        btnPause.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnPause.setVisibility(View.GONE);
+                btnResume.setVisibility(View.VISIBLE);
+                timerPause();
+            }
+        });
+
+        btnResume.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnResume.setVisibility(View.GONE);
+                btnPause.setVisibility(View.VISIBLE);
+                timerResume();
+            }
+        });
 
         fillableLoader.setSvgPath(SVGPath.NEW_FAT_PIG);
         fillableLoader.start();
@@ -141,10 +156,47 @@ public class Training_main extends Fragment {
         new Training_main.getData().execute();
         return viewMain;
 
+    }
 
+    public void timerPause(){
+        timer.cancel();
+        isPause = true;
+    }
 
+    public void timerResume(){
+        timerStart(milliLeft);
+        isPause = false;
+    }
+
+    public void timerStart(long timeForSport){
+        //if(!isPause){
+            timer = new CountDownTimer (timeForSport, 1) {
+                @Override
+                public void onTick(long timeForSport) {
+                    milliLeft = timeForSport;
+                    final String text = String.format(Locale.getDefault(), "%d min %d sec",
+                            TimeUnit.MILLISECONDS.toMinutes(timeForSport),
+                            TimeUnit.MILLISECONDS.toSeconds(timeForSport) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(timeForSport)));
+                    trainingTime.setText(text);
+                    fillableLoader.setFillDuration((int) (calcTime()));
+                    int sumkcal = 10;
+                    int timepast = sumkcal - burnedkcal()*(int)timeForSport/1000/60;
+                    burnedCalories.setText(""+timepast);
+                }
+
+                public void onFinish() {
+                    Toast.makeText(getActivity(), "Yeah, you finished you fat shit", Toast.LENGTH_LONG).show();
+                    btnPause.setVisibility(View.GONE);
+                    btnStart.setVisibility(View.VISIBLE);
+                }
+            };
+            timer.start();
+        //} else {
+            //TODO Flo ich hab kein plan...
+       // }
 
     }
+
 
 
     private class ViewHolder {
@@ -281,7 +333,7 @@ public class Training_main extends Fragment {
         //Function calculating the time for training
         public long calcTime(){
             long timeinmilli;
-            int kcalSum = Home.kcalSum;
+            int kcalSum = 10;
             int weight = Integer.parseInt(cursor.getString(6));
             double multi = 0.0;
 
@@ -294,22 +346,23 @@ public class Training_main extends Fragment {
             return timeinmilli;
         }
 
-        public int burnedkcal(){
+    public int burnedkcal(){
         double time = (double)((calcTime()/1000)/60);
         double burnedCalories=0;
         int burnedCaloriesret= 0;
         double multi = 0.0;
         int weight = Integer.parseInt(cursor.getString(6));
-            //getting position of listview for setting multiplicator
+
+        //getting position of listview for setting multiplicator
         for (int position = 0; position < sportMultiList.size(); position++){
             multi = Double.parseDouble(sportMultiList.get(position));
-            }
-
-            burnedCalories= ((weight * multi));
-           burnedCaloriesret= (int) burnedCalories;
-
-        return burnedCaloriesret;
         }
 
+        burnedCalories= ((weight * multi));
+        burnedCaloriesret= (int) burnedCalories;
 
+        return burnedCaloriesret;
     }
+
+
+}
