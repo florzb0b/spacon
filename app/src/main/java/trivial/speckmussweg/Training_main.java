@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 import android.database.Cursor;
@@ -45,7 +43,7 @@ import static android.support.constraint.Constraints.TAG;
 public class Training_main extends Fragment {
 
 
-
+    TextView burnedCalories;
     Button btnDialog;
     AlertDialog.Builder alertDialog;
     TextView sportTextView;
@@ -71,7 +69,7 @@ public class Training_main extends Fragment {
         sportMultiList = new ArrayList<String>();
         database = new MyDatabase(getActivity());
         cursor = database.selectProfile(1);
-
+        burnedCalories=viewMain.findViewById(R.id.burnedCalories);
         alertDialog = new AlertDialog.Builder(getActivity());
         sportTextView = viewMain.findViewById(R.id.training_sport_textview);
         btnDialog = viewMain.findViewById(R.id.training_btn_start_new);
@@ -113,6 +111,7 @@ public class Training_main extends Fragment {
                         fillableLoader.reset();
                         fillableLoader.start();
 
+
                         // CountDownTimer for training
                         new CountDownTimer (timeForSport, 1000){
                             public void onTick (long timeForSport){
@@ -121,6 +120,9 @@ public class Training_main extends Fragment {
                                         TimeUnit.MILLISECONDS.toSeconds(timeForSport) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(timeForSport)));
                                 trainingTime.setText(text);
                                 fillableLoader.setFillDuration((int)(calcTime()));
+                                int sumkcal = Home.kcalSum;
+                                int timepast = sumkcal - burnedkcal()*(int)(timeForSport/1000)/60;
+                                burnedCalories.setText(""+timepast);
                             }
                             public void onFinish() {
                                 Toast.makeText(getActivity(), "Yeah, you finished you fat shit", Toast.LENGTH_LONG).show();
@@ -293,5 +295,23 @@ public class Training_main extends Fragment {
             timeinmilli = (long) time; // casting to long because CountDownTimer expect a long value
             return timeinmilli;
         }
+
+        public int burnedkcal(){
+        double time = (double)((calcTime()/1000)/60);
+        double burnedCalories=0;
+        int burnedCaloriesret= 0;
+        double multi = 0.0;
+        int weight = Integer.parseInt(cursor.getString(6));
+            //getting position of listview for setting multiplicator
+        for (int position = 0; position < sportMultiList.size(); position++){
+            multi = Double.parseDouble(sportMultiList.get(position));
+            }
+
+            burnedCalories= ((weight * multi));
+           burnedCaloriesret= (int) burnedCalories;
+
+        return burnedCaloriesret;
+        }
+
 
     }
