@@ -20,11 +20,13 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +59,7 @@ public class Training_main extends Fragment {
     TextView trainingTime;
     TextView trainingCalories;
     TextView burnedCalories;
+    TextView mealTextView;
     private ProgressDialog pDialog;
     private static String url = "http://thelegendsrising.de/sports.json";
     ArrayList<String> sportNameList;
@@ -66,7 +69,8 @@ public class Training_main extends Fragment {
     FillableLoader fillableLoader;
     CountDownTimer timer;
     long milliLeft;
-    boolean isPause;
+    int maxTime;
+    RelativeLayout relativeLayoutInfoLayout;
 
 
     @Override
@@ -80,7 +84,6 @@ public class Training_main extends Fragment {
         sportMultiList = new ArrayList<String>();
         database = new MyDatabase(getActivity());
         cursor = database.selectProfile(1);
-        isPause = false;
 
         alertDialog = new AlertDialog.Builder(getActivity());
         sportTextView = viewMain.findViewById(R.id.training_sport_textview);
@@ -90,50 +93,59 @@ public class Training_main extends Fragment {
         trainingTime = viewMain.findViewById(R.id.training_time);
         trainingCalories = viewMain.findViewById(R.id.training_calories);
         burnedCalories = viewMain.findViewById(R.id.burnedCalories);
-
-        trainingCalories.setText(String.valueOf(Home.kcalSum));
+        mealTextView = viewMain.findViewById(R.id.textview_fragment_training_meal_content);
+        relativeLayoutInfoLayout = viewMain.findViewById(R.id.training_info_layout);
 
         btnStart.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity(), R.style.AlertDialogStyle);
-                LayoutInflater inflater = getLayoutInflater();
+                new Training_main.getData().execute();
+                //If no Meal is added, no Training can be startet
+                if (mealTextView.getText().equals("No Meal added.")) {
+                    Toast.makeText(getActivity(), "You have to configurate a Meal first, you Idiot..", Toast.LENGTH_SHORT).show();
+                } else { //training can be started
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity(), R.style.AlertDialogStyle);
+                    LayoutInflater inflater = getLayoutInflater();
 
-                // create view for add item in dialog
-                View convertView = (View) inflater.inflate(R.layout.listview_training_sport, null);
+                    // create view for add item in dialog
+                    View convertView = (View) inflater.inflate(R.layout.listview_training_sport, null);
 
-                // on dialog cancel button listener
-                alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    // on dialog cancel button listener
+                    alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
 
-                    }
-                });
+                        }
+                    });
 
-                // add custom view in dialog
-                alertDialog.setView(convertView);
-                ListView lv = (ListView) convertView.findViewById(R.id.listview_sport);
-                final AlertDialog alert = alertDialog.create();
-                alert.setTitle("Choose your Sport you fat fuck!");
-                MyAdapter myadapter = new MyAdapter(getActivity(), R.layout.listview_item, sportNameList);
-                lv.setAdapter(myadapter);
+                    // add custom view in dialog
+                    alertDialog.setView(convertView);
+                    ListView lv = (ListView) convertView.findViewById(R.id.listview_sport);
+                    final AlertDialog alert = alertDialog.create();
+                    alert.setTitle("Choose your Sport you fat fuck!");
+                    MyAdapter myadapter = new MyAdapter(getActivity(), R.layout.listview_item, sportNameList);
+                    lv.setAdapter(myadapter);
 
-                lv.setOnItemClickListener(new OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                        sportTextView.setText(sportNameList.get(position));
-                        btnStart.setVisibility(View.GONE);
-                        btnResume.setVisibility(View.GONE);
-                        btnPause.setVisibility(View.VISIBLE);
-                        long timeForSport = calcTime();
-                        fillableLoader.reset();
-                        fillableLoader.start();
-                        timerStart(timeForSport);
-                        alert.cancel();
-                    }
-                });
-                // show dialog
-                alert.show();
+                    lv.setOnItemClickListener(new OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                            sportTextView.setText(sportNameList.get(position));
+                            btnStart.setVisibility(View.GONE);
+                            btnResume.setVisibility(View.GONE);
+                            btnPause.setVisibility(View.VISIBLE);
+                            fillableLoader.reset();
+                            fillableLoader.setStrokeDrawingDuration(0);
+                            fillableLoader.setFillDuration(0);
+                            fillableLoader.setPercentage(100);
+                            fillableLoader.start();
+                            long timeForSport = calcTime();
+                            timerStart(timeForSport);
+                            alert.cancel();
+                        }
+                    });
+                    // show dialog
+                    alert.show();
+                }
             }
         });
 
@@ -154,27 +166,58 @@ public class Training_main extends Fragment {
                 timerResume();
             }
         });
+        relativeLayoutInfoLayout.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                btnStart.setAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.view_fadein_short));
+                relativeLayoutInfoLayout.setAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.view_fadein_short));
+                relativeLayoutInfoLayout.setVisibility(View.VISIBLE);
+                btnStart.setVisibility(View.VISIBLE);
+            }
+        }, 500);
+
 
         fillableLoader.setSvgPath(SVGPath.NEW_FAT_PIG);
         fillableLoader.start();
+        setMealContent();
 
-        new Training_main.getData().execute();
+
         return viewMain;
 
     }
 
+    private void setMealContent() {
+        database = new MyDatabase(getActivity());
+        Cursor cursor;
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 1; i <= 4; i++) {
+            cursor = database.selectBread(i);
+            if (cursor.getCount() > 0) {
+                if (!sb.toString().isEmpty()) {
+                    sb.append(", ");
+                }
+                sb.append(cursor.getString(1));
+            }
+        }
+        if (!sb.toString().isEmpty()) {
+            String str = sb.toString();
+            mealTextView.setText(str);
+        } else {
+            mealTextView.setText("No Meal added.");
+        }
+        trainingCalories.setText(String.valueOf(Home.kcalSum));
+    }
+
     public void timerPause() {
         timer.cancel();
-        isPause = true;
     }
 
     public void timerResume() {
         timerStart(milliLeft);
-        isPause = false;
     }
 
     public void timerStart(long timeForSport) {
-        //if(!isPause){
         timer = new CountDownTimer(timeForSport, 1000) {
             @Override
             public void onTick(long timeForSport) {
@@ -183,10 +226,13 @@ public class Training_main extends Fragment {
                         TimeUnit.MILLISECONDS.toMinutes(timeForSport),
                         TimeUnit.MILLISECONDS.toSeconds(timeForSport) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(timeForSport)));
                 trainingTime.setText(text);
-                fillableLoader.setFillDuration((int) (calcTime()));
+                double temp;
+                temp = (milliLeft * 100) / (maxTime);
+                fillableLoader.setPercentage((int) temp);
                 int sumkcal = Home.kcalSum;
-                double timepast = sumkcal - burnedkcal() * (double)(timeForSport / 1000); //Calculate difference between Mealcalories and burdnedcalories
+                double timepast = sumkcal - burnedkcal() * (double) (timeForSport / 1000); //Calculate difference between Mealcalories and burdnedcalories
                 burnedCalories.setText(String.format(Locale.getDefault(), "%.2f", timepast));
+
             }
 
             public void onFinish() {
@@ -194,12 +240,11 @@ public class Training_main extends Fragment {
                 btnPause.setVisibility(View.GONE);
                 btnStart.setVisibility(View.VISIBLE);
             }
+
+
         };
         timer.start();
-        //} else {
-        //TODO Flo ich hab kein plan...
-        // }
-
+        maxTime = (int) calcTime();
     }
 
 
@@ -363,7 +408,7 @@ public class Training_main extends Fragment {
             multi = Double.parseDouble(sportMultiList.get(position));
         }
 
-        burnedCalories = (weight * multi)/60;
+        burnedCalories = (weight * multi) / 60;
         burnedCaloriesret = burnedCalories;
 
         return burnedCaloriesret;

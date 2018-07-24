@@ -320,7 +320,7 @@ public class Home extends AppCompatActivity implements OnStateChangeListener {
     public static void getKcalFromDatabaseForTraining(Context cxt) {
         int kcal = 0;
         database = new MyDatabase(cxt);
-        Cursor cursor = database.selectBread(1);
+        Cursor cursor = null;
         for (int i = 1; i <= 4; i++) {
             cursor = database.selectBread(i);
             if (cursor.getCount() > 0) {

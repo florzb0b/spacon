@@ -30,13 +30,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -58,11 +55,6 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
     List<String> breadkcalList, cheesekcalList, meatkcalList, saladkcalList, extraskcalList, saucekcalList;
     LinearLayoutManager horizontalLayoutManager;
     List<Integer> subListId;
-    String objectBreadContent, objectBreadCalories;
-    List<String> objectCheeseList,
-            objectCheeseListCalories, objectMeatList, objectMeatListCalories, objectSaladList,
-            objectSaladListCalories, objectExtraList, objectExtraListCalories, objectSauceList,
-            objectSauceListCalories;
     RecyclerView recyclerView;
     ImageView leftArrow, rightArrow;
     Button buttonLast, buttonNext;
@@ -85,7 +77,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             textViewMealLayoutHeaderText1, textViewMealLayoutHeaderText2, textViewMealLayoutHeaderText3, textViewMealLayoutHeaderText4;
     LinearLayout.LayoutParams llParams1, llParams2, llParams3, llParams4;
     View viewParams1, viewParams2, viewParams3, viewParams4;
-    RelativeLayout relativeLayoutMealContent, relativeLayoutConfiguratorFooterFirstMeal;
+    RelativeLayout relativeLayoutMealContent, relativeLayoutConfiguratorFooterFirstMeal, relativeLayoutConfiguratorButtonLayout;
     ImageView imageViewConfiguratorDeleteBreadContent, imageViewConfiguratorDeleteCheeseContent, imageViewConfiguratorDeleteMeatContent,
             imageViewConfiguratorDeleteSaladContent, imageViewConfiguratorDeleteExtraContent,
             imageViewConfiguratorDeleteSauceContent;
@@ -109,9 +101,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
 
         initializeViews();
 
-
         recyclerView = viewMain.findViewById(R.id.recylcerview_configurator);
-
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(HORIZONTAL);
@@ -137,18 +127,6 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         extraskcalList = new ArrayList<>();
         saucekcalList = new ArrayList<>();
         subListId = new ArrayList<>();
-        objectCheeseList = new ArrayList<>();
-        objectCheeseListCalories = new ArrayList<>();
-        objectSaladList = new ArrayList<>();
-        objectSaladListCalories = new ArrayList<>();
-        objectMeatList = new ArrayList<>();
-        objectMeatListCalories = new ArrayList<>();
-        objectExtraList = new ArrayList<>();
-        objectExtraListCalories = new ArrayList<>();
-        objectSauceList = new ArrayList<>();
-        objectSauceListCalories = new ArrayList<>();
-        objectBreadCalories = "";
-        objectBreadContent = "";
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -330,7 +308,6 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         linearLayoutMealLayoutClickableLayout4 = viewMain.findViewById(R.id.linearlayout_tablayout_meallayout4);
         viewParams4 = linearLayoutMealLayoutClickableLayout4;
         llParams4 = (LinearLayout.LayoutParams) viewParams4.getLayoutParams();
-
 
         linearLayoutMealLayoutClickableLayout1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -697,6 +674,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         slideAnimator.setDuration(300);
         slideAnimator.start();
         recyclerView.setLayoutManager(horizontalLayoutManager);
+        relativeLayoutConfiguratorButtonLayout.setVisibility(View.VISIBLE);
 
         if (!breadIsChoosed || buttonCounter == 1) {
             adapter = new RecyclerViewAdapter(getActivity(), breadNameList, breadkcalList, buttonCounter);
@@ -781,10 +759,6 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
 
         }
         if (id == 2) {
-            /*id1IsFocused = false;
-            id2IsFocused = true;
-            id3IsFocused = false;
-            id4IsFocused = false;*/
             focusIdMeal = 2;
             llParams2.weight = .3f;
             viewParams2.setLayoutParams(llParams2);
@@ -815,10 +789,6 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             textViewMealLayoutBread4.setTextColor(Color.GRAY);
         }
         if (id == 3) {
-            /*id1IsFocused = false;
-            id2IsFocused = true;
-            id3IsFocused = false;
-            id4IsFocused = false;*/
             focusIdMeal = 3;
             llParams3.weight = .3f;
             viewParams3.setLayoutParams(llParams3);
@@ -848,10 +818,6 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             textViewMealLayoutBread4.setTextColor(Color.GRAY);
         }
         if (id == 4) {
-            /*id1IsFocused = false;
-            id2IsFocused = true;
-            id3IsFocused = false;
-            id4IsFocused = false;*/
             focusIdMeal = 4;
             llParams4.weight = .3f;
             viewParams4.setLayoutParams(llParams4);
@@ -908,6 +874,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
             });
             slideAnimator.setDuration(300);
             slideAnimator.start();
+            relativeLayoutConfiguratorButtonLayout.setVisibility(View.GONE);
         }
     }
 
@@ -1451,6 +1418,8 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
         textViewMealLayoutId2 = viewMain.findViewById(R.id.layout_meallist_id2);
         textViewMealLayoutId3 = viewMain.findViewById(R.id.layout_meallist_id3);
         textViewMealLayoutId4 = viewMain.findViewById(R.id.layout_meallist_id4);
+
+        relativeLayoutConfiguratorButtonLayout = viewMain.findViewById(R.id.relativelayout_configurator_button_layout);
 
 
     }
