@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="false"
-    >
+    tools:ignore="HardcodedText, UseCompoundDrawables">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -49,13 +49,14 @@
                             android:text="Bread:"
                             android:textSize="16sp"
                             android:textStyle="italic|bold"
-                            android:textColor="@android:color/white"/>
+                            android:textColor="@android:color/white"
+                             />
 
                         <ImageView
                             android:id="@+id/imageview_configurator_delete_bread"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:contentDescription="TODO"
+                            android:contentDescription="Delete Bread"
                             android:src="@drawable/ic_delete_white_24dp" />
 
                     </LinearLayout>
@@ -118,7 +119,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        tools:ignore="">
 
                         <TextView
                             android:layout_width="0dp"
@@ -134,7 +136,8 @@
                             android:id="@+id/imageview_configurator_delete_cheese"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_delete_white_24dp" />
+                            android:src="@drawable/ic_delete_white_24dp"
+                            android:contentDescription="Delete Cheese" />
 
                     </LinearLayout>
 
@@ -181,7 +184,8 @@
                             android:id="@+id/imageview_configurator_delete_meat"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_delete_white_24dp" />
+                            android:src="@drawable/ic_delete_white_24dp"
+                            android:contentDescription="Delete Meat" />
 
                     </LinearLayout>
 
@@ -228,7 +232,8 @@
                             android:id="@+id/imageview_configurator_delete_salad"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_delete_white_24dp" />
+                            android:src="@drawable/ic_delete_white_24dp"
+                            android:contentDescription="Delete Salad"/>
 
                     </LinearLayout>
 
@@ -275,7 +280,8 @@
                             android:id="@+id/imageview_configurator_delete_extras"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_delete_white_24dp" />
+                            android:src="@drawable/ic_delete_white_24dp"
+                            android:contentDescription="Delete Extras"/>
 
                     </LinearLayout>
 
@@ -322,7 +328,8 @@
                             android:id="@+id/imageview_configurator_delete_sauce"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_delete_white_24dp" />
+                            android:src="@drawable/ic_delete_white_24dp"
+                            android:contentDescription="Delete Sauce"/>
 
                     </LinearLayout>
 

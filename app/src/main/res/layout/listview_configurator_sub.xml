@@ -6,14 +6,14 @@
     android:layout_height="170dp"
     android:layout_margin="5dp"
     android:orientation="vertical"
-    tools:ignore="UseCompoundDrawables">
+    tools:ignore="UseCompoundDrawables,HardcodedText">
 
     <ImageView
         android:id="@+id/header_configurator_icon"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
-        android:contentDescription="TODO"
+        android:contentDescription="Icon of Meal"
         android:paddingBottom="2dp"
         android:paddingTop="6dp"
         android:textColor="@color/colorPrimaryDark"
@@ -42,7 +42,8 @@
             android:layout_gravity="center"
             android:paddingBottom="2dp"
             android:text="("
-            android:textColor="@color/backgroundColorDarkestYellow" />
+            android:textColor="@color/backgroundColorDarkestYellow"
+             />
 
         <TextView
             android:id="@+id/header_configurator_calories"
