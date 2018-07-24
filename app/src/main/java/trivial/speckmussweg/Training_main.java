@@ -185,7 +185,7 @@ public class Training_main extends Fragment {
                 trainingTime.setText(text);
                 fillableLoader.setFillDuration((int) (calcTime()));
                 int sumkcal = Home.kcalSum;
-                double timepast = sumkcal - (double) burnedkcal() * (double) (timeForSport / 1000) / 60; //Calculate difference between Mealcalories and burdnedcalories
+                double timepast = sumkcal - burnedkcal() * (double)(timeForSport / 1000); //Calculate difference between Mealcalories and burdnedcalories
                 burnedCalories.setText(String.format(Locale.getDefault(), "%.2f", timepast));
             }
 
@@ -351,10 +351,10 @@ public class Training_main extends Fragment {
     }
 
 
-    //Function calculation burned Calories per minute
-    public int burnedkcal() {
+    //Function calculation burned Calories per Second
+    public double burnedkcal() {
         double burnedCalories = 0;
-        int burnedCaloriesret = 0;
+        double burnedCaloriesret = 0;
         double multi = 0.0;
         int weight = Integer.parseInt(cursor.getString(6));
 
@@ -363,8 +363,8 @@ public class Training_main extends Fragment {
             multi = Double.parseDouble(sportMultiList.get(position));
         }
 
-        burnedCalories = ((weight * multi));
-        burnedCaloriesret = (int) burnedCalories;
+        burnedCalories = (weight * multi)/60;
+        burnedCaloriesret = burnedCalories;
 
         return burnedCaloriesret;
     }
