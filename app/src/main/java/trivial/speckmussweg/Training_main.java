@@ -315,7 +315,7 @@ public class Training_main extends Fragment {
                     @Override
                     public void run() {
                         Toast.makeText(getActivity(),
-                                "Couldn't get json from server. Check LogCat for possible errors!",
+                                "Couldn't get Data from server. Check your internet connection and try again!",
                                 Toast.LENGTH_LONG)
                                 .show();
                     }
