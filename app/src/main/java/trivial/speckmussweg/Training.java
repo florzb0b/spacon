@@ -76,6 +76,8 @@ public class Training extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        getActivity().setTitle("Training");
+
         // Inflate the layout for this fragment
         View viewMain = inflater.inflate(R.layout.fragment_training, container, false);
         fillableLoader = viewMain.findViewById(R.id.home_fillableLoader);
