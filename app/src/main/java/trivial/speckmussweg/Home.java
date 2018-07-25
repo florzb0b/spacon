@@ -30,6 +30,7 @@ import com.github.jorgecastillo.FillableLoader;
 import com.github.jorgecastillo.State;
 import com.github.jorgecastillo.listener.OnStateChangeListener;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import trivial.speckmussweg.database.MyDatabase;
 import trivial.speckmussweg.database.SVGPath;
 
@@ -75,7 +76,7 @@ public class Home extends AppCompatActivity implements OnStateChangeListener {
         spaconIcon = findViewById(R.id.spacon_imageview);
         fillableLoader.setSvgPath(SVGPath.NEW_FAT_PIG);
         animateViews(1000);
-
+        setTitle("Spacon");
 
         header.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,6 +97,7 @@ public class Home extends AppCompatActivity implements OnStateChangeListener {
                     FragmentManager fragmentManager = getSupportFragmentManager();
                     fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
                     setTitle("Profile");
+                    setProfile();
                     if (profileMenuItem != null) {
                         profileMenuItem.setChecked(false);
                     }
@@ -212,6 +214,7 @@ public class Home extends AppCompatActivity implements OnStateChangeListener {
             fragmentTransaction.commit();
             fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
 
+            setProfile();
             // Highlight the selected item has been done by NavigationView
             menuItem.setChecked(true);
             profileMenuItem = menuItem;
@@ -258,7 +261,7 @@ public class Home extends AppCompatActivity implements OnStateChangeListener {
             TextView headerName = headerview.findViewById(R.id.nav_header_name);
             TextView headerWeight = headerview.findViewById(R.id.nav_header_weight);
             TextView headerHeight = headerview.findViewById(R.id.nav_header_height);
-            ImageView headerPic = headerview.findViewById(R.id.nav_header_picture);
+            CircleImageView headerPic = headerview.findViewById(R.id.nav_header_picture);
             String temp = cursor.getString(1) + " " + cursor.getString(2);
             headerName.setText(temp);
             temp = cursor.getString(6) + " kg";
@@ -302,8 +305,9 @@ public class Home extends AppCompatActivity implements OnStateChangeListener {
                     fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.remove(fragment);
                     fragmentTransaction.commit();
-                    setTitle("");
+                    setTitle("Spacon");
                     animateViews(100);
+                    setProfile();
                 } else {
                     super.onBackPressed();
                 }

@@ -39,7 +39,6 @@ implementation 'pub.devrel:easypermissions:0.2.1'
     implementation 'com.squareup.okhttp:okhttp-urlconnection:2.2.0'
 
     implementation 'com.android.support:recyclerview-v7:27.1.1'
-//    implementation 'com.jakewharton:butterknife:8.5.1'
     implementation 'com.google.android.gms:play-services-maps:15.0.1'
     implementation 'com.google.android.gms:play-services-ads:15.0.1'
     implementation 'com.github.jorgecastilloprz:fillableloaders:1.03@aar'

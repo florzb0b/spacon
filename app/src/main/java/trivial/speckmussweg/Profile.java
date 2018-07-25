@@ -39,6 +39,7 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.Objects;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import pub.devrel.easypermissions.EasyPermissions;
 import trivial.speckmussweg.database.*;
 
@@ -51,11 +52,11 @@ public class Profile extends Fragment {
     EditText editTextFirstName, editTextLastName, editTextWeight, editTextHeight;
     TextView textViewDateOfBirth, textViewGender;
     LinearLayout linearLayoutAge;
-    ImageView imgViewBtnDeleteContent, imgViewProfilePic;
+    ImageView imgViewBtnDeleteContent;
+    CircleImageView imgViewProfilePic;
     Uri uriProfileImage;
     String stringPhotoRes, stringFirstName, stringLastName, stringWeight, stringHeight, stringDateOfBirth, stringGender;
     Boolean booleanPhotoSelected = false;
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -74,7 +75,7 @@ public class Profile extends Fragment {
         textViewGender = viewMain.findViewById(R.id.user_profile_content_gender);
         linearLayoutAge = viewMain.findViewById(R.id.user_profile_linearlayout_age);
         imgViewBtnDeleteContent = viewMain.findViewById(R.id.user_profile_button_deleteContent);
-        imgViewProfilePic = viewMain.findViewById(R.id.user_profile_content_photo);
+        imgViewProfilePic = viewMain.findViewById(R.id.user_profile_content_photo_circleimage);
 
         database = new MyDatabase(getActivity());
         Cursor cursor = database.selectProfile(1);
@@ -282,6 +283,7 @@ public class Profile extends Fragment {
                 uriProfileImage = data.getData();
                 Glide.with(this).load(uriProfileImage).crossFade().
                         diskCacheStrategy(DiskCacheStrategy.ALL).into(imgViewProfilePic);
+
             }
         }
     }
