@@ -87,7 +87,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:text="Information Meal"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/backgroundColorDarkerGreen"
                         android:textSize="15sp" />
 
                     <TextView
@@ -139,7 +139,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:text="Information Training"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/backgroundColorDarkerGreen"
                         android:textSize="15sp" />
 
                     <TextView
@@ -170,23 +170,9 @@
                         android:id="@+id/burnedCalories"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:text="---"
                         android:layout_marginStart="10dp"
-                        android:textColor="@color/backgroundColorDarkerGreen" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginTop="5dp"
-                        android:text="Distance:"
-                        android:textColor="#FFFFFF" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginStart="10dp"
-                        android:text="TODO"
+                        android:layout_marginBottom="10dp"
                         android:textColor="@color/backgroundColorDarkerGreen" />
 
                 </LinearLayout>

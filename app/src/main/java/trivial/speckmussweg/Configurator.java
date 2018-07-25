@@ -1458,7 +1458,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             Fragment fragment = null;
-                            Class fragmentClass = Training_main.class;
+                            Class fragmentClass = Training.class;
                             try {
                                 fragment = (Fragment) fragmentClass.newInstance();
                             } catch (Exception e) {

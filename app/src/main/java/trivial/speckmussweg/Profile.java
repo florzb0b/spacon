@@ -62,7 +62,7 @@ public class Profile extends Fragment {
         setHasOptionsMenu(true);
 
         // Inflate the layout for this fragment
-        viewMain = inflater.inflate(R.layout.fragment_profile_new, container, false);
+        viewMain = inflater.inflate(R.layout.fragment_profile, container, false);
 
         editTextFirstName = viewMain.findViewById(R.id.user_profile_content_firstname);
         editTextLastName = viewMain.findViewById(R.id.user_profile_content_lastname);

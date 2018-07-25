@@ -186,7 +186,7 @@ public class Home extends AppCompatActivity implements OnStateChangeListener {
                     fragmentClass = Configurator.class;
                     break;
                 case R.id.nav_training:
-                    fragmentClass = Training_main.class;
+                    fragmentClass = Training.class;
                     break;
                 case R.id.nav_aboutus:
                     fragmentClass = AboutUs.class;
