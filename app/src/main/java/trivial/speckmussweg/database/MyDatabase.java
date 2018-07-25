@@ -54,7 +54,6 @@ public class MyDatabase extends SQLiteOpenHelper {
     private static final String COLUMN_FOR_ALL_ID = "mealid";
 
 
-
     public MyDatabase(Context cxt) {
         super(cxt, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -144,7 +143,7 @@ public class MyDatabase extends SQLiteOpenHelper {
     }
 
     // 1= long, 0 = small
-    public void insertBread(int id, String name, int calorie, int subIsLong){
+    public void insertBread(int id, String name, int calorie, int subIsLong) {
         ContentValues newLine = new ContentValues();
         newLine.put(COLUMN_FOR_ALL_ID, id);
         newLine.put(COLUMN_BREAD_NAME, name);
@@ -154,7 +153,7 @@ public class MyDatabase extends SQLiteOpenHelper {
         db.insert(TABLE_BREAD, null, newLine);
     }
 
-    public void insertCheese(int id, String name, int calorie){
+    public void insertCheese(int id, String name, int calorie) {
         ContentValues newLine = new ContentValues();
         newLine.put(COLUMN_FOR_ALL_ID, id);
         newLine.put(COLUMN_CHEESE_NAME, name);
@@ -163,7 +162,7 @@ public class MyDatabase extends SQLiteOpenHelper {
         db.insert(TABLE_CHEESE, null, newLine);
     }
 
-    public void insertMeat(int id, String name, int calorie){
+    public void insertMeat(int id, String name, int calorie) {
         ContentValues newLine = new ContentValues();
         newLine.put(COLUMN_FOR_ALL_ID, id);
         newLine.put(COLUMN_MEAT_NAME, name);
@@ -172,7 +171,7 @@ public class MyDatabase extends SQLiteOpenHelper {
         db.insert(TABLE_MEAT, null, newLine);
     }
 
-    public void insertSalad(int id, String name, int calorie){
+    public void insertSalad(int id, String name, int calorie) {
         ContentValues newLine = new ContentValues();
         newLine.put(COLUMN_FOR_ALL_ID, id);
         newLine.put(COLUMN_SALAD_NAME, name);
@@ -181,7 +180,7 @@ public class MyDatabase extends SQLiteOpenHelper {
         db.insert(TABLE_SALAD, null, newLine);
     }
 
-    public void insertExtras(int id, String name, int calorie){
+    public void insertExtras(int id, String name, int calorie) {
         ContentValues newLine = new ContentValues();
         newLine.put(COLUMN_FOR_ALL_ID, id);
         newLine.put(COLUMN_EXTRA_NAME, name);
@@ -190,7 +189,7 @@ public class MyDatabase extends SQLiteOpenHelper {
         db.insert(TABLE_EXTRA, null, newLine);
     }
 
-    public void insertSauce(int id, String name, int calorie){
+    public void insertSauce(int id, String name, int calorie) {
         ContentValues newLine = new ContentValues();
         newLine.put(COLUMN_FOR_ALL_ID, id);
         newLine.put(COLUMN_SAUCE_NAME, name);
@@ -289,9 +288,8 @@ public class MyDatabase extends SQLiteOpenHelper {
         return cursor;
     }
 
-
-    public Long insertNewProfile(String firstname, String lastname, byte gender, String birthday,
-                          String height, String weight, String picture_res) {
+    public void insertNewProfile(String firstname, String lastname, byte gender, String birthday,
+                                 String height, String weight, String picture_res) {
         ContentValues newLine = new ContentValues();
         newLine.put(COLUMN_PROFILE_FIRSTNAME, firstname);
         newLine.put(COLUMN_PROFILE_LASTNAME, lastname);
@@ -302,24 +300,10 @@ public class MyDatabase extends SQLiteOpenHelper {
         newLine.put(COLUMN_PROFILE_PICTURE, picture_res);
         SQLiteDatabase db = this.getWritableDatabase();
         //if result expected
-        return db.insert(TABLE_PROFILE, null, newLine);
+        db.insert(TABLE_PROFILE, null, newLine);
     }
 
-    public void deleteProfile(int id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        String where = COLUMN_PROFILE_ID + "=?";
-        String[] whereArg = new String[]{Integer.toString(id)};
-        db.delete(TABLE_PROFILE, where, whereArg);
-    }
-
-    public Cursor selectAllProfiles(String orderBy) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_PROFILE + " ORDER BY " + orderBy, null);
-        cursor.moveToFirst();
-        return cursor;
-    }
-
-   public Cursor selectProfile(int id) {
+    public Cursor selectProfile(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_PROFILE + " WHERE " +
                 COLUMN_PROFILE_ID + "=" + id, null);
@@ -328,7 +312,7 @@ public class MyDatabase extends SQLiteOpenHelper {
     }
 
     public void updateProfile(int id, String firstname, String lastname, byte gender, String birthday,
-                       String height, String weight, String picture_res) {
+                              String height, String weight, String picture_res) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues updateLine = new ContentValues();
         updateLine.put(COLUMN_PROFILE_FIRSTNAME, firstname);

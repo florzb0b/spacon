@@ -30,9 +30,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -1447,8 +1449,8 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
                     content.setText(alert1 + "\n" + alert2);
                     content.setTextSize(16);
                     FrameLayout container = new FrameLayout(getActivity());
-                    FrameLayout.LayoutParams params = new  FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    params.setMargins(20,20,20,20);
+                    FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    params.setMargins(20, 20, 20, 20);
                     content.setLayoutParams(params);
                     container.addView(content);
                     builderTraining.setView(container);
@@ -1497,8 +1499,8 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
                 String alert5 = "Lettuce, tomatoes, green peppers, cucumbers and red onions.";
                 content.setText(alert1 + "\n" + alert2 + "\n" + alert3 + "\n" + "\n" + alert4 + "\n" + alert5);
                 FrameLayout container = new FrameLayout(getActivity());
-                FrameLayout.LayoutParams params = new  FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                params.setMargins(20,20,20,20);
+                FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                params.setMargins(20, 20, 20, 20);
                 content.setLayoutParams(params);
                 container.addView(content);
 

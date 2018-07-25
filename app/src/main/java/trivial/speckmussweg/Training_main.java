@@ -61,7 +61,6 @@ public class Training_main extends Fragment {
     TextView burnedCalories;
     TextView mealTextView;
     private ProgressDialog pDialog;
-    private static String url = "http://thelegendsrising.de/sports.json";
     ArrayList<String> sportNameList;
     ArrayList<String> sportMultiList;
     MyDatabase database;
@@ -80,8 +79,8 @@ public class Training_main extends Fragment {
         View viewMain = inflater.inflate(R.layout.fragment_training_main_new, container, false);
         fillableLoader = viewMain.findViewById(R.id.home_fillableLoader);
 
-        sportNameList = new ArrayList<String>();
-        sportMultiList = new ArrayList<String>();
+        sportNameList = new ArrayList<>();
+        sportMultiList = new ArrayList<>();
         database = new MyDatabase(getActivity());
         cursor = database.selectProfile(1);
 
@@ -108,7 +107,7 @@ public class Training_main extends Fragment {
                     LayoutInflater inflater = getLayoutInflater();
 
                     // create view for add item in dialog
-                    View convertView = (View) inflater.inflate(R.layout.listview_training_sport, null);
+                    @SuppressLint("InflateParams") View convertView = inflater.inflate(R.layout.listview_training_sport, null);
 
                     // on dialog cancel button listener
                     alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -120,7 +119,7 @@ public class Training_main extends Fragment {
 
                     // add custom view in dialog
                     alertDialog.setView(convertView);
-                    ListView lv = (ListView) convertView.findViewById(R.id.listview_sport);
+                    ListView lv = convertView.findViewById(R.id.listview_sport);
                     final AlertDialog alert = alertDialog.create();
                     alert.setTitle("Choose your Sport you fat fuck!");
                     MyAdapter myadapter = new MyAdapter(getActivity(), R.layout.listview_item, sportNameList);
@@ -186,6 +185,7 @@ public class Training_main extends Fragment {
 
     }
 
+    @SuppressLint("SetTextI18n")
     private void setMealContent() {
         database = new MyDatabase(getActivity());
         Cursor cursor;
@@ -264,17 +264,12 @@ public class Training_main extends Fragment {
         private MyAdapter(Context context, int resource, List<String> list) {
 
             super(context, resource, list);
-
-            // TODO Auto-generated constructor stub
-
             myContext = context;
-
             newList = list;
-
             inflater = LayoutInflater.from(context);
-
         }
 
+        @SuppressLint("InflateParams")
         @Override
         @NonNull
         public View getView(final int position, View view, @NonNull ViewGroup parent) {
@@ -323,6 +318,7 @@ public class Training_main extends Fragment {
             HttpHandler sh = new HttpHandler();
 
             // Making a request to url and getting response
+            String url = "http://thelegendsrising.de/sports.json";
             String jsonStr = sh.makeServiceCall(url);
 
             //Log.e(TAG, "Response from url: " + jsonStr);
@@ -398,8 +394,8 @@ public class Training_main extends Fragment {
 
     //Function calculation burned Calories per Second
     public double burnedkcal() {
-        double burnedCalories = 0;
-        double burnedCaloriesret = 0;
+        double burnedCalories;
+        double burnedCaloriesret;
         double multi = 0.0;
         int weight = Integer.parseInt(cursor.getString(6));
 

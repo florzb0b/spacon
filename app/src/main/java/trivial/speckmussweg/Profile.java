@@ -1,14 +1,12 @@
 package trivial.speckmussweg;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -26,7 +24,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,7 +41,6 @@ import pub.devrel.easypermissions.EasyPermissions;
 import trivial.speckmussweg.database.*;
 
 public class Profile extends Fragment {
-    // TODO: Methode schreiben um daten abzufragen, ob was eingegeben wurde. Diese dann in Home abfragen, um onbackPressed() zum laufen zu kriegen.
     private static final int REQUEST_CODE = 20;
     Calendar calenderProfile = Calendar.getInstance();
     MyDatabase database;
@@ -58,6 +54,7 @@ public class Profile extends Fragment {
     String stringPhotoRes, stringFirstName, stringLastName, stringWeight, stringHeight, stringDateOfBirth, stringGender;
     Boolean booleanPhotoSelected = false;
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -89,8 +86,6 @@ public class Profile extends Fragment {
                 textViewGender.setText("Male");
             }
             textViewDateOfBirth.setText(cursor.getString(4));
-            String dateToSplit = cursor.getString(4);
-            String[] splittedDate = dateToSplit.split("/");
             editTextHeight.setText(cursor.getString(5));
             editTextWeight.setText(cursor.getString(6));
             uriProfileImage = Uri.parse(cursor.getString(7));
@@ -114,7 +109,7 @@ public class Profile extends Fragment {
             @Override
             public void onClick(View view) {
                 booleanPhotoSelected = true;
-                openAlbum(view);
+                openAlbum();
             }
         });
         imgViewProfilePic.setOnLongClickListener(new View.OnLongClickListener() {
@@ -168,7 +163,7 @@ public class Profile extends Fragment {
                         }
                     }
                 });
-               builder.show();
+                builder.show();
 
             }
         });
@@ -250,7 +245,7 @@ public class Profile extends Fragment {
     }
 
     //opens the implicit Intent for choosing a picture
-    public void openAlbum(View v) {
+    public void openAlbum() {
         // Intent to open Album on Device
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         File pictureDirectory = Environment.getExternalStoragePublicDirectory

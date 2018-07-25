@@ -18,11 +18,11 @@ import java.util.List;
 import trivial.speckmussweg.R;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>
-        implements  View.OnTouchListener{
+        implements View.OnTouchListener {
 
     private List<String> mName;
     private List<String> mKcal;
-    int mId;
+    private int mId;
 
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
@@ -52,25 +52,24 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.kcalTextView.setText(kcal);
 
         //1= brot, 2 = cheese, 3 = Meat, 4 = salad, 5 = extra, 6 = sauce
-        if (mId == 1){
+        if (mId == 1) {
             holder.iconImageView.setImageResource(R.drawable.ic_configurator_bread);
         }
-        if (mId == 2){
+        if (mId == 2) {
             holder.iconImageView.setImageResource(R.drawable.ic_configurator_cheese);
         }
-        if (mId == 3){
+        if (mId == 3) {
             holder.iconImageView.setImageResource(R.drawable.ic_configurator_meat);
         }
-        if (mId == 4){
+        if (mId == 4) {
             holder.iconImageView.setImageResource(R.drawable.ic_configurator_salad);
         }
-        if (mId == 5){
+        if (mId == 5) {
             holder.iconImageView.setImageResource(R.drawable.ic_configurator_extra);
         }
-        if (mId == 6){
+        if (mId == 6) {
             holder.iconImageView.setImageResource(R.drawable.ic_configurator_sauce);
         }
-
 
 
     }
@@ -126,7 +125,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return mName.get(id);
     }
 
-    public String getCalories(int id){
+    public String getCalories(int id) {
         return mKcal.get(id);
     }
 
