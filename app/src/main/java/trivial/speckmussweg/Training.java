@@ -78,7 +78,7 @@ public class Training extends Fragment {
         setHasOptionsMenu(true);
         getActivity().setTitle("Training");
 
-        // Inflate the layout for this fragment
+        // Inflate the layout for this fragment.
         View viewMain = inflater.inflate(R.layout.fragment_training, container, false);
         fillableLoader = viewMain.findViewById(R.id.home_fillableLoader);
         //initialisation

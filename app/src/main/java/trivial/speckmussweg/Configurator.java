@@ -1435,7 +1435,7 @@ public class Configurator extends Fragment implements RecyclerViewAdapter.ItemCl
     @SuppressLint("SetTextI18n")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
+        // Handle item selection.
         switch (item.getItemId()) {
             case R.id.optionsmenu_configurator_starttraining:
                 if (buildAllowed && breadIsChoosed) {
